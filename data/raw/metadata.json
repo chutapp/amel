@@ -1,0 +1,32 @@
+{
+  "experiment": "context_bias",
+  "start_time": "2026-03-16T11:39:46.450060+00:00",
+  "config": {
+    "temperature": 1.0,
+    "max_tokens": 100,
+    "context_lengths": [
+      5,
+      10,
+      20,
+      50
+    ],
+    "polarities": [
+      "no_saturated",
+      "yes_saturated",
+      "neutral"
+    ],
+    "repetitions": 10,
+    "models": [
+      "qwen3:30b",
+      "qwen3:4b",
+      "qwen3.5:4b",
+      "llama3.2:3b",
+      "llama3.3:70b"
+    ],
+    "domains": [
+      "meals",
+      "code_review",
+      "content_moderation"
+    ]
+  }
+}

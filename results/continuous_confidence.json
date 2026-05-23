@@ -1,0 +1,50 @@
+{
+  "n_pairs": 6985,
+  "overall_spearman": {
+    "r": 0.467452,
+    "p": 0.0,
+    "significant": true
+  },
+  "overall_pearson": {
+    "r": 0.244672,
+    "p": 9.65302347703732e-96,
+    "significant": true
+  },
+  "entropy_bins": {
+    "zero_entropy": {
+      "n": 6212,
+      "mean_abs_bs": 0.107979,
+      "std": 0.270849
+    },
+    "low_entropy": {
+      "n": 60,
+      "mean_abs_bs": 0.348148,
+      "std": 0.308122
+    },
+    "high_entropy": {
+      "n": 713,
+      "mean_abs_bs": 0.325381,
+      "std": 0.232599
+    }
+  },
+  "per_category": {
+    "clear_positive": {
+      "n": 2238,
+      "mean_entropy": 0.0971,
+      "spearman_r": 0.5353,
+      "spearman_p": 3.72521602424771e-166
+    },
+    "ambiguous": {
+      "n": 2393,
+      "mean_entropy": 0.1502,
+      "spearman_r": 0.3157,
+      "spearman_p": 1.5863401058231988e-56
+    },
+    "clear_negative": {
+      "n": 2354,
+      "mean_entropy": 0.0148,
+      "spearman_r": 0.4366,
+      "spearman_p": 3.5672794399556676e-110
+    }
+  }
+}

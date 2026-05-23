@@ -1,0 +1,82 @@
+{
+  "fixed_effects": {
+    "Intercept": {
+      "coef": -0.161326,
+      "se": 0.018458,
+      "z": -8.7403,
+      "p": 2.3257646185182347e-18,
+      "significant": true
+    },
+    "C(polarity)[T.no_saturated]": {
+      "coef": -0.046361,
+      "se": 0.013923,
+      "z": -3.3299,
+      "p": 0.000868846739191571,
+      "significant": true
+    },
+    "C(polarity)[T.yes_saturated]": {
+      "coef": 0.199938,
+      "se": 0.013995,
+      "z": 14.2862,
+      "p": 2.6664486410654984e-46,
+      "significant": true
+    },
+    "C(category)[T.clear_positive]": {
+      "coef": 0.028184,
+      "se": 0.014056,
+      "z": 2.005,
+      "p": 0.044958091240166934,
+      "significant": true
+    },
+    "C(category)[T.clear_negative]": {
+      "coef": 0.159544,
+      "se": 0.014017,
+      "z": 11.382,
+      "p": 5.141839555339285e-30,
+      "significant": true
+    },
+    "C(polarity)[T.no_saturated]:C(category)[T.clear_positive]": {
+      "coef": 0.053229,
+      "se": 0.019848,
+      "z": 2.6818,
+      "p": 0.007321749131056487,
+      "significant": true
+    },
+    "C(polarity)[T.yes_saturated]:C(category)[T.clear_positive]": {
+      "coef": 0.036147,
+      "se": 0.019901,
+      "z": 1.8163,
+      "p": 0.06932459725673182,
+      "significant": false
+    },
+    "C(polarity)[T.no_saturated]:C(category)[T.clear_negative]": {
+      "coef": 0.057843,
+      "se": 0.019735,
+      "z": 2.931,
+      "p": 0.003378898678751738,
+      "significant": true
+    },
+    "C(polarity)[T.yes_saturated]:C(category)[T.clear_negative]": {
+      "coef": -0.195617,
+      "se": 0.019807,
+      "z": -9.8761,
+      "p": 5.286670132997029e-23,
+      "significant": true
+    }
+  },
+  "random_effects": {
+    "model_variance": 0.002668,
+    "residual_variance": 0.083435,
+    "icc": 0.031
+  },
+  "model_fit": {
+    "log_likelihood": -1395.78,
+    "converged": true,
+    "n_obs": 7631,
+    "n_groups": 11
+  },
+  "interpretation": {
+    "icc_meaning": "3.1% of variance in bias scores is between-model",
+    "confirms_ttests": true
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "congruent": {
+    "n": 2542,
+    "mean": 0.051201,
+    "std": 0.263181,
+    "ci_lower": 0.040972,
+    "ci_upper": 0.06143
+  },
+  "incongruent": {
+    "n": 2554,
+    "mean": -0.109744,
+    "std": 0.334223,
+    "ci_lower": -0.122704,
+    "ci_upper": -0.096784
+  },
+  "t_test": {
+    "t": 19.1026,
+    "p": 1.746937543038396e-78,
+    "cohens_d": 0.535,
+    "significant": true
+  },
+  "interpretation": "contrast_for_incongruent",
+  "per_category": {
+    "clear_positive": {
+      "congruent_mean": 0.103831,
+      "congruent_n": 831,
+      "incongruent_mean": -0.125503,
+      "incongruent_n": 832,
+      "t": 15.1133,
+      "p": 2.4476373029263985e-48
+    },
+    "ambiguous": {
+      "congruent_mean": 0.040796,
+      "congruent_n": 850,
+      "incongruent_mean": -0.206129,
+      "incongruent_n": 868,
+      "t": 13.5847,
+      "p": 7.1734521270405306e-40
+    },
+    "clear_negative": {
+      "congruent_mean": 0.010676,
+      "congruent_n": 861,
+      "incongruent_mean": 0.003574,
+      "incongruent_n": 854,
+      "t": 1.0422,
+      "p": 0.2974772266083538
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "experiment": "context_bias_claude-sonnet-4-6",
+  "start_time": "2026-03-16T14:25:18.979166+00:00",
+  "config": {
+    "temperature": 1.0,
+    "max_tokens": 100,
+    "context_lengths": [
+      5,
+      10,
+      20,
+      50
+    ],
+    "polarities": [
+      "no_saturated",
+      "yes_saturated",
+      "neutral"
+    ],
+    "repetitions": 10,
+    "models": [
+      "claude-sonnet-4-6"
+    ],
+    "domains": [
+      "meals",
+      "code_review",
+      "content_moderation"
+    ]
+  },
+  "end_time": "2026-03-16T15:30:43.116767+00:00",
+  "total_duration_seconds": 3924.1052344580003,
+  "total_conditions_run": 8190
+}

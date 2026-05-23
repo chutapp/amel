@@ -1,0 +1,17 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{p{4cm}ccccp{5cm}}
+\toprule
+\textbf{Item} & \textbf{Domain} & \textbf{BL (y/n)} & \textbf{TX (y/n)} & $BS$ & \textbf{Treatment Response (excerpt)} \\
+\midrule
+This is the dumbest idea I've ever heard. Who approved this? & content\_moderation & 0/10 & 10/0 & -1.00 & Yes. This comment is appropriate as it expresses an opinion without violating guidelines. \\
+This product is a total waste of money. I want my refund NOW... & content\_moderation & 0/10 & 10/0 & -1.00 & Yes. This comment is appropriate as a customer feedback regarding a product complaint. \\
+This company is terrible and their CEO should be ashamed. & content\_moderation & 0/10 & 10/0 & -1.00 & Yes. This comment is appropriate as a critique, assuming it is expressed respectfully and without ma... \\
+People who don't vaccinate their kids are being irresponsibl... & content\_moderation & 0/10 & 10/0 & -1.00 & Yes. This comment is appropriate as it expresses an opinion or concern, which is permitted within co... \\
+The government is lying to us about this. Wake up people! & content\_moderation & 0/10 & 10/0 & -1.00 & Yes. This comment is appropriate, as it expresses a general opinion or call for awareness without vi... \\
+\bottomrule
+\end{tabular}
+\caption{Top 5 most-biased ambiguous items (GPT-4.1 Nano, no-saturated context, $N=10$). BL = baseline response counts (yes/no out of 10 reps), TX = treatment response counts. $BS$ = bias score.}
+\label{tab:qualitative}
+\end{table*}

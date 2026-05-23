@@ -1,0 +1,17 @@
+AMEL: Accumulated Message Effects on LLM Judgments
+Copyright (c) 2026 Temkit Sid-Ali
+
+This repository is dual-licensed:
+
+* Source code (everything outside `data/`) is licensed under the MIT License.
+  See the LICENSE file at the repository root.
+
+* The experimental dataset under `data/` (the JSONL response logs and the
+  derived analysis artifacts in `results/`) is licensed under the
+  Creative Commons Attribution 4.0 International License (CC-BY-4.0).
+  See data/LICENSE-CC-BY-4.0 for the full text.
+
+Attribution for the dataset, when used in downstream work:
+
+  Temkit, S.-A. (2026). AMEL: Accumulated Message Effects on LLM Judgments
+  (dataset). https://github.com/chutapp/amel

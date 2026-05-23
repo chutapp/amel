@@ -1,0 +1,60 @@
+{
+  "bin_definition": {
+    "B1_confident_entropy_0": "Baseline P(yes) is exactly 0 or 1 (deterministic baseline)",
+    "B2_uncertain_low": "0 < entropy <= 0.764 (median of nonzero entropy)",
+    "B3_uncertain_high": "entropy > 0.764"
+  },
+  "by_bin": {
+    "B1_confident_entropy_0": {
+      "n": 5591,
+      "mean": -0.04052778984365463,
+      "std": 0.27726285926718414,
+      "ci_lower": -0.04779559076740664,
+      "ci_upper": -0.03325998891990262,
+      "cohens_d": -0.14617100159311297,
+      "t": -10.929642807628658,
+      "p": 0.0
+    },
+    "B2_uncertain_low": {
+      "n": 384,
+      "mean": -0.07355944113756616,
+      "std": 0.4002153729746848,
+      "ci_lower": -0.1135893153869629,
+      "ci_upper": -0.03352956688816942,
+      "cohens_d": -0.18379963915633765,
+      "t": -3.6017226467255874,
+      "p": 0.0003577349158903065
+    },
+    "B3_uncertain_high": {
+      "n": 348,
+      "mean": -0.12650862068965515,
+      "std": 0.37475135232769546,
+      "ci_lower": -0.165882631672893,
+      "ci_upper": -0.08713460970641732,
+      "cohens_d": -0.3375801578936843,
+      "t": -6.297476186951933,
+      "p": 9.153084956636803e-10
+    }
+  },
+  "crosstab_author_category_x_quartile": {
+    "clear_negative": {
+      "B1_confident_entropy_0": 2111,
+      "B3_uncertain_high": 12,
+      "B2_uncertain_low": 36
+    },
+    "clear_positive": {
+      "B1_confident_entropy_0": 1812,
+      "B3_uncertain_high": 96,
+      "B2_uncertain_low": 192
+    },
+    "ambiguous": {
+      "B1_confident_entropy_0": 1668,
+      "B3_uncertain_high": 240,
+      "B2_uncertain_low": 156
+    }
+  },
+  "author_label_vs_empirical": {
+    "n_records": 6323,
+    "interpretation": "If author labels match empirical entropy, ambiguous items should concentrate in Q3-Q4. Cross-tab shows the actual distribution."
+  }
+}

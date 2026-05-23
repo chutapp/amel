@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Intermediate/duplicate data
+data/combined_results.jsonl
+data/pilot/
+data/processed/
+data/items/
+
+# Intermediate results (regenerable from data + scripts)
+results/all/
+results/combined/
+results/figures/
+results/gpt52/
+results/gpt52-interim/
+results/interim/
+results/openai/
+results/pilot/
+results/tables/
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.synctex*
+paper/*.fls
+paper/*.fdb_latexmk
+
+# API keys should never be committed
+.env
+*.env
+data/raw/experiment_resume.log
+client_secret*.json
+gcp-oauth.keys.json

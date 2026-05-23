@@ -1,0 +1,24 @@
+{
+  "n_pairs": 593,
+  "spearman_r": 0.0774,
+  "spearman_p": 0.059452671203084895,
+  "pearson_r": 0.2172,
+  "pearson_p": 9.171204107216713e-08,
+  "interpretation": "No significant correlation between baseline P(no) and asymmetry magnitude.",
+  "quartile_analysis": {
+    "Low P(no)": {
+      "n": 258,
+      "mean_pno": 0.0,
+      "mean_asymmetry": 0.016,
+      "std_asymmetry": 0.1244
+    },
+    "Mid P(no)": {
+      "n": 335,
+      "mean_pno": 0.8999,
+      "mean_asymmetry": 0.0971,
+      "std_asymmetry": 0.2441
+    }
+  },
+  "mean_baseline_pno": 0.5084,
+  "mean_asymmetry": 0.0618
+}

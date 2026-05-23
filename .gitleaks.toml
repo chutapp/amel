@@ -1,0 +1,41 @@
+# gitleaks allowlist for the AMEL repository.
+#
+# `src/domains/code_review.py` deliberately contains insecure code snippets
+# (fake API keys, fake passwords, the canonical AWS documentation example
+# secret key, etc.) that are presented to the LLM as test items for the
+# "Is this code production-ready?" judgment task. None of these are real
+# credentials.
+#
+# This config allowlists those synthetic patterns so secret scanners (gitleaks
+# and similar) do not flag them. GitHub's native secret scanning also runs
+# additional rules; the file header in `src/domains/code_review.py` documents
+# the intent for any scanner whose results are reviewed by a human.
+
+title = "AMEL gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Synthetic research stimuli — fake credentials in code-review test items."
+
+paths = [
+    '''src/domains/code_review\.py''',
+    '''src/domains/code_review_flipped\.py''',
+    '''data/.*\.jsonl''',  # model responses may echo the stimuli verbatim
+    '''results/qualitative_examples\.(json|tex)''',
+]
+
+regexes = [
+    # Fake OpenAI-style keys used in stimuli
+    '''sk-1234567890abcdef''',
+    '''sk-live-abcdef123456''',
+    # Canonical AWS documentation example secret key (publicly published by AWS)
+    '''wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY''',
+    # Fake DB / app passwords in stimuli
+    '''super_secret_prod_password_2024''',
+    '''my_database_password_123''',
+    '''plaintext_password_here''',
+    '''temporary123''',
+    '''admin123''',
+]

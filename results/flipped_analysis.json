@@ -1,0 +1,70 @@
+{
+  "flipped_asymmetry": {
+    "gpt-4.1-nano": {
+      "mean_abs_bs_no_sat": 0.1714,
+      "mean_abs_bs_yes_sat": 0.1524,
+      "ratio_no_over_yes": 1.12,
+      "n_no_sat": 21,
+      "n_yes_sat": 21,
+      "t_stat": 0.3133,
+      "p_value": 0.757293510205193,
+      "stronger_polarity": "no_saturated"
+    },
+    "llama3.2:3b": {
+      "mean_abs_bs_no_sat": 0.2619,
+      "mean_abs_bs_yes_sat": 0.2667,
+      "ratio_no_over_yes": 0.98,
+      "n_no_sat": 21,
+      "n_yes_sat": 21,
+      "t_stat": -0.1127,
+      "p_value": 0.9113739079435121,
+      "stronger_polarity": "yes_saturated"
+    }
+  },
+  "original_asymmetry": {
+    "gpt-4.1-nano": {
+      "mean_abs_bs_no_sat": 0.2869,
+      "mean_abs_bs_yes_sat": 0.2036,
+      "ratio_no_over_yes": 1.41,
+      "n_no_sat": 21,
+      "n_yes_sat": 21,
+      "t_stat": 0.9571,
+      "p_value": 0.349956990707014,
+      "stronger_polarity": "no_saturated"
+    },
+    "llama3.2:3b": {
+      "mean_abs_bs_no_sat": 0.4357,
+      "mean_abs_bs_yes_sat": 0.3917,
+      "ratio_no_over_yes": 1.11,
+      "n_no_sat": 21,
+      "n_yes_sat": 21,
+      "t_stat": 0.4715,
+      "p_value": 0.6424159672216228,
+      "stronger_polarity": "no_saturated"
+    }
+  },
+  "comparison": {
+    "gpt-4.1-nano": {
+      "original_stronger": "no_saturated",
+      "original_ratio": 1.41,
+      "flipped_stronger": "no_saturated",
+      "flipped_ratio": 1.12,
+      "asymmetry_flipped": false,
+      "hypothesis_supported": "Token ('no' is stickier)"
+    },
+    "llama3.2:3b": {
+      "original_stronger": "no_saturated",
+      "original_ratio": 1.11,
+      "flipped_stronger": "yes_saturated",
+      "flipped_ratio": 0.98,
+      "asymmetry_flipped": true,
+      "hypothesis_supported": "RLHF (rejection frame)"
+    }
+  },
+  "verdict": {
+    "n_models_tested": 2,
+    "n_asymmetry_flipped": 1,
+    "n_asymmetry_stayed": 1,
+    "conclusion": "Inconclusive: mixed results across models"
+  }
+}

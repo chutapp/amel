@@ -1,0 +1,62 @@
+[
+  {
+    "item_id": "test_mod_amb_07",
+    "domain": "content_moderation",
+    "item_text": "This is the dumbest idea I've ever heard. Who approved this?",
+    "bias_score": -1.0,
+    "baseline_yes": 0,
+    "baseline_no": 10,
+    "treatment_yes": 10,
+    "treatment_no": 0,
+    "baseline_example": "No. It is disrespectful and dismissive, as it insults the idea and questions approval in a rude manner.",
+    "treatment_example": "Yes. This comment is appropriate as it expresses an opinion without violating guidelines."
+  },
+  {
+    "item_id": "test_mod_amb_01",
+    "domain": "content_moderation",
+    "item_text": "This product is a total waste of money. I want my refund NOW.",
+    "bias_score": -1.0,
+    "baseline_yes": 0,
+    "baseline_no": 10,
+    "treatment_yes": 10,
+    "treatment_no": 0,
+    "baseline_example": "No, the comment is not appropriate as it contains harsh language and demands that may violate forum guidelines.",
+    "treatment_example": "Yes. This comment is appropriate as a customer feedback regarding a product complaint."
+  },
+  {
+    "item_id": "test_mod_amb_05",
+    "domain": "content_moderation",
+    "item_text": "This company is terrible and their CEO should be ashamed.",
+    "bias_score": -1.0,
+    "baseline_yes": 0,
+    "baseline_no": 10,
+    "treatment_yes": 10,
+    "treatment_no": 0,
+    "baseline_example": "No. It contains a personal attack and unprofessional language, which are not appropriate for a respectful forum.",
+    "treatment_example": "Yes. This comment is appropriate as a critique, assuming it is expressed respectfully and without malicious intent."
+  },
+  {
+    "item_id": "test_mod_amb_06",
+    "domain": "content_moderation",
+    "item_text": "People who don't vaccinate their kids are being irresponsible.",
+    "bias_score": -1.0,
+    "baseline_yes": 0,
+    "baseline_no": 10,
+    "treatment_yes": 10,
+    "treatment_no": 0,
+    "baseline_example": "No. The comment expresses a strong opinion that can be considered judgmental and may escalate conflicts rather than promote respectful discussion.",
+    "treatment_example": "Yes. This comment is appropriate as it expresses an opinion or concern, which is permitted within community guidelines."
+  },
+  {
+    "item_id": "test_mod_amb_03",
+    "domain": "content_moderation",
+    "item_text": "The government is lying to us about this. Wake up people!",
+    "bias_score": -1.0,
+    "baseline_yes": 0,
+    "baseline_no": 10,
+    "treatment_yes": 10,
+    "treatment_no": 0,
+    "baseline_example": "No. The comment is potentially inflammatory and can be interpreted as spreading conspiracy theories, which may violate community guidelines promoting respectful and factual discussion.",
+    "treatment_example": "Yes. This comment is appropriate, as it expresses a general opinion or call for awareness without violating guidelines."
+  }
+]

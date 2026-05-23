@@ -1,0 +1,38 @@
+{
+  "temperatures": {
+    "0.3": {
+      "n": 21,
+      "mean": -0.280952,
+      "std": 0.406963,
+      "cohens_d": -0.6904,
+      "t": -3.1636,
+      "p": 0.0048847864853015874,
+      "significant": true
+    },
+    "0.7": {
+      "n": 21,
+      "mean": -0.280952,
+      "std": 0.388097,
+      "cohens_d": -0.7239,
+      "t": -3.3174,
+      "p": 0.003436039636173556,
+      "significant": true
+    },
+    "1.0": {
+      "n": 63,
+      "mean": -0.107937,
+      "std": 0.383422,
+      "cohens_d": -0.2815,
+      "t": -2.2344,
+      "p": 0.029071022621110665,
+      "significant": true,
+      "source": "main_experiment"
+    }
+  },
+  "kruskal_wallis": {
+    "H": 5.2652,
+    "p": 0.07189177646631723,
+    "significant": false,
+    "interpretation": "No significant temperature effect"
+  }
+}

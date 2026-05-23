@@ -1,0 +1,49 @@
+{
+  "baseline_vs_treatment": {
+    "n_baseline": 5197,
+    "n_treatment": 64740,
+    "mean_baseline_ms": 5430.0,
+    "mean_treatment_ms": 6553.4,
+    "t": -9.1777,
+    "p": 5.820291759786117e-20,
+    "cohens_d": 0.1218,
+    "significant": true
+  },
+  "per_context_length": {
+    "5": {
+      "n_treatment": 16299,
+      "mean_treatment_ms": 5484.0,
+      "mean_baseline_ms": 5430.0,
+      "t": -0.4069,
+      "p": 0.6841041204693653
+    },
+    "10": {
+      "n_treatment": 16321,
+      "mean_treatment_ms": 5837.1,
+      "mean_baseline_ms": 5430.0,
+      "t": -2.9982,
+      "p": 0.002722725102530908
+    },
+    "20": {
+      "n_treatment": 16203,
+      "mean_treatment_ms": 6554.5,
+      "mean_baseline_ms": 5430.0,
+      "t": -8.053,
+      "p": 8.97531960330008e-16
+    },
+    "50": {
+      "n_treatment": 15917,
+      "mean_treatment_ms": 8382.0,
+      "mean_baseline_ms": 5430.0,
+      "t": -19.5507,
+      "p": 6.615527551280724e-84
+    }
+  },
+  "rt_variability_vs_bias": {
+    "n_pairs": 6877,
+    "spearman_r": 0.0973,
+    "spearman_p": 6.254379674574015e-16,
+    "significant": true,
+    "interpretation": "Higher RT variability associated with larger bias"
+  }
+}
