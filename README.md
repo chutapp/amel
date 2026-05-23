@@ -1,5 +1,9 @@
 # AMEL: Accumulated Message Effects on LLM Judgments
 
+[![arXiv](https://img.shields.io/badge/arXiv-2605.22714-b31b1b.svg)](https://arxiv.org/abs/2605.22714)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Data: CC BY 4.0](https://img.shields.io/badge/Data-CC%20BY%204.0-lightgrey.svg)](data/LICENSE-CC-BY-4.0)
+
 This repository contains the code, data, and analysis for our study on how conversation history systematically distorts sequential binary judgments in LLM evaluation pipelines. We test 11 models from 4 providers across 82K+ API calls (75,898 in the main deduplicated experiment plus ~6.4K from the mitigation, temperature, and mechanistic experiments).
 
 ## Key Findings
