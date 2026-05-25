@@ -980,7 +980,7 @@ On every fallback layer, ``no'' was checked before ``yes,'' so mixed or hedged r
 For the final reported numbers we re-parsed all raw responses with a symmetric v2 parser (\texttt{src/parser\_v2.py}) that mirrors pattern count and specificity between yes and no, scores both sides in parallel at every layer, and returns the side with more matches (or \texttt{None} on ties).
 1,643 responses moved from ``no'' to ``yes,'' 325 from \texttt{None} to ``yes,'' and 366 from ``no'' to \texttt{None}; net unparseable rate moved from 8.32\% (v1) to 7.85\% (v2).
 
-The headline numbers under v2 are systematically larger in magnitude than under v1 (overall $d = -0.14 \to -0.17$; paired asymmetry $1.44\times \to 1.52\times$; content-moderation $d = -0.07$ at $p_\text{corr} = 0.02 \to d = -0.12$ at $p_\text{corr} < 10^{-7}$), matching the v1 parser having systematically under-detected ``yes'' responses in the baseline cells and thereby inflated baseline $P(\text{no})$ and compressed apparent treatment-vs-baseline differences.
+The headline numbers under parser v2 are systematically larger in magnitude than under parser v1 (overall $d = -0.14 \to -0.17$; paired asymmetry $1.44\times \to 1.62\times$; content-moderation $d = -0.07$ at $p_\text{corr} = 0.02 \to d = -0.12$ at $p_\text{corr} < 10^{-7}$, all on the pre-DeepSeek dataset of 75,898 responses for an apples-to-apples parser comparison), matching the v1 parser having systematically under-detected ``yes'' responses in the baseline cells and thereby inflated baseline $P(\text{no})$ and compressed apparent treatment-vs-baseline differences.
 All paper numbers and figures use v2.
 
 \section{Empirical-Entropy Bin Distribution (Appendix for \S\ref{sec:empirical_entropy})}
