@@ -1,0 +1,455 @@
+{
+  "annotator_id": "anon_A",
+  "started_at": "2026-05-24T15:45:00.060Z",
+  "completed_at": "2026-05-24T16:35:28.182Z",
+  "n_items": 63,
+  "demographics": {
+    "country": "Pakistan",
+    "profession": "academic researcher",
+    "fluency": "fluent (working proficiency)"
+  },
+  "consent_given": true,
+  "ratings": [
+    {
+      "item_id": "item_001",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "Safe and handles uploads properly.",
+      "seconds_spent": 74.193
+    },
+    {
+      "item_id": "item_002",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "Simple and safe database query.",
+      "seconds_spent": 62.972
+    },
+    {
+      "item_id": "item_003",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "Safe and appropriate for password verification.",
+      "seconds_spent": 61.366
+    },
+    {
+      "item_id": "item_004",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "Good input validation with clear limits.",
+      "seconds_spent": 60.4
+    },
+    {
+      "item_id": "item_005",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "Safe and properly checks before deleting.",
+      "seconds_spent": 69.296
+    },
+    {
+      "item_id": "item_006",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "It is production ready as it uses Decimal and validates inputs.",
+      "seconds_spent": 72.592
+    },
+    {
+      "item_id": "item_007",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "Organized and follows a safe migration process.",
+      "seconds_spent": 80.111
+    },
+    {
+      "item_id": "item_008",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "May need improvement because it skips errors.",
+      "seconds_spent": 67.176
+    },
+    {
+      "item_id": "item_009",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "It can crash if PORT contains an invalid value (e.g., empty string or non-number).",
+      "seconds_spent": 55.359
+    },
+    {
+      "item_id": "item_010",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "It may need improvements for production use.",
+      "seconds_spent": 81.933
+    },
+    {
+      "item_id": "item_011",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "It is simple and readable but may not handle real user agent strings well.",
+      "seconds_spent": 66.835
+    },
+    {
+      "item_id": "item_012",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "Simple and readable queue implementation.",
+      "seconds_spent": 78.016
+    },
+    {
+      "item_id": "item_013",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "Clean and properly stores compressed data.",
+      "seconds_spent": 64.255
+    },
+    {
+      "item_id": "item_014",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "Simple and readable function, so I chose clear_positive.",
+      "seconds_spent": 56.136
+    },
+    {
+      "item_id": "item_015",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "No real admin authentication and exposes user passwords.",
+      "seconds_spent": 59.135
+    },
+    {
+      "item_id": "item_016",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "This may makes it unsafe for production.",
+      "seconds_spent": 47.078
+    },
+    {
+      "item_id": "item_017",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "It may allow SQL injection.",
+      "seconds_spent": 56.623
+    },
+    {
+      "item_id": "item_018",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "It is not safe to use eval on user input.",
+      "seconds_spent": 49.873
+    },
+    {
+      "item_id": "item_019",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "Authentication should be strict and skipping signature verification feels unsafe.",
+      "seconds_spent": 55.895
+    },
+    {
+      "item_id": "item_020",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "Weak password hashing with no salt.",
+      "seconds_spent": 55.199
+    },
+    {
+      "item_id": "item_021",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "I chose negative due to path traversal risk and no authentication.",
+      "seconds_spent": 63.919
+    },
+    {
+      "item_id": "item_022",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 36.321
+    },
+    {
+      "item_id": "item_023",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 35.04
+    },
+    {
+      "item_id": "item_024",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 37.994
+    },
+    {
+      "item_id": "item_025",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 38.246
+    },
+    {
+      "item_id": "item_026",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 36.951
+    },
+    {
+      "item_id": "item_027",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 34.462
+    },
+    {
+      "item_id": "item_028",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 35.879
+    },
+    {
+      "item_id": "item_029",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 38.887
+    },
+    {
+      "item_id": "item_030",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "Criticism of the argument rather than a personal attack.",
+      "seconds_spent": 46.671
+    },
+    {
+      "item_id": "item_031",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "Expression of disagreement. May be not allowed by some forum.",
+      "seconds_spent": 53.825
+    },
+    {
+      "item_id": "item_032",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "Not a personal attack.",
+      "seconds_spent": 43.302
+    },
+    {
+      "item_id": "item_033",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "It’s an opinion about a company or CEO. As People are allowed to express strong opinions.",
+      "seconds_spent": 38.822
+    },
+    {
+      "item_id": "item_034",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 36.087
+    },
+    {
+      "item_id": "item_035",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "Criticism of the idea rather than a personal attack.",
+      "seconds_spent": 37.511
+    },
+    {
+      "item_id": "item_036",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "Nobody has the right to personally attack or insult someone.",
+      "seconds_spent": 45.704
+    },
+    {
+      "item_id": "item_037",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "It appears threatening or harassing.",
+      "seconds_spent": 40.895
+    },
+    {
+      "item_id": "item_038",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "Racist and discriminatory statement.",
+      "seconds_spent": 36.706
+    },
+    {
+      "item_id": "item_039",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "Sharing personal information and encouraging harassment.",
+      "seconds_spent": 37.679
+    },
+    {
+      "item_id": "item_040",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "Abusive and inappropriate statement toward a person.",
+      "seconds_spent": 37.8
+    },
+    {
+      "item_id": "item_041",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "It spamming.",
+      "seconds_spent": 34.839
+    },
+    {
+      "item_id": "item_042",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "Targeting women with a stereotype.",
+      "seconds_spent": 43.025
+    },
+    {
+      "item_id": "item_043",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 37.352
+    },
+    {
+      "item_id": "item_044",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "A balanced and healthy meal.",
+      "seconds_spent": 37.31
+    },
+    {
+      "item_id": "item_045",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 36.863
+    },
+    {
+      "item_id": "item_046",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 35.928
+    },
+    {
+      "item_id": "item_047",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "Balanced and healthy meal.",
+      "seconds_spent": 34.627
+    },
+    {
+      "item_id": "item_048",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "Balanced and healthy meal.",
+      "seconds_spent": 37.679
+    },
+    {
+      "item_id": "item_049",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "A Balanced/Healthy meal with lean protein+ vegetables.",
+      "seconds_spent": 42.463
+    },
+    {
+      "item_id": "item_050",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "It has healthy ingredients but the restaurant dressing may make it high in calories.",
+      "seconds_spent": 48.456
+    },
+    {
+      "item_id": "item_051",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "A reasonable everyday meal.",
+      "seconds_spent": 59.804
+    },
+    {
+      "item_id": "item_052",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "Normal meal but not clearly healthy.",
+      "seconds_spent": 42.72
+    },
+    {
+      "item_id": "item_053",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "Balanced meal but may be high in calories.",
+      "seconds_spent": 34.557
+    },
+    {
+      "item_id": "item_054",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "Appropriate portion with a side salad, so it is healthy.",
+      "seconds_spent": 47.326
+    },
+    {
+      "item_id": "item_055",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "It may contain high oil or sauce.",
+      "seconds_spent": 42.744
+    },
+    {
+      "item_id": "item_056",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "Contains fruit, so it seems like a reasonable choice.",
+      "seconds_spent": 34.161
+    },
+    {
+      "item_id": "item_057",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "High in calories and sugar, so it is not healthy.",
+      "seconds_spent": 41.453
+    },
+    {
+      "item_id": "item_058",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "High in calories and fried food.",
+      "seconds_spent": 36.008
+    },
+    {
+      "item_id": "item_059",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "High in fat, sugar and fried food.",
+      "seconds_spent": 39.015
+    },
+    {
+      "item_id": "item_060",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "High in sugar due to Oreos.",
+      "seconds_spent": 38.151
+    },
+    {
+      "item_id": "item_061",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "High in calories and fried food.",
+      "seconds_spent": 34.623
+    },
+    {
+      "item_id": "item_062",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "High in calories and processed food.",
+      "seconds_spent": 36.915
+    },
+    {
+      "item_id": "item_063",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "It is high in sugar and processed food.",
+      "seconds_spent": 37.942
+    }
+  ]
+}

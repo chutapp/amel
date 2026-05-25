@@ -1,0 +1,455 @@
+{
+  "annotator_id": "anon_D",
+  "started_at": "2026-05-25T11:07:57.067Z",
+  "completed_at": "2026-05-25T11:59:26.858Z",
+  "n_items": 63,
+  "demographics": {
+    "country": "Pakistan",
+    "profession": "academic researcher",
+    "fluency": "native"
+  },
+  "consent_given": true,
+  "ratings": [
+    {
+      "item_id": "item_001",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 121.499
+    },
+    {
+      "item_id": "item_002",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "I'm assuming here that two users cannot have same email address",
+      "seconds_spent": 112.231
+    },
+    {
+      "item_id": "item_003",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 16.832
+    },
+    {
+      "item_id": "item_004",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "it looks good, handles negative/zero orders and bulk orders mtoo",
+      "seconds_spent": 169.385
+    },
+    {
+      "item_id": "item_005",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 80.699
+    },
+    {
+      "item_id": "item_006",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 33.649
+    },
+    {
+      "item_id": "item_007",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 45.199
+    },
+    {
+      "item_id": "item_008",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "failed items are skipped so it could be a problem",
+      "seconds_spent": 82.749
+    },
+    {
+      "item_id": "item_009",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 191.065
+    },
+    {
+      "item_id": "item_010",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 44.981
+    },
+    {
+      "item_id": "item_011",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 119.399
+    },
+    {
+      "item_id": "item_012",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 72.898
+    },
+    {
+      "item_id": "item_013",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 30.315
+    },
+    {
+      "item_id": "item_014",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 104.148
+    },
+    {
+      "item_id": "item_015",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "get_all_users_with_passwords's functionality is unclear. \ndoes it return users who have passwords, or user AND their passwords",
+      "seconds_spent": 132.965
+    },
+    {
+      "item_id": "item_016",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "Keys and passwords should NOT be hardcoded",
+      "seconds_spent": 41.981
+    },
+    {
+      "item_id": "item_017",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "sql injection",
+      "seconds_spent": 60.283
+    },
+    {
+      "item_id": "item_018",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 15.832
+    },
+    {
+      "item_id": "item_019",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "verify_signature is false",
+      "seconds_spent": 62.165
+    },
+    {
+      "item_id": "item_020",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 26.682
+    },
+    {
+      "item_id": "item_021",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 42.383
+    },
+    {
+      "item_id": "item_022",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 4.184
+    },
+    {
+      "item_id": "item_023",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 5.749
+    },
+    {
+      "item_id": "item_024",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 4.216
+    },
+    {
+      "item_id": "item_025",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 4.017
+    },
+    {
+      "item_id": "item_026",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 4.916
+    },
+    {
+      "item_id": "item_027",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "a very respectful/joyous greeting and appreciation. It's entirely positive.",
+      "seconds_spent": 45.513
+    },
+    {
+      "item_id": "item_028",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "respectful way of asking for tips",
+      "seconds_spent": 28.246
+    },
+    {
+      "item_id": "item_029",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 3.799
+    },
+    {
+      "item_id": "item_030",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 3.816
+    },
+    {
+      "item_id": "item_031",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 8.049
+    },
+    {
+      "item_id": "item_032",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "nothing wrong with the comment",
+      "seconds_spent": 12.483
+    },
+    {
+      "item_id": "item_033",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "even though the comment says that CEO is terrible but it is not using any vulgar slangs and if a company did something wrong (for example, a face cream company using substandard raw materials causing allergic reactions in users), such comments on a news forum should be allowed. however, if the CEO didn't do anything, it should still be allowed as a form of healthy debate",
+      "seconds_spent": 201.097
+    },
+    {
+      "item_id": "item_034",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 9.066
+    },
+    {
+      "item_id": "item_035",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "\"dumbest\" is not respectful. but the person is not threatening anyone or using vulgar slangs",
+      "seconds_spent": 46.299
+    },
+    {
+      "item_id": "item_036",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "moron and pathetic should not be used to define a person on a public forum",
+      "seconds_spent": 28.366
+    },
+    {
+      "item_id": "item_037",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 4.083
+    },
+    {
+      "item_id": "item_038",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "attacking a race is never okay",
+      "seconds_spent": 27.648
+    },
+    {
+      "item_id": "item_039",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "inciting personal attacks is never okay",
+      "seconds_spent": 23.449
+    },
+    {
+      "item_id": "item_040",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 3.698
+    },
+    {
+      "item_id": "item_041",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "its spam",
+      "seconds_spent": 19.283
+    },
+    {
+      "item_id": "item_042",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "the comment shows misogynist traits but it is still respectful in tone and doesn't use abuses. and it is a topic that can start a good debate. so even though the comment itself is biased, it should be allowed at a typical news site",
+      "seconds_spent": 93.016
+    },
+    {
+      "item_id": "item_043",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 5.632
+    },
+    {
+      "item_id": "item_044",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "clearly healthy options!",
+      "seconds_spent": 20.599
+    },
+    {
+      "item_id": "item_045",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "sweet potatoes are healthy, and so are beans salsa and greens",
+      "seconds_spent": 69.932
+    },
+    {
+      "item_id": "item_046",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "note: for this and similar examples, i really need 3-4 seconds to see what annotation to choose since it's so plain and simple",
+      "seconds_spent": 54.632
+    },
+    {
+      "item_id": "item_047",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "all healthy, organic options with no oil",
+      "seconds_spent": 41.248
+    },
+    {
+      "item_id": "item_048",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "lentil and vegetable both are healthy options, and whole wheat is a healthier choice than the processed rolls",
+      "seconds_spent": 51.247
+    },
+    {
+      "item_id": "item_049",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 5.983
+    },
+    {
+      "item_id": "item_050",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "it has proteins but it would be calories-heaving since it has parmesan (i think parmesan cheese is calorie-rich)",
+      "seconds_spent": 92.782
+    },
+    {
+      "item_id": "item_051",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "turkey is healthy, cheese is also fine but chips fall under junk. so overall not too healthy but not too unhealthy either",
+      "seconds_spent": 42.865
+    },
+    {
+      "item_id": "item_052",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "meat sauce is good, it has proteins. but spaghetti has carbs and so does bread (but garlic is healthy). overall its a mix of both healthy and unhealthy options",
+      "seconds_spent": 49.431
+    },
+    {
+      "item_id": "item_053",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 23.816
+    },
+    {
+      "item_id": "item_054",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "2 slices are not \"too much\" and there's salad alongside which is healthy. so overall not healthy but not too unhealthy either",
+      "seconds_spent": 47.899
+    },
+    {
+      "item_id": "item_055",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "not sure how healthy the pad thai noodles are",
+      "seconds_spent": 26.199
+    },
+    {
+      "item_id": "item_056",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 5.467
+    },
+    {
+      "item_id": "item_057",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "too many unhealthy calories",
+      "seconds_spent": 25.716
+    },
+    {
+      "item_id": "item_058",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "oily, fatty items",
+      "seconds_spent": 15.929
+    },
+    {
+      "item_id": "item_059",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "too much of fats, calories and sugar!",
+      "seconds_spent": 18.883
+    },
+    {
+      "item_id": "item_060",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "too much sugar in oreos and fats in mil but milk has calcium too",
+      "seconds_spent": 41.784
+    },
+    {
+      "item_id": "item_061",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 4.699
+    },
+    {
+      "item_id": "item_062",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 6.317
+    },
+    {
+      "item_id": "item_063",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "too much sugar, and fat, hence too much calories",
+      "seconds_spent": 31.917
+    }
+  ]
+}

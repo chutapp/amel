@@ -1,0 +1,318 @@
+{
+  "corpus": "civil_comments",
+  "version": "hf:google/civil_comments@train",
+  "sampled_at": "2026-05-24T08:41:21+00:00",
+  "seed": 20260524,
+  "bin_size": 7,
+  "bins": {
+    "clear_yes": {
+      "rule": "toxicity >= 0.80 AND agreement >= 0.85 (inappropriate)",
+      "items": [
+        {
+          "item_id": "cc_16346",
+          "source_id": "16346",
+          "text": "On the other hand, if you were a homosexual stoner with a pre-existing medical condition who works in the public sector - my guess is that Mr. Obama has been great.",
+          "mean_label": 1.0,
+          "agreement": 1.0,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 1.0,
+            "insult": 1.0,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_764",
+          "source_id": "764",
+          "text": "They are terrorists pure and simple.",
+          "mean_label": 0.8999999761581421,
+          "agreement": 0.8999999761581421,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.30000001192092896,
+            "insult": 0.800000011920929,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_109321",
+          "source_id": "109321",
+          "text": "A lucky FOOL!!",
+          "mean_label": 1.0,
+          "agreement": 1.0,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 1.0,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_148613",
+          "source_id": "148613",
+          "text": "It's \"too\"dummy.",
+          "mean_label": 0.8999999761581421,
+          "agreement": 0.8999999761581421,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.800000011920929,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_4437",
+          "source_id": "4437",
+          "text": "I was talking about the comments here---I wouldn't be so crazy to expect our puppet legislators to be so reasonable....they are bought and paid for!",
+          "mean_label": 0.8571428656578064,
+          "agreement": 0.8571428656578064,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.8571428656578064,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_192499",
+          "source_id": "192499",
+          "text": "It's the Corrupt Bastards Clubhouse!",
+          "mean_label": 0.8529411554336548,
+          "agreement": 0.8529411554336548,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.04411764815449715,
+            "identity_attack": 0.0,
+            "insult": 0.8529411554336548,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_17468",
+          "source_id": "17468",
+          "text": "prosecute the bastards.",
+          "mean_label": 0.8513513803482056,
+          "agreement": 0.8513513803482056,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.054054055362939835,
+            "identity_attack": 0.013513513840734959,
+            "insult": 0.7837837934494019,
+            "threat": 0.29729729890823364
+          }
+        }
+      ]
+    },
+    "ambiguous": {
+      "rule": "0.40 <= toxicity <= 0.60 AND agreement <= 0.60",
+      "items": [
+        {
+          "item_id": "cc_240013",
+          "source_id": "240013",
+          "text": "Its not the Marijuana that ruins people lives Its the prohibition of it that does, The laws are meant to ruins ones life that smokes or posses it in-order to blame the marijuana as the cause of ones down fall in life. In reality it is the law itself which helps down grade America and the people. Hypocrisy is a deadly sin.",
+          "mean_label": 0.4000000059604645,
+          "agreement": 0.5999999940395355,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.30000001192092896,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_129999",
+          "source_id": "129999",
+          "text": "Too bad your reading comprehension is so low.  CDQ is an economic engine designed, as you say, to benefit coastal communities.  But that is in no way  related to subsistence except by your lack of understanding between the two.  Note that I do not take a position one way or the other.  I only comment that it should not be couched as subsistence when it is not.  Now that you have been schooled do you understand the difference and my point?",
+          "mean_label": 0.4000000059604645,
+          "agreement": 0.5999999940395355,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.10000000149011612,
+            "identity_attack": 0.10000000149011612,
+            "insult": 0.4000000059604645,
+            "threat": 0.10000000149011612
+          }
+        },
+        {
+          "item_id": "cc_174978",
+          "source_id": "174978",
+          "text": "\"Under the Mexican law,  illegal immigration is a felony, punishable by up to two years in prison. Immigrants who are deported and attempt to re-enter can be imprisoned for 10 years.\nVISA violators can be sentenced to 6 year terms. Mexicans who help illegal immigrants are concidered criminals.\"",
+          "mean_label": 0.4000000059604645,
+          "agreement": 0.5999999940395355,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.30000001192092896,
+            "insult": 0.10000000149011612,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_248532",
+          "source_id": "248532",
+          "text": "Read the sentence again, and note that consummating a marriage, in the Church & other societies, involves the action of sexual relations between the two partners after the marriage.\n\nIn the case of same sex partners, it's sodomy.",
+          "mean_label": 0.5,
+          "agreement": 0.5,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.20000000298023224,
+            "insult": 0.20000000298023224,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_221765",
+          "source_id": "221765",
+          "text": "Do you also grab women in their privates?",
+          "mean_label": 0.5375000238418579,
+          "agreement": 0.5375000238418579,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.02500000037252903,
+            "identity_attack": 0.03750000149011612,
+            "insult": 0.10000000149011612,
+            "threat": 0.012500000186264515
+          }
+        },
+        {
+          "item_id": "cc_126493",
+          "source_id": "126493",
+          "text": "That's absurd.",
+          "mean_label": 0.4000000059604645,
+          "agreement": 0.5999999940395355,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.4000000059604645,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_88734",
+          "source_id": "88734",
+          "text": "In a just world this guy would hang",
+          "mean_label": 0.4000000059604645,
+          "agreement": 0.5999999940395355,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.10000000149011612,
+            "identity_attack": 0.0,
+            "insult": 0.0,
+            "threat": 0.30000001192092896
+          }
+        }
+      ]
+    },
+    "clear_no": {
+      "rule": "toxicity <= 0.05 AND agreement >= 0.95 (appropriate)",
+      "items": [
+        {
+          "item_id": "cc_12630",
+          "source_id": "12630",
+          "text": "Alaska I am a European citizen and Liberal Democrat admire Mr Bernie Sanders defends the welfare of communities and advocates a mathematical unknown values as liberal democrat I agree Hillary Clinton for President 2016",
+          "mean_label": 0.0,
+          "agreement": 1.0,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.0,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_24366",
+          "source_id": "24366",
+          "text": "Oh really?  What sort of purses?  What sort of \"men?\"",
+          "mean_label": 0.0,
+          "agreement": 1.0,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.0,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_51952",
+          "source_id": "51952",
+          "text": "If you don’t like The Donald, stay home. By not showing up sends a stronger message against a bloated ego of this nature. Doubtful he is going to draw a very large crowd of supporters. Hopefully the majority of those there will be news and LEO folks. He came, he talked to a small group of supporters and he left. Quietly and dejected.",
+          "mean_label": 0.0,
+          "agreement": 1.0,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.0,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_115231",
+          "source_id": "115231",
+          "text": "If we are all supposed to be treated equal and Taxpayer money is used to move all these villages then every home in the USA that is threatened by erosion should be treated equally as those who own a home in the village. It is a choice to live there.",
+          "mean_label": 0.0,
+          "agreement": 1.0,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.0,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_160326",
+          "source_id": "160326",
+          "text": "That is funny right there, I don't care who ya are!",
+          "mean_label": 0.0,
+          "agreement": 1.0,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.0,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_149813",
+          "source_id": "149813",
+          "text": "Never one of those 2cnd Amendment fans when you need one.\n\n\nJust saying, you can believe me!",
+          "mean_label": 0.0,
+          "agreement": 1.0,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.0,
+            "threat": 0.0
+          }
+        },
+        {
+          "item_id": "cc_94364",
+          "source_id": "94364",
+          "text": "Sorry, I didn't see you two at the Liberal Agenda setting meeting, but you seem to eagerly spout the ALEC agenda code words and misinformation points pretty devoutly. The Truth is you really have no ideaology at all. Just fear.",
+          "mean_label": 0.0,
+          "agreement": 1.0,
+          "n_annotators": 10,
+          "metadata": {
+            "severe_toxicity": 0.0,
+            "identity_attack": 0.0,
+            "insult": 0.0,
+            "threat": 0.0
+          }
+        }
+      ]
+    }
+  }
+}

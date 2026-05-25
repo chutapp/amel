@@ -42,6 +42,7 @@ PROVIDER_COLORS = {
     "OpenAI": "#4477AA",      # blue
     "Anthropic": "#EE6677",   # rose
     "Google": "#228833",      # green
+    "DeepSeek": "#CCBB44",    # yellow
     "Local (OSS)": "#BBBBBB", # grey
 }
 
@@ -70,10 +71,11 @@ MODEL_META = {
     "claude-opus-4-6":              {"provider": "Anthropic", "short": "Opus\n4.6",        "order": 4, "tier": "flagship"},
     "gemini-2.5-flash":             {"provider": "Google",    "short": "Gemini\nFlash",    "order": 5, "tier": "small"},
     "gemini-2.5-pro":               {"provider": "Google",    "short": "Gemini\nPro",      "order": 6, "tier": "flagship"},
-    "llama3.2:3b":                  {"provider": "Local (OSS)", "short": "Llama3.2\n3B",   "order": 7, "tier": "small"},
-    "qwen3:4b":                     {"provider": "Local (OSS)", "short": "Qwen3\n4B",      "order": 8, "tier": "small"},
-    "qwen3.5:4b":                   {"provider": "Local (OSS)", "short": "Qwen3.5\n4B",   "order": 9, "tier": "small"},
-    "qwen3:30b":                    {"provider": "Local (OSS)", "short": "Qwen3\n30B",    "order": 10, "tier": "large"},
+    "deepseek-chat":                {"provider": "DeepSeek",  "short": "DeepSeek\nV4 Flash", "order": 7, "tier": "flagship"},
+    "llama3.2:3b":                  {"provider": "Local (OSS)", "short": "Llama3.2\n3B",   "order": 8, "tier": "small"},
+    "qwen3:4b":                     {"provider": "Local (OSS)", "short": "Qwen3\n4B",      "order": 9, "tier": "small"},
+    "qwen3.5:4b":                   {"provider": "Local (OSS)", "short": "Qwen3.5\n4B",   "order": 10, "tier": "small"},
+    "qwen3:30b":                    {"provider": "Local (OSS)", "short": "Qwen3\n30B",    "order": 11, "tier": "large"},
 }
 
 def get_color(model):
@@ -368,7 +370,7 @@ def fig1_design(out_dir):
     print("  Fig 1: Experimental design")
 
 
-# ── Figure 2: Model Comparison ─────────────────────────────────────────────
+# ── Figure 2: Model Comparison (split API vs OSS) ─────────────────────────
 def fig2_model_comparison(scores, out_dir):
     model_scores = defaultdict(list)
     for s in scores:
@@ -384,46 +386,59 @@ def fig2_model_comparison(scores, out_dir):
         t, p = stats.ttest_1samp(arr, 0)
         model_stats[model] = {"mean": mean, "ci": ci, "d": d, "p": p, "n": len(arr)}
 
-    # Sort by effect size
-    sorted_models = sorted(model_stats.keys(),
-                           key=lambda m: model_stats[m]["mean"])
+    # Partition: closed-API providers vs local OSS
+    OSS_PROVIDER = "Local (OSS)"
 
-    fig, ax = plt.subplots(figsize=(7, 5.5))
+    def is_oss(m):
+        return MODEL_META.get(m, {}).get("provider") == OSS_PROVIDER
 
-    y_pos = np.arange(len(sorted_models))
-    means = [model_stats[m]["mean"] for m in sorted_models]
-    cis = [model_stats[m]["ci"] for m in sorted_models]
-    colors = [get_color(m) for m in sorted_models]
+    api_models = sorted([m for m in model_stats if not is_oss(m)],
+                        key=lambda m: model_stats[m]["mean"])
+    oss_models = sorted([m for m in model_stats if is_oss(m)],
+                        key=lambda m: model_stats[m]["mean"])
 
-    bars = ax.barh(y_pos, means, xerr=cis, height=0.65,
-                   color=colors, edgecolor="white", linewidth=0.5,
-                   error_kw=dict(capsize=3, capthick=1, elinewidth=1, color="#374151"))
+    n_comparisons = 21  # Bonferroni factor used throughout the paper
 
-    ax.set_yticks(y_pos)
-    ax.set_yticklabels([get_short(m) for m in sorted_models], fontsize=8)
-    ax.set_xlabel("Mean Bias Score (conforming <-- | --> contrarian)")
-    ax.axvline(0, color="#374151", lw=0.8, ls="-")
-    ax.set_title("Model Susceptibility to AMEL", fontweight="bold", pad=12)
+    def _bar_panel(ax, models, title):
+        y_pos = np.arange(len(models))
+        means = [model_stats[m]["mean"] for m in models]
+        cis = [model_stats[m]["ci"] for m in models]
+        colors = [get_color(m) for m in models]
+        ax.barh(y_pos, means, xerr=cis, height=0.65,
+                color=colors, edgecolor="white", linewidth=0.5,
+                error_kw=dict(capsize=3, capthick=1, elinewidth=1, color="#374151"))
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([get_short(m) for m in models], fontsize=8)
+        ax.axvline(0, color="#374151", lw=0.8, ls="-")
+        ax.set_title(title, fontweight="bold", pad=8, fontsize=10)
+        for i, m in enumerate(models):
+            s = model_stats[m]
+            x_pos = s["mean"] + s["ci"] + 0.005 if s["mean"] >= 0 else s["mean"] - s["ci"] - 0.005
+            ha = "left" if s["mean"] >= 0 else "right"
+            p_corr = min(s["p"] * n_comparisons, 1.0)
+            sig = "***" if p_corr < 0.001 else "**" if p_corr < 0.01 else "*" if p_corr < 0.05 else "ns"
+            ax.text(x_pos, i, f"d={s['d']:.2f} {sig}",
+                    va="center", ha=ha, fontsize=7, color="#6b7280")
 
-    # Add significance stars (Bonferroni-corrected, 21 comparisons)
-    n_comparisons = 21
-    for i, model in enumerate(sorted_models):
-        s = model_stats[model]
-        x_pos = s["mean"] + s["ci"] + 0.005 if s["mean"] >= 0 else s["mean"] - s["ci"] - 0.005
-        ha = "left" if s["mean"] >= 0 else "right"
-        p_corr = min(s["p"] * n_comparisons, 1.0)
-        sig = "***" if p_corr < 0.001 else "**" if p_corr < 0.01 else "*" if p_corr < 0.05 else "ns"
-        label = f"d={s['d']:.2f} {sig}"
-        ax.text(x_pos, i, label, va="center", ha=ha, fontsize=7, color="#6b7280")
-
-    # Provider legend
+    # Share x-axis so the two panels are directly comparable
+    fig, axes = plt.subplots(
+        2, 1, figsize=(7, 6.0), sharex=True,
+        gridspec_kw={"height_ratios": [max(1, len(api_models)),
+                                       max(1, len(oss_models))]},
+    )
+    _bar_panel(axes[0], api_models, "Closed APIs (model + platform layer)")
+    _bar_panel(axes[1], oss_models, "Open-weight, run locally (raw model)")
+    axes[1].set_xlabel("Mean Bias Score (conforming <-- | --> contrarian)")
     handles = [mpatches.Patch(color=c, label=p) for p, c in PROVIDER_COLORS.items()]
-    ax.legend(handles=handles, loc="lower right", framealpha=0.9, fontsize=8)
+    axes[1].legend(handles=handles, loc="lower right", framealpha=0.9, fontsize=8)
+    fig.suptitle("Model Susceptibility to AMEL (API vs OSS panels)",
+                 fontweight="bold", y=0.995, fontsize=11)
+    fig.tight_layout(rect=[0, 0, 1, 0.97])
 
     fig.savefig(out_dir / "fig2_model_comparison.pdf")
     fig.savefig(out_dir / "fig2_model_comparison.png")
     plt.close(fig)
-    print("  Fig 2: Model comparison")
+    print("  Fig 2: Model comparison (API vs OSS panels)")
 
 
 # ── Figure 3: Ambiguity Interaction ────────────────────────────────────────

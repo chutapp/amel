@@ -1,0 +1,30 @@
+{
+  "experiment": "context_bias_deepseek_v3",
+  "start_time": "2026-05-25T17:12:57.243831+00:00",
+  "config": {
+    "model": "deepseek-chat",
+    "base_url": "https://api.deepseek.com/v1",
+    "temperature": 1.0,
+    "max_tokens": 100,
+    "context_lengths": [
+      5,
+      10,
+      20,
+      50
+    ],
+    "polarities": [
+      "no_saturated",
+      "yes_saturated",
+      "neutral"
+    ],
+    "repetitions": 10,
+    "domains": [
+      "meals",
+      "code_review",
+      "content_moderation"
+    ]
+  },
+  "end_time": "2026-05-25T17:31:17.895674+00:00",
+  "total_duration_seconds": 1100.6414484167472,
+  "total_conditions_run": 8190
+}

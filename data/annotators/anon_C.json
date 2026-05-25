@@ -1,0 +1,455 @@
+{
+  "annotator_id": "anon_C",
+  "started_at": "2026-05-24T15:04:55.581Z",
+  "completed_at": "2026-05-24T21:58:41.430Z",
+  "n_items": 63,
+  "demographics": {
+    "country": "Pakistan",
+    "profession": "data scientist or ML engineer",
+    "fluency": "fluent (working proficiency)"
+  },
+  "consent_given": true,
+  "ratings": [
+    {
+      "item_id": "item_001",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 31.35
+    },
+    {
+      "item_id": "item_002",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 28.251
+    },
+    {
+      "item_id": "item_003",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 29.435
+    },
+    {
+      "item_id": "item_004",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 32.152
+    },
+    {
+      "item_id": "item_005",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 31.669
+    },
+    {
+      "item_id": "item_006",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 694.169
+    },
+    {
+      "item_id": "item_007",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 36.262
+    },
+    {
+      "item_id": "item_008",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 29.508
+    },
+    {
+      "item_id": "item_009",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 70.966
+    },
+    {
+      "item_id": "item_010",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 57.272
+    },
+    {
+      "item_id": "item_011",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 33.634
+    },
+    {
+      "item_id": "item_012",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 37.591
+    },
+    {
+      "item_id": "item_013",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 28.675
+    },
+    {
+      "item_id": "item_014",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 31.953
+    },
+    {
+      "item_id": "item_015",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 29.843
+    },
+    {
+      "item_id": "item_016",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 34.226
+    },
+    {
+      "item_id": "item_017",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 37.344
+    },
+    {
+      "item_id": "item_018",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 28.435
+    },
+    {
+      "item_id": "item_019",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 55.83
+    },
+    {
+      "item_id": "item_020",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 39.429
+    },
+    {
+      "item_id": "item_021",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 32.324
+    },
+    {
+      "item_id": "item_022",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 32.445
+    },
+    {
+      "item_id": "item_023",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 29.776
+    },
+    {
+      "item_id": "item_024",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 27.44
+    },
+    {
+      "item_id": "item_025",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 9.568
+    },
+    {
+      "item_id": "item_026",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 27.897
+    },
+    {
+      "item_id": "item_027",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 14.016
+    },
+    {
+      "item_id": "item_028",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 8.031
+    },
+    {
+      "item_id": "item_029",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 32.245
+    },
+    {
+      "item_id": "item_030",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 41.667
+    },
+    {
+      "item_id": "item_031",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 36.348
+    },
+    {
+      "item_id": "item_032",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 52.908
+    },
+    {
+      "item_id": "item_033",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 8.104
+    },
+    {
+      "item_id": "item_034",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 31.797
+    },
+    {
+      "item_id": "item_035",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 18.909
+    },
+    {
+      "item_id": "item_036",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 32.566
+    },
+    {
+      "item_id": "item_037",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 37.584
+    },
+    {
+      "item_id": "item_038",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 29.601
+    },
+    {
+      "item_id": "item_039",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 8.331
+    },
+    {
+      "item_id": "item_040",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 732.688
+    },
+    {
+      "item_id": "item_041",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 26.892
+    },
+    {
+      "item_id": "item_042",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 19.396
+    },
+    {
+      "item_id": "item_043",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 31.969
+    },
+    {
+      "item_id": "item_044",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 14.887
+    },
+    {
+      "item_id": "item_045",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 43.245
+    },
+    {
+      "item_id": "item_046",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 63.689
+    },
+    {
+      "item_id": "item_047",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 36.492
+    },
+    {
+      "item_id": "item_048",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 31.07
+    },
+    {
+      "item_id": "item_049",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 37.74
+    },
+    {
+      "item_id": "item_050",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 31.322
+    },
+    {
+      "item_id": "item_051",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 31.052
+    },
+    {
+      "item_id": "item_052",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 68.002
+    },
+    {
+      "item_id": "item_053",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 95.948
+    },
+    {
+      "item_id": "item_054",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 31.895
+    },
+    {
+      "item_id": "item_055",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 12.515
+    },
+    {
+      "item_id": "item_056",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 34.146
+    },
+    {
+      "item_id": "item_057",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 14.129
+    },
+    {
+      "item_id": "item_058",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 10.124
+    },
+    {
+      "item_id": "item_059",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 12.729
+    },
+    {
+      "item_id": "item_060",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 30.577
+    },
+    {
+      "item_id": "item_061",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 33.548
+    },
+    {
+      "item_id": "item_062",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 37.1
+    },
+    {
+      "item_id": "item_063",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 37.918
+    }
+  ]
+}

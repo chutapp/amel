@@ -1,17 +1,13 @@
 # AMEL: Accumulated Message Effects on LLM Judgments
 
-[![arXiv](https://img.shields.io/badge/arXiv-2605.22714-b31b1b.svg)](https://arxiv.org/abs/2605.22714)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Data: CC BY 4.0](https://img.shields.io/badge/Data-CC%20BY%204.0-lightgrey.svg)](data/LICENSE-CC-BY-4.0)
-
 This repository contains the code, data, and analysis for our study on how conversation history systematically distorts sequential binary judgments in LLM evaluation pipelines. We test 11 models from 4 providers across 82K+ API calls (75,898 in the main deduplicated experiment plus ~6.4K from the mitigation, temperature, and mechanistic experiments).
 
 ## Key Findings
 
-- **AMEL is cross-provider** (d = -0.17, p < 10^-46, N = 75,898 main-experiment API calls after dedup; 9/11 models significant after Bonferroni)
+- **AMEL is cross-provider** (d = -0.17, p < 10^-47, N = 75,898 main-experiment API calls after dedup; 9/11 models significant after Bonferroni)
 - **Uncertainty predicts susceptibility**: items where the model is genuinely uncertain at baseline (nonzero binary entropy) absorb roughly twice the bias of confident-baseline items (d = -0.34 vs d = -0.15)
 - **Two regimes**: assimilation for congruent items (model conforms when context matches item ground truth), resistance/anchoring for incongruent items (model shifts away from context when item contradicts it); difference d = 0.54
-- **Negativity asymmetry**: paired per-item ratio 1.62x (t = 13.46, p < 10^-39, n = 2,481 pairs); marginal-means ratio is ~2.2x but mixes item composition
+- **Negativity asymmetry**: paired per-item ratio 1.62x (t = 13.46, p < 10^-40, n = 2,481 pairs); marginal-means ratio is ~2.2x but mixes item composition
 - **No accumulation**: 5 turns of biased history produce the same effect as 50 (Spearman |r| < 0.01; linear-slope OLS p = 0.80)
 - **Scaling reduces but doesn't eliminate**: Haiku d=-0.22 > Sonnet d=-0.18 > Opus d=-0.17
 - **Temperature doesn't help**: lower temperature trends toward stronger bias, not weaker
@@ -22,7 +18,7 @@ This repository contains the code, data, and analysis for our study on how conve
 - **Logprobs** (1 model, 1 domain, 1,050 calls): the probability distribution shifts continuously, not just binary flips
 - **Flipped framing** (2 models, 1,260 calls): negativity asymmetry has both token-level and semantic components; per-model attribution is directional but not significant at this sample size
 - **Positional placement** (2 models, 1,260 calls): START ≈ END ≈ SPREAD, position of biased turns is irrelevant (KW H=0.19, p=0.91)
-- **Baseline correlation**: items with higher baseline P(no) tend to show stronger negativity asymmetry — Pearson r=0.22, p<10^-7; Spearman r=0.08, p=0.06, n.s. Treat as suggestive: the rank correlation is not significant.
+- **Baseline correlation**: items with higher baseline P(no) show stronger negativity asymmetry (Spearman r=0.08, n.s.; Pearson r=0.22, p<0.001)
 
 ## Repository Structure
 
@@ -38,13 +34,6 @@ This repository contains the code, data, and analysis for our study on how conve
 │   ├── conversation.py         # Context construction (polarity + positional)
 │   ├── parser.py               # Original yes/no parser (kept for archival reference)
 │   ├── parser_v2.py            # Symmetric yes/no parser (canonical; used for the published numbers)
-│   ├── runner.py               # Async experiment runner (Ollama)
-│   └── domains/                # Evaluation domain definitions
-│
-├── scripts/                    # One-off ops
-│   ├── dedupe_qwen30b.py       # Removes the 2,186 duplicate-condition rows
-│   ├── reparse_with_v2.py      # Re-parses raw_response with parser_v2
-│   └── redact_log.py           # Scrubs local paths from data/raw/experiment.log
 │   ├── runner.py               # Async experiment runner (Ollama)
 │   └── domains/                # Evaluation domain definitions
 │       ├── base.py             # Abstract domain interface
@@ -78,11 +67,7 @@ This repository contains the code, data, and analysis for our study on how conve
 │   ├── asymmetry_baseline_corr.py # Baseline P(no) vs asymmetry correlation
 │   ├── logprobs_analysis.py    # First-token probability analysis
 │   ├── flipped_analysis.py     # Original vs flipped framing comparison
-│   ├── positional_analysis.py  # START/END/SPREAD placement analysis
-│   ├── unparseable_by_condition.py # MAR/MNAR sensitivity for parser dropouts
-│   ├── entropy_stratified.py   # Empirical-entropy stratification (B1/B2/B3 bins)
-│   ├── accumulation_slope.py   # OLS-slope test for accumulation
-│   └── qwen30b_dedup_sensitivity.py # First/last/random dedup comparison
+│   └── positional_analysis.py  # START/END/SPREAD placement analysis
 │
 ├── generate_paper_figures.py   # Publication figure generation (14 figures)
 │
@@ -202,21 +187,11 @@ python -m analysis.qualitative_examples
 python -m analysis.mitigation_analysis
 python -m analysis.temperature_analysis
 
-# Characterization analyses
+# Mechanistic analyses
 python -m analysis.asymmetry_baseline_corr
 python -m analysis.logprobs_analysis
 python -m analysis.flipped_analysis
 python -m analysis.positional_analysis
-
-# Round-2 analyses (added after the symmetric-parser sweep)
-python -m analysis.unparseable_by_condition   # MAR/MNAR sensitivity
-python -m analysis.entropy_stratified         # Empirical-entropy bins
-python -m analysis.accumulation_slope         # OLS slope test on accumulation
-python -m analysis.qwen30b_dedup_sensitivity  # First/last/random dedup comparison
-
-# Data prep (one-off)
-python scripts/dedupe_qwen30b.py              # Dedupes Qwen3:30b concurrent-resume duplicates
-python scripts/reparse_with_v2.py             # Re-parses raw_response with symmetric parser_v2
 
 # Generate paper figures (0-13, 14 total)
 python generate_paper_figures.py

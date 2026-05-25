@@ -1,0 +1,455 @@
+{
+  "annotator_id": "anon_B",
+  "started_at": "2026-05-25T06:12:32.586Z",
+  "completed_at": "2026-05-25T06:42:42.920Z",
+  "n_items": 63,
+  "demographics": {
+    "country": "Serbia",
+    "profession": "data scientist or ML engineer",
+    "fluency": "fluent (working proficiency)"
+  },
+  "consent_given": true,
+  "ratings": [
+    {
+      "item_id": "item_001",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "UPLOAD_DIR  ?",
+      "seconds_spent": 84.399
+    },
+    {
+      "item_id": "item_002",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 24.512
+    },
+    {
+      "item_id": "item_003",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 18.535
+    },
+    {
+      "item_id": "item_004",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 20.04
+    },
+    {
+      "item_id": "item_005",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 13.991
+    },
+    {
+      "item_id": "item_006",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "Error handling in place.",
+      "seconds_spent": 66.911
+    },
+    {
+      "item_id": "item_007",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "MIGRATIONS , where is it defined?",
+      "seconds_spent": 72.816
+    },
+    {
+      "item_id": "item_008",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 6.968
+    },
+    {
+      "item_id": "item_009",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "libraries? import os etc?",
+      "seconds_spent": 23.216
+    },
+    {
+      "item_id": "item_010",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "no libraries import before function, no error handling. otherwise, not really sure about the function - lack of my knowledge, without AI /googling",
+      "seconds_spent": 111.639
+    },
+    {
+      "item_id": "item_011",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "again libraries issue....",
+      "seconds_spent": 17.4
+    },
+    {
+      "item_id": "item_012",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 10.088
+    },
+    {
+      "item_id": "item_013",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "what if nothing in filepath? not sure",
+      "seconds_spent": 45.192
+    },
+    {
+      "item_id": "item_014",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "no error/warning handling in production code",
+      "seconds_spent": 77.311
+    },
+    {
+      "item_id": "item_015",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "where are libraries?",
+      "seconds_spent": 23.128
+    },
+    {
+      "item_id": "item_016",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "you cannot put this into production?",
+      "seconds_spent": 15.687
+    },
+    {
+      "item_id": "item_017",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 15.696
+    },
+    {
+      "item_id": "item_018",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "libraries?",
+      "seconds_spent": 6.32
+    },
+    {
+      "item_id": "item_019",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "spent more than 3 minutes, as I was distracted by my child.",
+      "seconds_spent": 444.887
+    },
+    {
+      "item_id": "item_020",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 32.592
+    },
+    {
+      "item_id": "item_021",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "what if there is no path?",
+      "seconds_spent": 21.776
+    },
+    {
+      "item_id": "item_022",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 2.552
+    },
+    {
+      "item_id": "item_023",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 2.647
+    },
+    {
+      "item_id": "item_024",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 2.392
+    },
+    {
+      "item_id": "item_025",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 8.296
+    },
+    {
+      "item_id": "item_026",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 5.207
+    },
+    {
+      "item_id": "item_027",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 2.016
+    },
+    {
+      "item_id": "item_028",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 2.984
+    },
+    {
+      "item_id": "item_029",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "a bit rude writing style",
+      "seconds_spent": 16.199
+    },
+    {
+      "item_id": "item_030",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "rude",
+      "seconds_spent": 13.143
+    },
+    {
+      "item_id": "item_031",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 5.007
+    },
+    {
+      "item_id": "item_032",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "everyone has its opinion",
+      "seconds_spent": 91.568
+    },
+    {
+      "item_id": "item_033",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "it might be true, depending on the behaviour of the CEO and the company",
+      "seconds_spent": 55.128
+    },
+    {
+      "item_id": "item_034",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 5.568
+    },
+    {
+      "item_id": "item_035",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "since in the readme file this was annotated as ambiguous, I am rating it same, otherwise, I would rate as clear_negative",
+      "seconds_spent": 59.927
+    },
+    {
+      "item_id": "item_036",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 3.32
+    },
+    {
+      "item_id": "item_037",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 2.56
+    },
+    {
+      "item_id": "item_038",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 3.648
+    },
+    {
+      "item_id": "item_039",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "ok, since no personal info is shown. this snip of text , only, does not violate the use of personal information",
+      "seconds_spent": 36.936
+    },
+    {
+      "item_id": "item_040",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 9.32
+    },
+    {
+      "item_id": "item_041",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "not clear_positive, as it is a bit aggressive",
+      "seconds_spent": 45.024
+    },
+    {
+      "item_id": "item_042",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 2.272
+    },
+    {
+      "item_id": "item_043",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 2.248
+    },
+    {
+      "item_id": "item_044",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 2.544
+    },
+    {
+      "item_id": "item_045",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "salsa is not that healthy, while greens and baked potato from oven are",
+      "seconds_spent": 26.04
+    },
+    {
+      "item_id": "item_046",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 2.616
+    },
+    {
+      "item_id": "item_047",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 4.192
+    },
+    {
+      "item_id": "item_048",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 19.528
+    },
+    {
+      "item_id": "item_049",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 5.063
+    },
+    {
+      "item_id": "item_050",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "this salat might have high calories in the dressing, also coming from the restaurant , it depends how they prepare it.",
+      "seconds_spent": 31.503
+    },
+    {
+      "item_id": "item_051",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "turkey is healthy, chips is not",
+      "seconds_spent": 39.456
+    },
+    {
+      "item_id": "item_052",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "i like it, carbohydrates are ok when in small quantity",
+      "seconds_spent": 40.727
+    },
+    {
+      "item_id": "item_053",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "example influenced me. otherwise, I would probably say clear_positive",
+      "seconds_spent": 29.216
+    },
+    {
+      "item_id": "item_054",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "",
+      "seconds_spent": 10.872
+    },
+    {
+      "item_id": "item_055",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 9.287
+    },
+    {
+      "item_id": "item_056",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "",
+      "seconds_spent": 2.552
+    },
+    {
+      "item_id": "item_057",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 2.888
+    },
+    {
+      "item_id": "item_058",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 3.847
+    },
+    {
+      "item_id": "item_059",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 3.688
+    },
+    {
+      "item_id": "item_060",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 3.256
+    },
+    {
+      "item_id": "item_061",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 5.631
+    },
+    {
+      "item_id": "item_062",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 13.576
+    },
+    {
+      "item_id": "item_063",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "",
+      "seconds_spent": 2.935
+    }
+  ]
+}

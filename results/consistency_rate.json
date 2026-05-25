@@ -1,0 +1,42 @@
+{
+  "overall": {
+    "matched": 7107,
+    "n": 8387,
+    "consistency_rate": 0.8474
+  },
+  "per_polarity": {
+    "no_saturated": {
+      "matched": 2303,
+      "n": 2813,
+      "consistency_rate": 0.8187
+    },
+    "yes_saturated": {
+      "matched": 2454,
+      "n": 2787,
+      "consistency_rate": 0.8805
+    },
+    "neutral": {
+      "matched": 2350,
+      "n": 2787,
+      "consistency_rate": 0.8432
+    }
+  },
+  "per_domain": {
+    "meals": {
+      "matched": 2660,
+      "n": 2841,
+      "consistency_rate": 0.9363
+    },
+    "content_moderation": {
+      "matched": 2545,
+      "n": 2856,
+      "consistency_rate": 0.8911
+    },
+    "code_review": {
+      "matched": 1902,
+      "n": 2690,
+      "consistency_rate": 0.7071
+    }
+  },
+  "interpretation": "Lower CR = more bias-induced flipping. CR=1.0 means treatment never shifted the binary outcome. AMEL predicts CR < 1.0, especially on ambiguous items and under no-saturated context."
+}

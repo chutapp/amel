@@ -1,14 +1,15 @@
 """Shared utilities for AMEL analysis scripts."""
 
 import json
+import os
 from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
 from scipy import stats
 
-# Default data file
-DEFAULT_DATA_FILE = Path("data/all_results.jsonl")
+# Default data file; override with AMEL_DATA_FILE env var for v2 / adjudicated runs.
+DEFAULT_DATA_FILE = Path(os.environ.get("AMEL_DATA_FILE", "data/all_results.jsonl"))
 
 # Bonferroni correction factor (21 test items)
 N_COMPARISONS = 21

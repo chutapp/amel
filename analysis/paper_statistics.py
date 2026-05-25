@@ -36,7 +36,8 @@ def test_group(values, label=""):
 
 
 def main():
-    data_file = Path("data/all_results.jsonl")
+    import os as _os
+    data_file = Path(_os.environ.get("AMEL_DATA_FILE", "data/all_results.jsonl"))
     out_file = Path("results/paper_statistics.json")
     out_file.parent.mkdir(parents=True, exist_ok=True)
 

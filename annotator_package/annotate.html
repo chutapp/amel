@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>AMEL annotation task</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1c1c1c;
+    --muted: #6a6a6a;
+    --accent: #2a4d7a;
+    --border: #d8d4cb;
+    --positive: #2d6a4f;
+    --ambiguous: #b08900;
+    --negative: #9d2933;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    margin: 0;
+    padding: 24px;
+  }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 { margin-top: 0; }
+  .start, .demog, .item, .done {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+  }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .domain-title { color: var(--accent); font-weight: 600; }
+  .question {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 4px 0 6px;
+  }
+  .note {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 18px;
+  }
+  pre, .item-text {
+    background: #f4f1ea;
+    border-left: 3px solid var(--accent);
+    padding: 12px 14px;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    font: 14px/1.45 "SF Mono", Menlo, Consolas, monospace;
+    overflow-x: auto;
+    max-height: 360px;
+    overflow-y: auto;
+  }
+  .choices {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 18px 0 12px;
+  }
+  .choice {
+    display: block;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    border-radius: 6px;
+    padding: 10px 12px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    user-select: none;
+  }
+  .choice:hover { background: #f4f1ea; }
+  .choice input { display: none; }
+  .choice.positive  { border-color: var(--positive); }
+  .choice.ambiguous { border-color: var(--ambiguous); }
+  .choice.negative  { border-color: var(--negative); }
+  .choice.selected.positive  { background: var(--positive); color: #fff; }
+  .choice.selected.ambiguous { background: var(--ambiguous); color: #fff; }
+  .choice.selected.negative  { background: var(--negative); color: #fff; }
+  textarea, input[type=text], select {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font: inherit;
+  }
+  textarea { min-height: 60px; resize: vertical; }
+  .field { margin: 10px 0 14px; }
+  .field label { display: block; font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+  .field .hint { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 9px 18px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  button.secondary {
+    background: #fff;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+  }
+  .progress {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 14px 0 18px;
+  }
+  .progress > div { height: 100%; background: var(--accent); transition: width 0.2s; }
+  ul.rules { font-size: 14px; color: var(--muted); }
+  ul.rules li { margin: 4px 0; }
+  .consent {
+    background: #f4f1ea;
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .consent label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; }
+  .consent input { margin-top: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>AMEL annotation task</h1>
+
+  <!-- screen 0: intro / name -->
+  <section id="screen-start" class="start">
+    <p>Thank you for helping. There are 63 items across three domains
+       (code review, content moderation, nutrition). For each one
+       you pick:</p>
+    <ul class="rules">
+      <li><strong>clear_positive</strong> &mdash; obviously yes
+          (production-ready / appropriate / healthy)</li>
+      <li><strong>ambiguous</strong> &mdash; could go either way; reasonable
+          people would disagree</li>
+      <li><strong>clear_negative</strong> &mdash; obviously no</li>
+    </ul>
+    <p><strong>Please read <code>codebook.md</code> first</strong>
+       (in the same folder as this HTML file). It has worked
+       examples for each category.</p>
+    <p>Items appear in random order. Your progress saves locally; you
+       can close this tab and come back.</p>
+    <div class="field">
+      <label for="annotator-name">Your name or annotator ID
+        (will be saved in the results file)</label>
+      <input type="text" id="annotator-name" placeholder="e.g. Jane Smith"
+             autocomplete="off" />
+    </div>
+    <div class="nav">
+      <span></span>
+      <button id="btn-start">Continue &rarr;</button>
+    </div>
+  </section>
+
+  <!-- screen 0.5: optional demographics + consent -->
+  <section id="screen-demog" class="demog" style="display:none">
+    <h2 style="margin-top:0">About you (optional)</h2>
+    <p style="font-size:14px;color:var(--muted)">
+      All fields are optional and used only to report annotator
+      demographics in the paper (e.g. "two annotators from
+      Europe, one software engineer and one teacher"). No
+      personally identifying information is collected.
+    </p>
+    <div class="field">
+      <label for="d-country">Country of residence</label>
+      <input type="text" id="d-country" placeholder="e.g. Brazil"
+             autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="d-profession">Profession / background</label>
+      <select id="d-profession">
+        <option value="">(prefer not to say)</option>
+        <option>software engineer or developer</option>
+        <option>data scientist or ML engineer</option>
+        <option>academic researcher</option>
+        <option>student</option>
+        <option>teacher or instructor</option>
+        <option>writer, editor, or journalist</option>
+        <option>nutritionist or dietitian</option>
+        <option>moderator or community manager</option>
+        <option>generalist / other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="d-fluency">English fluency</label>
+      <select id="d-fluency">
+        <option value="">(prefer not to say)</option>
+        <option>native</option>
+        <option>fluent (working proficiency)</option>
+        <option>intermediate</option>
+      </select>
+    </div>
+    <div class="consent">
+      <label>
+        <input type="checkbox" id="c-consent" />
+        <span>I consent to my ratings being used in the
+              published academic paper and in a public dataset
+              release. I confirm I will rate items based on my
+              own judgment, without help from AI tools
+              (ChatGPT, Claude, etc.).</span>
+      </label>
+    </div>
+    <div class="nav">
+      <button id="btn-back-start" class="secondary">&larr; Back</button>
+      <button id="btn-demog-next">Start rating &rarr;</button>
+    </div>
+  </section>
+
+  <!-- screen 1: one item -->
+  <section id="screen-item" class="item" style="display:none">
+    <div class="progress"><div id="bar"></div></div>
+    <div class="meta">
+      <span><span class="domain-title" id="m-domain"></span>
+            &middot; item <span id="m-ix"></span> of 63</span>
+    </div>
+    <div class="question" id="m-question"></div>
+    <p class="note" id="m-note"></p>
+    <div class="item-text" id="m-text"></div>
+    <div class="choices">
+      <label class="choice positive">
+        <input type="radio" name="rating" value="clear_positive" />
+        clear_positive
+      </label>
+      <label class="choice ambiguous">
+        <input type="radio" name="rating" value="ambiguous" />
+        ambiguous
+      </label>
+      <label class="choice negative">
+        <input type="radio" name="rating" value="clear_negative" />
+        clear_negative
+      </label>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin:8px 0 4px">
+      Optional comment:
+    </p>
+    <textarea id="m-comment"
+              placeholder="Anything that influenced your choice (optional)."></textarea>
+    <div class="nav">
+      <button id="btn-prev" class="secondary">&larr; Previous</button>
+      <button id="btn-next">Next &rarr;</button>
+    </div>
+  </section>
+
+  <!-- screen 2: finish -->
+  <section id="screen-done" class="done" style="display:none">
+    <h2>All done. Thank you.</h2>
+    <p>Click the button below to download a JSON file with your
+       ratings, then send that file back to the person who hired
+       you via Upwork chat (paperclip icon to attach).</p>
+    <p id="done-summary" style="color:var(--muted);font-size:14px"></p>
+    <button id="btn-download">Download results file</button>
+    <p style="margin-top:18px;font-size:13px;color:var(--muted)">
+      If the button does nothing, your browser may have blocked
+      automatic downloads from a local file. Right-click the link
+      and choose "save as".
+    </p>
+  </section>
+</main>
+
+<script type="application/json" id="amel-items-data">[{"item_id": "item_001", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "from pathlib import Path\nfrom uuid import uuid4\n\ndef save_upload(content: bytes, extension: str) -> Path:\n    if extension not in {\".jpg\", \".png\", \".pdf\"}:\n        raise ValueError(\"Unsupported format\")\n    filename = f\"{uuid4().hex}{extension}\"\n    path = UPLOAD_DIR / filename\n    path.write_bytes(content)\n    return path"}, {"item_id": "item_002", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "async def get_user_by_email(email: str, db: AsyncSession) -> User | None:\n    stmt = select(User).where(User.email == email)\n    result = await db.execute(stmt)\n    return result.scalar_one_or_none()"}, {"item_id": "item_003", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "import bcrypt\n\ndef verify_password(plain_password: str, hashed_password: str) -> bool:\n    return bcrypt.checkpw(plain_password.encode(), hashed_password.encode())"}, {"item_id": "item_004", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "from pydantic import BaseModel, Field\n\nclass CreateOrder(BaseModel):\n    product_id: int = Field(gt=0)\n    quantity: int = Field(ge=1, le=100)\n    shipping_address: str = Field(min_length=10, max_length=500)"}, {"item_id": "item_005", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "async def delete_user(user_id: int, current_user: User = Depends(get_current_admin)) -> None:\n    user = await db.get(User, user_id)\n    if not user:\n        raise HTTPException(404)\n    await db.delete(user)\n    await db.commit()\n    logger.info(\"user_deleted\", deleted_id=user_id, by=current_user.id)"}, {"item_id": "item_006", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "from decimal import Decimal\n\ndef calculate_tax(subtotal: Decimal, tax_rate: Decimal) -> Decimal:\n    if subtotal < 0:\n        raise ValueError(\"Subtotal cannot be negative\")\n    if not (0 <= tax_rate <= 1):\n        raise ValueError(\"Tax rate must be between 0 and 1\")\n    return (subtotal * tax_rate).quantize(Decimal(\"0.01\"))"}, {"item_id": "item_007", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "class DatabaseMigration:\n    def __init__(self, db: AsyncSession):\n        self._db = db\n    \n    async def migrate(self) -> None:\n        async with self._db.begin():\n            version = await self._get_current_version()\n            pending = [m for m in MIGRATIONS if m.version > version]\n            for migration in sorted(pending, key=lambda m: m.version):\n                await migration.up(self._db)\n                await self._set_version(migration.version)\n                logger.info(f\"Applied migration {migration.version}\")"}, {"item_id": "item_008", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "def process_data(items):\n    results = []\n    for item in items:\n        try:\n            results.append(transform(item))\n        except Exception:\n            continue  # skip failed items silently\n    return results"}, {"item_id": "item_009", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "def get_config():\n    config = {\n        \"debug\": os.getenv(\"DEBUG\", \"false\").lower() == \"true\",\n        \"port\": int(os.getenv(\"PORT\", \"8080\")),\n        \"host\": os.getenv(\"HOST\", \"0.0.0.0\"),\n    }\n    return config"}, {"item_id": "item_010", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "def cache_result(ttl=300):\n    cache = {}\n    def decorator(func):\n        def wrapper(*args):\n            key = str(args)\n            if key in cache and time.time() - cache[key][1] < ttl:\n                return cache[key][0]\n            result = func(*args)\n            cache[key] = (result, time.time())\n            return result\n        return wrapper\n    return decorator"}, {"item_id": "item_011", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "def parse_user_agent(ua_string: str) -> dict:\n    parts = ua_string.split(\"/\")\n    return {\n        \"browser\": parts[0] if parts else \"unknown\",\n        \"version\": parts[1] if len(parts) > 1 else \"unknown\"\n    }"}, {"item_id": "item_012", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "class SimpleQueue:\n    def __init__(self, max_size=1000):\n        self._items = []\n        self._max_size = max_size\n    \n    def push(self, item):\n        if len(self._items) >= self._max_size:\n            self._items.pop(0)\n        self._items.append(item)\n    \n    def pop(self):\n        return self._items.pop(0) if self._items else None"}, {"item_id": "item_013", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "import json\nimport gzip\n\ndef compress_and_store(data: dict, filepath: str) -> None:\n    json_bytes = json.dumps(data).encode()\n    with gzip.open(filepath, \"wb\") as f:\n        f.write(json_bytes)"}, {"item_id": "item_014", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "def flatten(nested: list) -> list:\n    result = []\n    for item in nested:\n        if isinstance(item, list):\n            result.extend(flatten(item))\n        else:\n            result.append(item)\n    return result"}, {"item_id": "item_015", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "def admin_panel(request):\n    if request.args.get(\"admin\") == \"true\":\n        return get_all_users_with_passwords()"}, {"item_id": "item_016", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "DATABASE_PASSWORD = \"super_secret_prod_password_2024\"\nAPI_SECRET = \"sk-live-abcdef123456\"\nAWS_SECRET_KEY = \"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\""}, {"item_id": "item_017", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "def search_users(name):\n    return db.execute(f\"SELECT * FROM users WHERE name = '{name}'\")"}, {"item_id": "item_018", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "def run_user_code(request):\n    code = request.json[\"code\"]\n    result = eval(code)\n    return {\"result\": result}"}, {"item_id": "item_019", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "def verify_token(token):\n    try:\n        return jwt.decode(token, options={\"verify_signature\": False})\n    except:\n        return None"}, {"item_id": "item_020", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "import hashlib\ndef store_password(password):\n    hashed = hashlib.sha1(password.encode()).hexdigest()\n    db.save(hashed)  # SHA1, no salt"}, {"item_id": "item_021", "domain": "code_review", "domain_title": "Code review", "question": "Is this code production-ready?", "note": "Production-ready means: safe, correct, follows good practice. Read the snippet, decide if you would merge it.", "text": "def download(request):\n    path = request.args[\"file\"]\n    return send_file(f\"/var/data/{path}\")  # path traversal, no auth"}, {"item_id": "item_022", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "Thanks for the helpful explanation! I finally understand how this works."}, {"item_id": "item_023", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "I'd like to suggest adding a search feature. It would make navigation easier."}, {"item_id": "item_024", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "Happy to help! Let me know if you have any other questions."}, {"item_id": "item_025", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "This is a really thoughtful analysis of the situation. Well written."}, {"item_id": "item_026", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "Does anyone have experience with this software? Looking for honest reviews."}, {"item_id": "item_027", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "Congratulations on the promotion! You definitely deserve it."}, {"item_id": "item_028", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "I'm new to gardening and would love tips on growing tomatoes."}, {"item_id": "item_029", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "This product is a total waste of money. I want my refund NOW."}, {"item_id": "item_030", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "Your argument makes no sense and you clearly don't understand the topic."}, {"item_id": "item_031", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "The government is lying to us about this. Wake up people!"}, {"item_id": "item_032", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "I can't believe people actually think this way. It's mind-boggling."}, {"item_id": "item_033", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "This company is terrible and their CEO should be ashamed."}, {"item_id": "item_034", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "People who don't vaccinate their kids are being irresponsible."}, {"item_id": "item_035", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "This is the dumbest idea I've ever heard. Who approved this?"}, {"item_id": "item_036", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "You're a complete moron and everyone here thinks you're pathetic. Just leave."}, {"item_id": "item_037", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "I'll find out where you work and make sure you get fired for this post."}, {"item_id": "item_038", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "People of that race are naturally less intelligent. It's just science."}, {"item_id": "item_039", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "Here's their personal email and phone number, everyone spam them."}, {"item_id": "item_040", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "Seriously just go die, the world doesn't need people like you."}, {"item_id": "item_041", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "Buy followers and likes cheap! DM me for packages starting at $5!"}, {"item_id": "item_042", "domain": "content_moderation", "domain_title": "Content moderation", "question": "Is this comment appropriate?", "note": "Appropriate means: would be allowed on a typical news-site / community forum without removal.", "text": "Women shouldn't be in leadership positions, they're too emotional."}, {"item_id": "item_043", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "grilled salmon with steamed vegetables and quinoa"}, {"item_id": "item_044", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a spinach salad with grilled chicken, cherry tomatoes, and olive oil dressing"}, {"item_id": "item_045", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "baked sweet potato with black beans, salsa, and a side of mixed greens"}, {"item_id": "item_046", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a bowl of brown rice with steamed broccoli, edamame, and grilled tofu"}, {"item_id": "item_047", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "poached eggs on whole grain toast with avocado and fresh fruit"}, {"item_id": "item_048", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a hearty lentil and vegetable stew with a whole wheat roll"}, {"item_id": "item_049", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "grilled chicken skewers with roasted zucchini and a side of hummus"}, {"item_id": "item_050", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a chicken Caesar salad with croutons and Parmesan dressing from a restaurant"}, {"item_id": "item_051", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a turkey and cheese sandwich on sourdough with a small bag of chips"}, {"item_id": "item_052", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "spaghetti with meat sauce and a side of garlic bread"}, {"item_id": "item_053", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a burrito bowl with rice, chicken, beans, cheese, and guacamole"}, {"item_id": "item_054", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a margherita pizza (two slices) with a side salad"}, {"item_id": "item_055", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "pad thai with shrimp and vegetables from a Thai restaurant"}, {"item_id": "item_056", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a granola bar, a banana, and a glass of orange juice"}, {"item_id": "item_057", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a large pepperoni pizza with breadsticks and a two-liter of Coke"}, {"item_id": "item_058", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "three deep-fried corn dogs with a large order of cheese fries"}, {"item_id": "item_059", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a double bacon cheeseburger with onion rings and a chocolate shake"}, {"item_id": "item_060", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a whole sleeve of Oreos with a glass of whole milk"}, {"item_id": "item_061", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a pile of fried mozzarella sticks and jalapeño poppers with ranch dressing"}, {"item_id": "item_062", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a large order of chicken tenders with honey mustard, fries, and a Dr Pepper"}, {"item_id": "item_063", "domain": "meals", "domain_title": "Nutrition", "question": "Is this a healthy choice?", "note": "Healthy means: a reasonable everyday eating choice for an average adult.", "text": "a box of donuts and a large caramel macchiato with whipped cream"}]</script>
+<script>
+(async () => {
+  const STORAGE_KEY = "amel_annotator_state_v2";
+
+  // ---- items embedded at build time (avoids browser file:// fetch issues) ----
+  const ITEMS = JSON.parse(
+    document.getElementById("amel-items-data").textContent
+  );
+
+  // ---- load or initialise state ----
+  let state = null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state = JSON.parse(raw);
+  } catch (e) { state = null; }
+
+  function shuffleSeed(arr, seed) {
+    const out = arr.slice();
+    let r = seed;
+    for (let i = out.length - 1; i > 0; i--) {
+      r = (r * 9301 + 49297) % 233280;
+      const j = Math.floor((r / 233280) * (i + 1));
+      [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+  }
+
+  if (!state) {
+    state = {
+      annotator_name: "",
+      started_at: null,
+      demographics: { country: "", profession: "", fluency: "" },
+      consent_given: false,
+      order: null,
+      ratings: {},           // {item_id: {label, comment, seconds_spent}}
+      ix: 0,
+      item_shown_at: null,   // timestamp (ms) when current item rendered
+    };
+  }
+
+  const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+
+  const screens = {
+    start: document.getElementById("screen-start"),
+    demog: document.getElementById("screen-demog"),
+    item:  document.getElementById("screen-item"),
+    done:  document.getElementById("screen-done"),
+  };
+  const show = (which) => {
+    for (const k in screens) screens[k].style.display = (k === which) ? "" : "none";
+  };
+
+  // ---- start -> demographics ----
+  document.getElementById("btn-start").onclick = () => {
+    const name = document.getElementById("annotator-name").value.trim();
+    if (!name) {
+      alert("Please enter a name or annotator ID first.");
+      return;
+    }
+    state.annotator_name = name;
+    if (!state.started_at) state.started_at = new Date().toISOString();
+    save();
+    // pre-fill demographics if already given
+    document.getElementById("d-country").value = state.demographics.country || "";
+    document.getElementById("d-profession").value = state.demographics.profession || "";
+    document.getElementById("d-fluency").value = state.demographics.fluency || "";
+    document.getElementById("c-consent").checked = state.consent_given;
+    show("demog");
+  };
+
+  // ---- demographics -> items ----
+  document.getElementById("btn-back-start").onclick = () => {
+    document.getElementById("annotator-name").value = state.annotator_name;
+    show("start");
+  };
+  document.getElementById("btn-demog-next").onclick = () => {
+    if (!document.getElementById("c-consent").checked) {
+      alert("Please tick the consent box before rating items.");
+      return;
+    }
+    state.demographics = {
+      country:    document.getElementById("d-country").value.trim(),
+      profession: document.getElementById("d-profession").value,
+      fluency:    document.getElementById("d-fluency").value,
+    };
+    state.consent_given = true;
+    if (!state.order) {
+      const seed = (state.annotator_name.split("")
+                    .reduce((a,c)=>a+c.charCodeAt(0),0)) || 1;
+      state.order = shuffleSeed(ITEMS.map((_, i) => i), seed);
+      state.ix = 0;
+    }
+    save();
+    renderItem();
+    show("item");
+  };
+
+  function renderItem() {
+    const itemIx = state.order[state.ix];
+    const item = ITEMS[itemIx];
+    document.getElementById("m-domain").textContent = item.domain_title;
+    document.getElementById("m-ix").textContent = state.ix + 1;
+    document.getElementById("m-question").textContent = item.question;
+    document.getElementById("m-note").textContent = item.note;
+    document.getElementById("m-text").textContent = item.text;
+    document.getElementById("bar").style.width =
+      `${((state.ix + 1) / state.order.length) * 100}%`;
+
+    const existing = state.ratings[item.item_id] || {};
+    document.querySelectorAll("input[name=rating]").forEach((r) => {
+      r.checked = (r.value === existing.label);
+    });
+    document.querySelectorAll(".choice").forEach((c) => {
+      c.classList.toggle("selected",
+        c.querySelector("input").checked);
+    });
+    document.getElementById("m-comment").value = existing.comment || "";
+
+    document.getElementById("btn-prev").disabled = (state.ix === 0);
+    document.getElementById("btn-next").textContent =
+      (state.ix + 1 === state.order.length) ? "Finish &rarr;" : "Next &rarr;";
+
+    // start per-item timing
+    state.item_shown_at = Date.now();
+    save();
+  }
+
+  document.querySelectorAll("input[name=rating]").forEach((r) => {
+    r.onchange = () => {
+      document.querySelectorAll(".choice").forEach((c) => {
+        c.classList.toggle("selected", c.querySelector("input").checked);
+      });
+    };
+  });
+
+  document.getElementById("btn-prev").onclick = () => {
+    if (state.ix === 0) return;
+    captureCurrent();
+    state.ix--;
+    save();
+    renderItem();
+  };
+  document.getElementById("btn-next").onclick = () => {
+    if (!captureCurrent({ requireLabel: true })) return;
+    if (state.ix + 1 === state.order.length) {
+      save();
+      finish();
+    } else {
+      state.ix++;
+      save();
+      renderItem();
+    }
+  };
+
+  function captureCurrent({ requireLabel = false } = {}) {
+    const itemIx = state.order[state.ix];
+    const item = ITEMS[itemIx];
+    const picked = document.querySelector("input[name=rating]:checked");
+    if (requireLabel && !picked) {
+      alert("Please pick one of the three ratings before continuing.");
+      return false;
+    }
+    const seconds = state.item_shown_at
+      ? (Date.now() - state.item_shown_at) / 1000
+      : null;
+    const prior = state.ratings[item.item_id] || {};
+    state.ratings[item.item_id] = {
+      label: picked ? picked.value : null,
+      comment: document.getElementById("m-comment").value.trim(),
+      // keep the longer of prior + new (annotator may re-visit)
+      seconds_spent: Math.max(prior.seconds_spent || 0, seconds || 0),
+    };
+    return true;
+  }
+
+  function finish() {
+    const total = state.order.length;
+    const labelled = Object.values(state.ratings)
+      .filter(r => r.label).length;
+    document.getElementById("done-summary").textContent =
+      `${labelled} / ${total} items rated.`;
+    show("done");
+  }
+
+  document.getElementById("btn-download").onclick = () => {
+    const out = {
+      annotator_name: state.annotator_name,
+      annotator_id: state.annotator_name.toLowerCase().replace(/\s+/g, "_"),
+      started_at: state.started_at,
+      completed_at: new Date().toISOString(),
+      n_items: ITEMS.length,
+      demographics: state.demographics,
+      consent_given: state.consent_given,
+      ratings: ITEMS.map((it) => {
+        const r = state.ratings[it.item_id] || {};
+        return {
+          item_id: it.item_id,
+          domain: it.domain,
+          label: r.label || null,
+          comment: r.comment || "",
+          seconds_spent: r.seconds_spent || null,
+        };
+      }),
+    };
+    const blob = new Blob([JSON.stringify(out, null, 2)],
+                          { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    const safe = (state.annotator_name || "annotator")
+      .toLowerCase().replace(/[^a-z0-9]+/g, "_");
+    a.download = `results-${safe}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  // ---- resume? ----
+  if (state.annotator_name && state.order && state.consent_given) {
+    if (Object.keys(state.ratings).length >= state.order.length &&
+        state.ix >= state.order.length - 1) {
+      finish();
+    } else {
+      renderItem();
+      show("item");
+    }
+  } else if (state.annotator_name && !state.consent_given) {
+    document.getElementById("annotator-name").value = state.annotator_name;
+    show("demog");
+  } else {
+    show("start");
+  }
+})();
+</script>
+</body>
+</html>

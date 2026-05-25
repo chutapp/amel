@@ -1,0 +1,681 @@
+{
+  "n_annotators": 4,
+  "annotator_ids": [
+    "anon_A",
+    "anon_B",
+    "anon_C",
+    "anon_D"
+  ],
+  "n_items": 63,
+  "adjudication_rule": "majority of N annotators; ties (no consensus) labelled null",
+  "per_item": {
+    "item_001": {
+      "label": null,
+      "agreement": 0.5,
+      "votes": {
+        "clear_positive": 2,
+        "ambiguous": 2
+      },
+      "tie": true,
+      "domain": "code_review",
+      "author_label": "clear_positive"
+    },
+    "item_002": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_positive"
+    },
+    "item_003": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "clear_negative": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_positive"
+    },
+    "item_004": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_positive"
+    },
+    "item_005": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_positive"
+    },
+    "item_006": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_positive"
+    },
+    "item_007": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "clear_negative": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_positive"
+    },
+    "item_008": {
+      "label": "ambiguous",
+      "agreement": 0.5,
+      "votes": {
+        "ambiguous": 2,
+        "clear_positive": 1,
+        "clear_negative": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "ambiguous"
+    },
+    "item_009": {
+      "label": null,
+      "agreement": 0.5,
+      "votes": {
+        "ambiguous": 2,
+        "clear_positive": 2
+      },
+      "tie": true,
+      "domain": "code_review",
+      "author_label": "ambiguous"
+    },
+    "item_010": {
+      "label": "ambiguous",
+      "agreement": 0.5,
+      "votes": {
+        "ambiguous": 2,
+        "clear_negative": 1,
+        "clear_positive": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "ambiguous"
+    },
+    "item_011": {
+      "label": "ambiguous",
+      "agreement": 0.75,
+      "votes": {
+        "ambiguous": 3,
+        "clear_negative": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "ambiguous"
+    },
+    "item_012": {
+      "label": "clear_positive",
+      "agreement": 0.5,
+      "votes": {
+        "clear_positive": 2,
+        "clear_negative": 1,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "ambiguous"
+    },
+    "item_013": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "ambiguous"
+    },
+    "item_014": {
+      "label": null,
+      "agreement": 0.5,
+      "votes": {
+        "clear_positive": 2,
+        "ambiguous": 2
+      },
+      "tie": true,
+      "domain": "code_review",
+      "author_label": "ambiguous"
+    },
+    "item_015": {
+      "label": null,
+      "agreement": 0.5,
+      "votes": {
+        "clear_negative": 2,
+        "ambiguous": 2
+      },
+      "tie": true,
+      "domain": "code_review",
+      "author_label": "clear_negative"
+    },
+    "item_016": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_negative"
+    },
+    "item_017": {
+      "label": "clear_negative",
+      "agreement": 0.5,
+      "votes": {
+        "ambiguous": 1,
+        "clear_positive": 1,
+        "clear_negative": 2
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_negative"
+    },
+    "item_018": {
+      "label": "clear_negative",
+      "agreement": 0.75,
+      "votes": {
+        "clear_negative": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_negative"
+    },
+    "item_019": {
+      "label": "clear_negative",
+      "agreement": 0.75,
+      "votes": {
+        "clear_negative": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_negative"
+    },
+    "item_020": {
+      "label": "clear_negative",
+      "agreement": 0.75,
+      "votes": {
+        "clear_negative": 3,
+        "clear_positive": 1
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_negative"
+    },
+    "item_021": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "code_review",
+      "author_label": "clear_negative"
+    },
+    "item_022": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_positive"
+    },
+    "item_023": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_positive"
+    },
+    "item_024": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_positive"
+    },
+    "item_025": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_positive"
+    },
+    "item_026": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_positive"
+    },
+    "item_027": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_positive"
+    },
+    "item_028": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_positive"
+    },
+    "item_029": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "ambiguous"
+    },
+    "item_030": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "ambiguous"
+    },
+    "item_031": {
+      "label": null,
+      "agreement": 0.5,
+      "votes": {
+        "ambiguous": 2,
+        "clear_positive": 2
+      },
+      "tie": true,
+      "domain": "content_moderation",
+      "author_label": "ambiguous"
+    },
+    "item_032": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "ambiguous"
+    },
+    "item_033": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "ambiguous"
+    },
+    "item_034": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "ambiguous"
+    },
+    "item_035": {
+      "label": "ambiguous",
+      "agreement": 0.75,
+      "votes": {
+        "ambiguous": 3,
+        "clear_negative": 1
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "ambiguous"
+    },
+    "item_036": {
+      "label": "clear_negative",
+      "agreement": 0.75,
+      "votes": {
+        "clear_negative": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_negative"
+    },
+    "item_037": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_negative"
+    },
+    "item_038": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_negative"
+    },
+    "item_039": {
+      "label": "clear_negative",
+      "agreement": 0.75,
+      "votes": {
+        "clear_negative": 3,
+        "clear_positive": 1
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_negative"
+    },
+    "item_040": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_negative"
+    },
+    "item_041": {
+      "label": "clear_negative",
+      "agreement": 0.75,
+      "votes": {
+        "clear_negative": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_negative"
+    },
+    "item_042": {
+      "label": "clear_negative",
+      "agreement": 0.75,
+      "votes": {
+        "clear_negative": 3,
+        "clear_positive": 1
+      },
+      "tie": false,
+      "domain": "content_moderation",
+      "author_label": "clear_negative"
+    },
+    "item_043": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_positive"
+    },
+    "item_044": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_positive"
+    },
+    "item_045": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_positive"
+    },
+    "item_046": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_positive"
+    },
+    "item_047": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_positive"
+    },
+    "item_048": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_positive"
+    },
+    "item_049": {
+      "label": "clear_positive",
+      "agreement": 1.0,
+      "votes": {
+        "clear_positive": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_positive"
+    },
+    "item_050": {
+      "label": "ambiguous",
+      "agreement": 1.0,
+      "votes": {
+        "ambiguous": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "ambiguous"
+    },
+    "item_051": {
+      "label": null,
+      "agreement": 0.5,
+      "votes": {
+        "clear_positive": 2,
+        "ambiguous": 2
+      },
+      "tie": true,
+      "domain": "meals",
+      "author_label": "ambiguous"
+    },
+    "item_052": {
+      "label": "ambiguous",
+      "agreement": 0.75,
+      "votes": {
+        "ambiguous": 3,
+        "clear_positive": 1
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "ambiguous"
+    },
+    "item_053": {
+      "label": "ambiguous",
+      "agreement": 1.0,
+      "votes": {
+        "ambiguous": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "ambiguous"
+    },
+    "item_054": {
+      "label": null,
+      "agreement": 0.5,
+      "votes": {
+        "clear_positive": 2,
+        "ambiguous": 2
+      },
+      "tie": true,
+      "domain": "meals",
+      "author_label": "ambiguous"
+    },
+    "item_055": {
+      "label": "ambiguous",
+      "agreement": 0.75,
+      "votes": {
+        "ambiguous": 3,
+        "clear_positive": 1
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "ambiguous"
+    },
+    "item_056": {
+      "label": "clear_positive",
+      "agreement": 0.75,
+      "votes": {
+        "clear_positive": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "ambiguous"
+    },
+    "item_057": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_negative"
+    },
+    "item_058": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_negative"
+    },
+    "item_059": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_negative"
+    },
+    "item_060": {
+      "label": "clear_negative",
+      "agreement": 0.75,
+      "votes": {
+        "clear_negative": 3,
+        "ambiguous": 1
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_negative"
+    },
+    "item_061": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_negative"
+    },
+    "item_062": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_negative"
+    },
+    "item_063": {
+      "label": "clear_negative",
+      "agreement": 1.0,
+      "votes": {
+        "clear_negative": 4
+      },
+      "tie": false,
+      "domain": "meals",
+      "author_label": "clear_negative"
+    }
+  }
+}

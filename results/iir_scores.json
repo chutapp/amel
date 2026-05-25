@@ -1,0 +1,89 @@
+{
+  "n_annotators": 4,
+  "annotator_ids": [
+    "anon_A",
+    "anon_B",
+    "anon_C",
+    "anon_D"
+  ],
+  "n_items": 63,
+  "categories": [
+    "clear_positive",
+    "ambiguous",
+    "clear_negative"
+  ],
+  "overall": {
+    "label": "overall",
+    "n_items": 63,
+    "n_annotators": 4,
+    "krippendorff_alpha": 0.5128,
+    "fleiss_kappa": 0.5109,
+    "full_agreement_rate": 0.4603
+  },
+  "overall_pairwise_cohen_kappa": {
+    "anon_A_vs_anon_B": 0.4442,
+    "anon_A_vs_anon_C": 0.7352,
+    "anon_A_vs_anon_D": 0.6703,
+    "anon_B_vs_anon_C": 0.2594,
+    "anon_B_vs_anon_D": 0.3945,
+    "anon_C_vs_anon_D": 0.6173
+  },
+  "per_domain": {
+    "code_review": {
+      "label": "code_review",
+      "n_items": 21,
+      "n_annotators": 4,
+      "krippendorff_alpha": 0.2767,
+      "fleiss_kappa": 0.268,
+      "full_agreement_rate": 0.2381,
+      "pairwise_cohen_kappa": {
+        "anon_A_vs_anon_B": 0.2089,
+        "anon_A_vs_anon_C": 0.5418,
+        "anon_A_vs_anon_D": 0.4207,
+        "anon_B_vs_anon_C": 0.0063,
+        "anon_B_vs_anon_D": 0.131,
+        "anon_C_vs_anon_D": 0.4305
+      }
+    },
+    "content_moderation": {
+      "label": "content_moderation",
+      "n_items": 21,
+      "n_annotators": 4,
+      "krippendorff_alpha": 0.5387,
+      "fleiss_kappa": 0.5331,
+      "full_agreement_rate": 0.4762,
+      "pairwise_cohen_kappa": {
+        "anon_A_vs_anon_B": 0.5,
+        "anon_A_vs_anon_C": 0.7308,
+        "anon_A_vs_anon_D": 0.8166,
+        "anon_B_vs_anon_C": 0.2857,
+        "anon_B_vs_anon_D": 0.3505,
+        "anon_C_vs_anon_D": 0.7083
+      }
+    },
+    "meals": {
+      "label": "meals",
+      "n_items": 21,
+      "n_annotators": 4,
+      "krippendorff_alpha": 0.7227,
+      "fleiss_kappa": 0.7194,
+      "full_agreement_rate": 0.6667,
+      "pairwise_cohen_kappa": {
+        "anon_A_vs_anon_B": 0.6277,
+        "anon_A_vs_anon_C": 0.9255,
+        "anon_A_vs_anon_D": 0.7835,
+        "anon_B_vs_anon_C": 0.5594,
+        "anon_B_vs_anon_D": 0.7123,
+        "anon_C_vs_anon_D": 0.7123
+      }
+    }
+  },
+  "interpretation": {
+    "krippendorff_alpha_bands": {
+      "\u22650.80": "strong agreement",
+      "0.67\u20130.80": "acceptable (NLP/HCI norm)",
+      "<0.67": "labels problematic"
+    },
+    "note": "Ambiguous items by design split annotator votes; per-domain \u03b1 gives the cleanest picture."
+  }
+}
