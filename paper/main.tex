@@ -76,7 +76,7 @@ Our main findings:
 \begin{enumerate}
     \item AMEL appears across all five provider families tested. Across 12 models, conversation history pulls responses toward its prevailing polarity ($d = -0.17$, $p < 10^{-54}$); 10 of 12 models show a significant effect after Bonferroni correction.
     \item Susceptibility tracks the model's own baseline uncertainty. Items where the model is genuinely uncertain at baseline (nonzero binary entropy of $P(\text{yes}|\text{baseline})$) absorb $\approx 2\times$ more bias than items where the baseline is deterministic ($d = -0.34$ vs.\ $d = -0.15$). The author-coded ``ambiguous'' label predicts bias size only because some author-ambiguous items are also empirically uncertain; among items the model already finds clear-cut, author labels add little (Section~\ref{sec:empirical_entropy}).
-    \item Negative history biases more than positive history: paired per-item $|BS|$ ratio $1.62\times$ ($t = 13.46$, $p < 10^{-39}$, $n = 2{,}481$). Marginal means give $\approx 2\times$ but mix item composition across cells; the paired test is the cleaner statistic.
+    \item Negative history biases more than positive history: paired per-item $|BS|$ ratio $1.52\times$ ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$). Marginal means give $\approx 2\times$ but mix item composition across cells; the paired test is the cleaner statistic.
     \item Bias saturates early. Five turns of skewed history produce the same shift as fifty (Spearman $|r| < 0.01$, $p > 0.94$; OLS slope $-5 \times 10^{-5}$ BS/turn, $p = 0.80$). The model recognizes the pattern fast and additional examples do not strengthen it.
     \item Larger models within provider families show less bias, but none are immune.
     \item The effect is detected in all three tested domains, all significant after Bonferroni correction: code review ($d = -0.24$) $>$ meals ($d = -0.13$) $>$ content moderation ($d = -0.12$).
@@ -89,7 +89,7 @@ Our main findings:
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/fig0_hero.pdf}
-    \caption{Overview of AMEL. (a) By author-coded item category, ambiguous items absorb the most bias ($d = -0.28$); clear negatives barely budge ($d = +0.03$, n.s.). The same pattern, sharper, when items are stratified by empirical baseline entropy instead: high-entropy items show $d = -0.34$, deterministic-baseline items $d = -0.15$ (Section~\ref{sec:empirical_entropy}). (b) Negative context biases models more than positive context (paired per-item ratio $1.62\times$, $p < 10^{-39}$); marginal means yield $\approx 2\times$ (Section~\ref{sec:polarity}). Even balanced history shifts models toward ``no.'' (c) Bias saturates immediately; 5 turns produce the same effect as 50.}
+    \caption{Overview of AMEL. (a) By author-coded item category, ambiguous items absorb the most bias ($d = -0.28$); clear negatives barely budge ($d = +0.03$, n.s.). The same pattern, sharper, when items are stratified by empirical baseline entropy instead: high-entropy items show $d = -0.34$, deterministic-baseline items $d = -0.15$ (Section~\ref{sec:empirical_entropy}). (b) Negative context biases models more than positive context (paired per-item ratio $1.52\times$, $p < 10^{-37}$); marginal means yield $\approx 2\times$ (Section~\ref{sec:polarity}). Even balanced history shifts models toward ``no.'' (c) Bias saturates immediately; 5 turns produce the same effect as 50.}
     \label{fig:hero}
 \end{figure*}
 
@@ -210,7 +210,7 @@ The author wrote initial category labels, then re-classified all 63 items (21 pe
 The three disagreements, all on the boundary between ``ambiguous'' and ``clear,'' were resolved by re-examination and a written justification recorded in the repository.
 
 \paragraph{External inter-rater validation.}
-Four external annotators recruited via Upwork (NLP / CS / research backgrounds, compensated at $\sim$\$40 / hour, full demographics released with the dataset) independently rated all 63 items into the same three categories, blind to the author labels and to one another. Inter-rater agreement is moderate overall (Krippendorff's $\alpha = 0.51$, Fleiss' $\kappa = 0.51$, full 4-way agreement on 47\% of items) and varies sharply by domain: meals $\alpha = 0.72$ (above the conventional $\alpha \geq 0.67$ NLP threshold), content moderation $\alpha = 0.54$, code review $\alpha = 0.28$. The lowest-agreement domain coincides with the most contested judgment (``is this code production-ready?''), which is itself consistent with this paper's core claim that ambiguous items are where the action is. For the per-category analyses in Section~\ref{sec:results} we use the majority-vote label across the four external annotators; items with no clear majority ($n = 7$) are excluded from per-category analyses but retained for overall, polarity, accumulation, contrast, and empirical-entropy analyses. Adjudication moved 8 items from ``ambiguous'' (author) to ``clear positive'' (majority); the headline statistics do not change under the relabelling (overall $d = -0.17$ unchanged; bootstrap 95\% CI $[-0.19, -0.15]$). The full per-annotator ratings, the codebook, and the agreement breakdown are released at \url{https://github.com/chutapp/amel/tree/main/data/annotators}.
+Five external annotators recruited via Upwork (NLP / CS / data-science backgrounds, compensated at $\sim$\$40 / hour, full demographics released with the dataset) independently rated all 63 items into the same three categories, blind to the author labels and to one another. Inter-rater agreement is moderate overall (Krippendorff's $\alpha = 0.53$, Fleiss' $\kappa = 0.53$, full 5-way agreement on 41\% of items) and varies sharply by domain: meals $\alpha = 0.70$ (right at the conventional $\alpha \geq 0.67$ NLP threshold), content moderation $\alpha = 0.62$, code review $\alpha = 0.28$. The lowest-agreement domain coincides with the most contested judgment (``is this code production-ready?''), which is itself consistent with this paper's core claim that ambiguous items are where the action is. For the per-category analyses in Section~\ref{sec:results} we use the majority-vote label across the five external annotators; items with no clear majority --- $n = 3$, all of them 2-2-1 splits --- are excluded from per-category analyses but retained for overall, polarity, accumulation, contrast, and empirical-entropy analyses. Adjudication moved 10 items from ``ambiguous'' (author) to ``clear positive'' (majority); the headline statistics do not change under the relabelling (overall $d = -0.17$ unchanged; bootstrap 95\% CI $[-0.19, -0.15]$). The full per-annotator ratings, the codebook, and the agreement breakdown are released at \url{https://github.com/chutapp/amel/tree/main/data/annotators}.
 
 \subsection{Models Tested}
 \label{sec:models}
@@ -272,9 +272,9 @@ Responses that resist parsing are excluded (unparseable rate: 8.3\%, concentrate
 \subsection{Statistical Analysis}
 
 \paragraph{Sample size justification.}
-With 7,631 bias score observations, the marginal one-sample $t$-test treating each observation as independent has $>$99\% power to detect $d = 0.10$ at $\alpha = 0.05/21$.
-This is an overstatement because observations are nested 10-deep within (model, item, condition) baselines; the bias-score construction collapses each 10-rep cell to a single $BS$ value (so the 7,631 figure is already at the cell level, not the per-call level), but cells within the same item or model remain correlated.
-The mixed-effects model in Section~\ref{sec:mixed} estimates an ICC of $0.031$ between models; using the Kish design effect $1 + (m-1)\,\text{ICC}$ with the average cluster size $m = 693$ per model gives an effective $n_\text{eff} \approx 7{,}631 / 22.5 \approx 339$.
+With 8,387 bias score observations, the marginal one-sample $t$-test treating each observation as independent has $>$99\% power to detect $d = 0.10$ at $\alpha = 0.05/21$.
+This is an overstatement because observations are nested 10-deep within (model, item, condition) baselines; the bias-score construction collapses each 10-rep cell to a single $BS$ value (so the 8,387 figure is already at the cell level, not the per-call level), but cells within the same item or model remain correlated.
+The mixed-effects model in Section~\ref{sec:mixed} estimates an ICC of $0.031$ between models; using the Kish design effect $1 + (m-1)\,\text{ICC}$ with the average cluster size $m = 693$ per model gives an effective $n_\text{eff} \approx 8{,}387 / 22.5 \approx 339$.
 At $n_\text{eff} = 339$, 80\% power detects $d \approx 0.15$ at $\alpha = 0.05/21$, which is still below the observed overall $d = 0.17$.
 The smallest per-model subsample (Gemini Pro, $n = 402$ cells) provides $\approx 80\%$ power to detect $d = 0.20$ at the corrected $\alpha$, close to the smallest significant per-model effect we report.
 
@@ -291,8 +291,8 @@ Accumulation is assessed via Spearman rank correlation between context length an
 \label{sec:results}
 
 We collected 84,088 API responses (86,274 raw responses; 2,186 duplicate-condition rows from a concurrent-resume bug on the Qwen3 30B run were deduplicated, keeping the first occurrence per condition; see Appendix~\ref{app:dedup}).
-After dropping unparseable outputs (7.85\%, concentrated in Claude Opus 4.6 which produces verbose conditional responses that resist binary extraction), 7,631 bias score observations remain.
-The unparseable rate differs across conditions ($\chi^2 = 97.7$, $p < 10^{-20}$, $df = 3$): baseline 10.8\%, no-saturated 7.0\%, yes-saturated 8.2\%, neutral 7.7\%.
+After dropping unparseable outputs (7.09\%, concentrated in Claude Opus 4.6 which produces verbose conditional responses that resist binary extraction), 8,387 bias score observations remain.
+The unparseable rate differs across conditions ($\chi^2 = 97.7$, $p < 10^{-20}$, $df = 3$): baseline 9.71\%, no-saturated 6.29\%, yes-saturated 7.38\%, neutral 6.96\%.
 We report the differential rate explicitly and discuss its MAR/MNAR implications in Appendix~\ref{app:unparseable}; the headline conclusions are robust to per-model exclusion of Opus (which contributes most unparseable rows).
 Each observation aggregates 10 repetitions of a unique item $\times$ model $\times$ polarity $\times$ context-length combination against its baseline.
 Baseline consistency across repetitions averages 97.1\%, confirming that $T = 1.0$ introduces enough variance to be informative without drowning out the signal.
@@ -306,9 +306,9 @@ Table~\ref{tab:summary} gives the headline numbers.
 \toprule
 \textbf{Finding} & $d$ & $p$ & \textbf{Key number} \\
 \midrule
-Overall effect & $-0.17$ & $<10^{-46}$ & $\bar{BS} = -0.052$ \\
+Overall effect & $-0.17$ & $<10^{-54}$ & $\bar{BS} = -0.054$ \\
 High-entropy items & $-0.34$ & $<10^{-9}$ & Hardest hit \\
-Negativity asymmetry & --- & $<10^{-39}$ & paired $1.62\times$ \\
+Negativity asymmetry & --- & $<10^{-37}$ & paired $1.52\times$ \\
 Accumulation & --- & $0.94$ & Spearman $|r|<0.01$ \\
 Scaling (Anthropic) & \multicolumn{3}{l}{$-0.22 \to -0.18 \to -0.17$} \\
 \bottomrule
@@ -363,9 +363,9 @@ The larger Qwen3 30B trends in the same direction but does not reach significanc
 \label{sec:category}
 
 Item difficulty modulates the effect (Figure~\ref{fig:category}).
-Author-coded ambiguous items take the biggest hit: $\bar{BS} = -0.109$, $d = -0.28$, $p < 10^{-42}$.
-Clear positives show a moderate effect: $\bar{BS} = -0.052$, $d = -0.16$, $p < 10^{-13}$.
-Clear negatives do not move: $\bar{BS} = +0.005$, $d = +0.03$, $p_\text{corrected} = 1.00$.
+Author-coded ambiguous items take the biggest hit: $\bar{BS} = -0.111$, $d = -0.28$, $p < 10^{-48}$.
+Clear positives show a moderate effect: $\bar{BS} = -0.056$, $d = -0.16$, $p < 10^{-16}$.
+Clear negatives do not move: $\bar{BS} = +0.004$, $d = +0.03$, $p_\text{corrected} = 1.00$.
 Section~\ref{sec:empirical_entropy} re-runs this analysis with empirical baseline uncertainty as the stratifier rather than author labels, and finds the underlying pattern is even sharper: the effect on items the model is genuinely uncertain about is twice as large as the effect on items it already calls confidently.
 
 The pattern suggests a decision-boundary account.
@@ -408,10 +408,10 @@ Code review prompts are also longer and more complex, which may interact differe
 \label{sec:polarity}
 
 The asymmetry between polarities is robust (Figure~\ref{fig:polarity}).
-No-saturated contexts shift models by $\bar{BS} = -0.107$ ($d = -0.32$).
-Yes-saturated contexts shift models by $\bar{BS} = +0.049$ ($d = +0.19$).
+No-saturated contexts shift models by $\bar{BS} = -0.113$ ($d = -0.33$).
+Yes-saturated contexts shift models by $\bar{BS} = +0.053$ ($d = +0.20$).
 Comparing marginal means gives a ratio of $\approx 2.2\times$, but this confounds item composition between the two cells.
-The cleaner statistic is a paired per-item comparison: mean $|BS_\text{no}| = 0.166$ vs.\ $|BS_\text{yes}| = 0.102$, ratio $1.62\times$ ($t = 13.46$, $p < 10^{-39}$, $n = 2{,}481$ pairs).
+The cleaner statistic is a paired per-item comparison: mean $|BS_\text{no}| = 0.169$ vs.\ $|BS_\text{yes}| = 0.111$, ratio $1.52\times$ ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$ pairs).
 We report the paired result as the headline statistic throughout.
 
 An unexpected result: the neutral condition (50/50 history) also produces a negative shift ($\bar{BS} = -0.097$, $d = -0.32$), close in magnitude to the no-saturated condition.
@@ -424,7 +424,7 @@ If models already lean toward ``no'' in binary tasks, negative context reinforce
 \begin{figure}[t]
     \centering
     \includegraphics[width=\columnwidth]{figures/fig8_polarity_asymmetry.pdf}
-    \caption{Polarity asymmetry. Negative context induces stronger bias than positive context (paired per-item ratio $1.62\times$, $p < 10^{-39}$; marginal means give $\approx 2.2\times$). Even balanced (50/50) history produces a negative shift. Error bars: 95\% CIs.}
+    \caption{Polarity asymmetry. Negative context induces stronger bias than positive context (paired per-item ratio $1.52\times$, $p < 10^{-37}$; marginal means give $\approx 2.2\times$). Even balanced (50/50) history produces a negative shift. Error bars: 95\% CIs.}
     \label{fig:polarity}
 \end{figure}
 
@@ -495,7 +495,7 @@ $B_2$ low uncertainty ($0{<}H{\le}0.76$) & 384 & $-0.074$ & $-0.18$ & $<10^{-3}$
 $B_3$ high uncertainty ($H{>}0.76$) & 348 & $-0.127$ & $-0.34$ & $<10^{-9}$ \\
 \bottomrule
 \end{tabular}
-\caption{Empirical-entropy stratification. Each bias-score observation is grouped by the binary entropy of $P(\text{yes}|\text{baseline})$ across 10 reps. The three bins sum to 6,323 observations, not the full 7,631: observations from (model, item) pairs where fewer than 5 baseline reps parsed cleanly are dropped from this analysis. The author-label crosstab (Appendix~\ref{app:entropy_crosstab}) shows that 81\% of author-coded ``ambiguous'' items are actually in $B_1$ (model is confident at baseline), so the entropy strata do not coincide with the author labels.}
+\caption{Empirical-entropy stratification. Each bias-score observation is grouped by the binary entropy of $P(\text{yes}|\text{baseline})$ across 10 reps. The three bins sum to 7,079 observations, not the full 8,387: observations from (model, item) pairs where fewer than 5 baseline reps parsed cleanly are dropped from this analysis. The author-label crosstab (Appendix~\ref{app:entropy_crosstab}) shows that 81\% of author-coded ``ambiguous'' items are actually in $B_1$ (model is confident at baseline), so the entropy strata do not coincide with the author labels.}
 \label{tab:entropy_bins}
 \end{table}
 
@@ -739,13 +739,13 @@ The finding that the neutral arm also produces a negative shift therefore admits
 Distinguishing these requires a non-evaluative-filler control we do not run here (see Future Work).
 
 \paragraph{Per-category label reliability is uneven by domain.}
-The external 4-annotator IRR study (Section~\ref{sec:domains}) reports overall $\alpha = 0.51$ and per-domain $\alpha$ from $0.28$ (code review) to $0.72$ (meals). Code-review category labels are therefore the weakest link in any per-category analysis; the empirical-entropy stratification in Section~\ref{sec:empirical_entropy} bypasses this concern entirely by using the model's own baseline behavior to group items, and we treat that version of the ``uncertainty absorbs bias'' result as primary. Headline statistics that do not depend on per-category labels (overall, polarity, accumulation, contrast, empirical-entropy) are unaffected.
+The external 5-annotator IRR study (Section~\ref{sec:domains}) reports overall $\alpha = 0.53$ and per-domain $\alpha$ from $0.28$ (code review) to $0.70$ (meals). Code-review category labels are therefore the weakest link in any per-category analysis; the empirical-entropy stratification in Section~\ref{sec:empirical_entropy} bypasses this concern entirely by using the model's own baseline behavior to group items, and we treat that version of the ``uncertainty absorbs bias'' result as primary. Headline statistics that do not depend on per-category labels (overall, polarity, accumulation, contrast, empirical-entropy) are unaffected.
 
 \paragraph{Closed APIs and open-weight models are not the same unit of analysis.}
 Closed APIs (OpenAI, Anthropic, Google, DeepSeek) include unobservable platform layers between the user and the raw weights: system prompts, safety post-filters, output post-processing. Local open-weight runs (Llama, Qwen via Ollama) do not. Cross-cell comparisons between API and OSS models therefore conflate the model with the platform; within-provider scaling comparisons (\eg{} GPT-4.1 Nano vs.\ GPT-5.2, Qwen3 4B vs.\ Qwen3 30B) are unaffected. We split Figure~\ref{fig:model_comparison} into API and OSS sub-panels so this boundary is visually explicit.
 
 \paragraph{Differential unparseable rates across conditions.}
-The 7.85\% unparseable rate is not independent of polarity (Appendix~\ref{app:unparseable}): baseline 10.8\%, no-saturated 7.0\%, yes-saturated 8.2\%, neutral 7.7\%.
+The 7.09\% unparseable rate is not independent of polarity (Appendix~\ref{app:unparseable}): baseline 9.71\%, no-saturated 6.29\%, yes-saturated 7.38\%, neutral 6.96\%.
 Most of the differential is driven by Claude Opus 4.6 (22\% unparseable across all conditions due to verbose conditional responses), which is roughly MAR.
 The headline conclusions reproduce if Opus is excluded from the model panel; we report this as a sensitivity check rather than a primary result.
 
@@ -773,12 +773,12 @@ The exact API model strings used are listed in Table~\ref{tab:models}; provider 
 \section*{Ethics Statement}
 This work studies systematic bias in AI evaluation systems with the goal of improving their reliability.
 Content moderation test items reference harmful content categories (hate speech, threats) as examples of clearly inappropriate material; these were designed to test model behavior and are not intended to promote or normalize such content.
-The only human-subject component is the four-annotator external IRR study (Section~\ref{sec:domains}): annotators were recruited via Upwork, gave informed digital consent for publication and public dataset release, were compensated at $\sim$\$40 / hour for a $\sim$75-minute task, and rated only synthetic research stimuli (no personal or sensitive data). No demographic field was used to filter recruitment.
+The only human-subject component is the five-annotator external IRR study (Section~\ref{sec:domains}): annotators were recruited via Upwork, gave informed digital consent for publication and public dataset release, were compensated at $\sim$\$40 / hour for a $\sim$75-minute task, and rated only synthetic research stimuli (no personal or sensitive data). No demographic field was used to filter recruitment.
 All model interactions used standard commercial APIs and locally hosted open-source models; no models were fine-tuned or modified.
 We note that our findings could theoretically be used to deliberately bias LLM evaluators (by manipulating conversation history), but we believe the defensive value of documenting this vulnerability outweighs the offensive risk, particularly given the simplicity of the mitigation (fresh contexts).
 
 \section*{Acknowledgments}
-The author thanks the four external annotators---annotator A, Marija Gavrilović, Ali, and Amna (consenting to be named)---for their independent ratings of the 63 test items used in the IRR study (Section~\ref{sec:domains}), and (volunteer, dropped from primary IRR) for a parallel exploratory pass kept separate from the headline statistics. All annotators consented to the public release of their pseudonymised ratings; pseudonymised data and the codebook are available at \url{https://github.com/chutapp/amel/tree/main/data/annotators}.
+The author thanks the five external annotators---annotator A, Marija Gavrilović, Ali, Amna, and annotator E (consenting to be named)---for their independent ratings of the 63 test items used in the IRR study (Section~\ref{sec:domains}), and (volunteer, dropped from primary IRR) for a parallel exploratory pass kept separate from the headline statistics. All annotators consented to the public release of their pseudonymised ratings; pseudonymised data and the codebook are available at \url{https://github.com/chutapp/amel/tree/main/data/annotators}.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
@@ -980,7 +980,7 @@ On every fallback layer, ``no'' was checked before ``yes,'' so mixed or hedged r
 For the final reported numbers we re-parsed all raw responses with a symmetric v2 parser (\texttt{src/parser\_v2.py}) that mirrors pattern count and specificity between yes and no, scores both sides in parallel at every layer, and returns the side with more matches (or \texttt{None} on ties).
 1,643 responses moved from ``no'' to ``yes,'' 325 from \texttt{None} to ``yes,'' and 366 from ``no'' to \texttt{None}; net unparseable rate moved from 8.32\% (v1) to 7.85\% (v2).
 
-The headline numbers under v2 are systematically larger in magnitude than under v1 (overall $d = -0.14 \to -0.17$; paired asymmetry $1.44\times \to 1.62\times$; content-moderation $d = -0.07$ at $p_\text{corr} = 0.02 \to d = -0.12$ at $p_\text{corr} < 10^{-7}$), matching the v1 parser having systematically under-detected ``yes'' responses in the baseline cells and thereby inflated baseline $P(\text{no})$ and compressed apparent treatment-vs-baseline differences.
+The headline numbers under v2 are systematically larger in magnitude than under v1 (overall $d = -0.14 \to -0.17$; paired asymmetry $1.44\times \to 1.52\times$; content-moderation $d = -0.07$ at $p_\text{corr} = 0.02 \to d = -0.12$ at $p_\text{corr} < 10^{-7}$), matching the v1 parser having systematically under-detected ``yes'' responses in the baseline cells and thereby inflated baseline $P(\text{no})$ and compressed apparent treatment-vs-baseline differences.
 All paper numbers and figures use v2.
 
 \section{Empirical-Entropy Bin Distribution (Appendix for \S\ref{sec:empirical_entropy})}
@@ -1014,7 +1014,7 @@ The result was 2,186 duplicate-condition rows for Qwen3 30B (out of 5,830 remain
 We deduplicate by keeping the first occurrence per \texttt{(domain, polarity, context\_length, test\_item\_id, repetition)} key for Qwen3 30B only; all other models pass through unchanged.
 Total dataset size goes from 86,274 raw rows to 84,088 deduplicated rows.
 For Qwen3 30B specifically (after the symmetric v2 parser), the published first-occurrence dedup gives $\bar{BS} = +0.032$ ($d = +0.10$, $p_\text{raw} = 0.008$, $p_\text{corr} = 0.17$, n.s.); last-occurrence dedup gives $\bar{BS} = +0.058$ ($d = +0.22$, $p < 10^{-7}$); random selection between the two duplicate samples gives $\bar{BS} = +0.049$ ($d = +0.17$, $p < 10^{-5}$). Direction is stable across all three; magnitude depends on the dedup choice.
-Across-paper headline numbers (overall $d = -0.17$, ambiguous $d = -0.28$, asymmetry $1.62\times$ paired) are unaffected by the dedup choice to the displayed precision.
+Across-paper headline numbers (overall $d = -0.17$, ambiguous $d = -0.28$, asymmetry $1.52\times$ paired) are unaffected by the dedup choice to the displayed precision.
 The dedup script is included in the repository (\texttt{scripts/dedupe\_qwen30b.py}); re-running it on a fresh capture would be a no-op since the released dataset is already deduplicated.
 The pre-dedup file is not shipped in the public release (it would add 126\,MB and contains no additional information beyond duplicate rows); a checksum and the row-level dedup keys are provided in the script docstring so the dedup can be audited from the released dataset alone.
 

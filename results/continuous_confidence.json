@@ -1,50 +1,50 @@
 {
-  "n_pairs": 6985,
+  "n_pairs": 7741,
   "overall_spearman": {
-    "r": 0.467452,
+    "r": 0.473746,
     "p": 0.0,
     "significant": true
   },
   "overall_pearson": {
-    "r": 0.244672,
-    "p": 9.65302347703732e-96,
+    "r": 0.256879,
+    "p": 6.72917367475141e-117,
     "significant": true
   },
   "entropy_bins": {
     "zero_entropy": {
-      "n": 6212,
-      "mean_abs_bs": 0.107979,
-      "std": 0.270849
+      "n": 6824,
+      "mean_abs_bs": 0.110326,
+      "std": 0.273214
     },
     "low_entropy": {
-      "n": 60,
-      "mean_abs_bs": 0.348148,
-      "std": 0.308122
+      "n": 120,
+      "mean_abs_bs": 0.465741,
+      "std": 0.342066
     },
     "high_entropy": {
-      "n": 713,
-      "mean_abs_bs": 0.325381,
-      "std": 0.232599
+      "n": 797,
+      "mean_abs_bs": 0.329063,
+      "std": 0.234275
     }
   },
   "per_category": {
     "clear_positive": {
-      "n": 2238,
-      "mean_entropy": 0.0971,
-      "spearman_r": 0.5353,
-      "spearman_p": 3.72521602424771e-166
+      "n": 2490,
+      "mean_entropy": 0.0986,
+      "spearman_r": 0.5258,
+      "spearman_p": 4.4487394146220585e-177
     },
     "ambiguous": {
-      "n": 2393,
-      "mean_entropy": 0.1502,
-      "spearman_r": 0.3157,
-      "spearman_p": 1.5863401058231988e-56
+      "n": 2645,
+      "mean_entropy": 0.1617,
+      "spearman_r": 0.3151,
+      "spearman_p": 4.740728986658679e-62
     },
     "clear_negative": {
-      "n": 2354,
-      "mean_entropy": 0.0148,
-      "spearman_r": 0.4366,
-      "spearman_p": 3.5672794399556676e-110
+      "n": 2606,
+      "mean_entropy": 0.0155,
+      "spearman_r": 0.4714,
+      "spearman_p": 2.740691066285649e-144
     }
   }
 }

@@ -1,17 +1,19 @@
 # AMEL: Accumulated Message Effects on LLM Judgments
 
-This repository contains the code, data, and analysis for our study on how conversation history systematically distorts sequential binary judgments in LLM evaluation pipelines. We test 11 models from 4 providers across 82K+ API calls (75,898 in the main deduplicated experiment plus ~6.4K from the mitigation, temperature, and mechanistic experiments).
+This repository contains the code, data, and analysis for our study on how conversation history systematically distorts sequential binary judgments in LLM evaluation pipelines. We test 12 models from 5 providers across 90K+ API calls (84,088 in the main deduplicated experiment plus ~6.4K from the mitigation, temperature, and mechanistic experiments).
 
 ## Key Findings
 
-- **AMEL is cross-provider** (d = -0.17, p < 10^-47, N = 75,898 main-experiment API calls after dedup; 9/11 models significant after Bonferroni)
+- **AMEL is cross-provider** (d = -0.17, p < 10^-54, N = 84,088 main-experiment API calls after dedup; 10/12 models significant after Bonferroni; bootstrap 95% CI on d: [-0.19, -0.15])
 - **Uncertainty predicts susceptibility**: items where the model is genuinely uncertain at baseline (nonzero binary entropy) absorb roughly twice the bias of confident-baseline items (d = -0.34 vs d = -0.15)
-- **Two regimes**: assimilation for congruent items (model conforms when context matches item ground truth), resistance/anchoring for incongruent items (model shifts away from context when item contradicts it); difference d = 0.54
-- **Negativity asymmetry**: paired per-item ratio 1.62x (t = 13.46, p < 10^-40, n = 2,481 pairs); marginal-means ratio is ~2.2x but mixes item composition
+- **Two regimes**: assimilation for congruent items (model conforms when context matches item ground truth), resistance/anchoring for incongruent items (model shifts away from context when item contradicts it); difference d = 0.56
+- **Negativity asymmetry**: paired per-item ratio 1.52x (t = 13.03, p < 10^-37, n = 2,733 pairs); marginal-means ratio is ~2.2x but mixes item composition
 - **No accumulation**: 5 turns of biased history produce the same effect as 50 (Spearman |r| < 0.01; linear-slope OLS p = 0.80)
 - **Scaling reduces but doesn't eliminate**: Haiku d=-0.22 > Sonnet d=-0.18 > Opus d=-0.17
 - **Temperature doesn't help**: lower temperature trends toward stronger bias, not weaker
 - **Balanced ordering mitigates drift**: interleaving expected-yes/no items prevents positional drift in sequential evaluation
+- **External 5-annotator IRR validation**: Krippendorff α = 0.53 overall; per-domain α = 0.28 (code), 0.62 (content), 0.70 (meals); full per-annotator ratings + codebook released under data/annotators/ (CC-BY-4.0)
+- **Consistency rate**: 84.7% of (model, item, polarity, context-length) cells have the same modal answer under treatment as baseline; lowest in code review (70.7%)
 
 ### Characterization Experiments (Section 5)
 
@@ -47,6 +49,7 @@ This repository contains the code, data, and analysis for our study on how conve
 ├── run_openai_5_2.py           # OpenAI GPT-5.2 runner
 ├── run_claude.py               # Anthropic Claude runner
 ├── run_gemini.py               # Google Gemini runner
+├── run_deepseek.py             # DeepSeek runner (added in paper v2)
 ├── run_mitigation.py           # Sequential batch mitigation experiment
 ├── run_temperature.py          # Temperature sensitivity experiment
 ├── run_logprobs.py             # Logprobs mechanistic experiment (Phase 1)
@@ -72,7 +75,8 @@ This repository contains the code, data, and analysis for our study on how conve
 ├── generate_paper_figures.py   # Publication figure generation (14 figures)
 │
 ├── data/
-│   ├── all_results.jsonl       # Main experiment dataset (75,898 deduplicated responses; see scripts/dedupe_qwen30b.py for the dedup procedure)
+│   ├── all_results.jsonl       # Main experiment dataset (84,088 deduplicated responses; see scripts/dedupe_qwen30b.py for the dedup procedure)
+│   ├── annotators/             # External 5-annotator IRR ratings + codebook (CC-BY-4.0; see data/annotators/README.md)
 │   ├── mitigation/             # Sequential batch experiment (3,780 responses)
 │   ├── temperature/            # Temperature spot-check (840 responses)
 │   ├── logprobs/               # Logprobs experiment (1,050 responses)
@@ -85,7 +89,8 @@ This repository contains the code, data, and analysis for our study on how conve
 │   ├── claude-sonnet-4-6/      # Claude Sonnet 4.6 results
 │   ├── claude-opus-4-6/        # Claude Opus 4.6 results
 │   ├── gemini-flash/           # Gemini 2.5 Flash results
-│   └── gemini-pro/             # Gemini 2.5 Pro results
+│   ├── gemini-pro/             # Gemini 2.5 Pro results
+│   └── deepseek-v3/            # DeepSeek V4 Flash results (added in paper v2)
 │
 └── results/
     ├── paper_figures/          # Figures 0-13 (PDF + PNG, 14 total)

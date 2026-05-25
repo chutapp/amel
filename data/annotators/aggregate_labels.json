@@ -1,22 +1,23 @@
 {
-  "n_annotators": 4,
+  "n_annotators": 5,
   "annotator_ids": [
     "anon_A",
     "anon_B",
     "anon_C",
-    "anon_D"
+    "anon_D",
+    "anon_E"
   ],
   "n_items": 63,
   "adjudication_rule": "majority of N annotators; ties (no consensus) labelled null",
   "per_item": {
     "item_001": {
-      "label": null,
-      "agreement": 0.5,
+      "label": "clear_positive",
+      "agreement": 0.6,
       "votes": {
-        "clear_positive": 2,
+        "clear_positive": 3,
         "ambiguous": 2
       },
-      "tie": true,
+      "tie": false,
       "domain": "code_review",
       "author_label": "clear_positive"
     },
@@ -24,7 +25,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "code_review",
@@ -32,9 +33,9 @@
     },
     "item_003": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_positive": 3,
+        "clear_positive": 4,
         "clear_negative": 1
       },
       "tie": false,
@@ -45,7 +46,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "code_review",
@@ -53,9 +54,9 @@
     },
     "item_005": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_positive": 3,
+        "clear_positive": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -66,7 +67,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "code_review",
@@ -74,33 +75,34 @@
     },
     "item_007": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.6,
       "votes": {
         "clear_positive": 3,
-        "clear_negative": 1
+        "clear_negative": 2
       },
       "tie": false,
       "domain": "code_review",
       "author_label": "clear_positive"
     },
     "item_008": {
-      "label": "ambiguous",
-      "agreement": 0.5,
+      "label": null,
+      "agreement": 0.4,
       "votes": {
         "ambiguous": 2,
         "clear_positive": 1,
-        "clear_negative": 1
+        "clear_negative": 2
       },
-      "tie": false,
+      "tie": true,
       "domain": "code_review",
       "author_label": "ambiguous"
     },
     "item_009": {
       "label": null,
-      "agreement": 0.5,
+      "agreement": 0.4,
       "votes": {
         "ambiguous": 2,
-        "clear_positive": 2
+        "clear_positive": 2,
+        "clear_negative": 1
       },
       "tie": true,
       "domain": "code_review",
@@ -108,9 +110,9 @@
     },
     "item_010": {
       "label": "ambiguous",
-      "agreement": 0.5,
+      "agreement": 0.6,
       "votes": {
-        "ambiguous": 2,
+        "ambiguous": 3,
         "clear_negative": 1,
         "clear_positive": 1
       },
@@ -120,65 +122,67 @@
     },
     "item_011": {
       "label": "ambiguous",
-      "agreement": 0.75,
+      "agreement": 0.6,
       "votes": {
         "ambiguous": 3,
-        "clear_negative": 1
+        "clear_negative": 1,
+        "clear_positive": 1
       },
       "tie": false,
       "domain": "code_review",
       "author_label": "ambiguous"
     },
     "item_012": {
-      "label": "clear_positive",
-      "agreement": 0.5,
+      "label": null,
+      "agreement": 0.4,
       "votes": {
         "clear_positive": 2,
-        "clear_negative": 1,
+        "clear_negative": 2,
         "ambiguous": 1
       },
-      "tie": false,
+      "tie": true,
       "domain": "code_review",
       "author_label": "ambiguous"
     },
     "item_013": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.6,
       "votes": {
         "clear_positive": 3,
-        "ambiguous": 1
+        "ambiguous": 2
       },
       "tie": false,
       "domain": "code_review",
       "author_label": "ambiguous"
     },
     "item_014": {
-      "label": null,
-      "agreement": 0.5,
+      "label": "clear_positive",
+      "agreement": 0.6,
       "votes": {
-        "clear_positive": 2,
+        "clear_positive": 3,
         "ambiguous": 2
       },
-      "tie": true,
+      "tie": false,
       "domain": "code_review",
       "author_label": "ambiguous"
     },
     "item_015": {
-      "label": null,
-      "agreement": 0.5,
+      "label": "clear_negative",
+      "agreement": 0.6,
       "votes": {
-        "clear_negative": 2,
+        "clear_negative": 3,
         "ambiguous": 2
       },
-      "tie": true,
+      "tie": false,
       "domain": "code_review",
       "author_label": "clear_negative"
     },
     "item_016": {
       "label": "clear_negative",
-      "agreement": 1.0,
+      "agreement": 0.8,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 4,
+        "ambiguous": 1
       },
       "tie": false,
       "domain": "code_review",
@@ -186,11 +190,11 @@
     },
     "item_017": {
       "label": "clear_negative",
-      "agreement": 0.5,
+      "agreement": 0.6,
       "votes": {
         "ambiguous": 1,
         "clear_positive": 1,
-        "clear_negative": 2
+        "clear_negative": 3
       },
       "tie": false,
       "domain": "code_review",
@@ -198,9 +202,9 @@
     },
     "item_018": {
       "label": "clear_negative",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_negative": 3,
+        "clear_negative": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -209,9 +213,9 @@
     },
     "item_019": {
       "label": "clear_negative",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_negative": 3,
+        "clear_negative": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -220,9 +224,9 @@
     },
     "item_020": {
       "label": "clear_negative",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_negative": 3,
+        "clear_negative": 4,
         "clear_positive": 1
       },
       "tie": false,
@@ -233,7 +237,7 @@
       "label": "clear_negative",
       "agreement": 1.0,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 5
       },
       "tie": false,
       "domain": "code_review",
@@ -243,7 +247,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "content_moderation",
@@ -253,7 +257,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "content_moderation",
@@ -263,7 +267,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "content_moderation",
@@ -273,7 +277,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "content_moderation",
@@ -283,7 +287,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "content_moderation",
@@ -293,7 +297,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "content_moderation",
@@ -303,7 +307,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "content_moderation",
@@ -311,9 +315,9 @@
     },
     "item_029": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_positive": 3,
+        "clear_positive": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -322,9 +326,9 @@
     },
     "item_030": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_positive": 3,
+        "clear_positive": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -332,21 +336,21 @@
       "author_label": "ambiguous"
     },
     "item_031": {
-      "label": null,
-      "agreement": 0.5,
+      "label": "clear_positive",
+      "agreement": 0.6,
       "votes": {
         "ambiguous": 2,
-        "clear_positive": 2
+        "clear_positive": 3
       },
-      "tie": true,
+      "tie": false,
       "domain": "content_moderation",
       "author_label": "ambiguous"
     },
     "item_032": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_positive": 3,
+        "clear_positive": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -355,9 +359,9 @@
     },
     "item_033": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_positive": 3,
+        "clear_positive": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -366,9 +370,9 @@
     },
     "item_034": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_positive": 3,
+        "clear_positive": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -377,9 +381,9 @@
     },
     "item_035": {
       "label": "ambiguous",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "ambiguous": 3,
+        "ambiguous": 4,
         "clear_negative": 1
       },
       "tie": false,
@@ -388,9 +392,9 @@
     },
     "item_036": {
       "label": "clear_negative",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_negative": 3,
+        "clear_negative": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -401,7 +405,7 @@
       "label": "clear_negative",
       "agreement": 1.0,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 5
       },
       "tie": false,
       "domain": "content_moderation",
@@ -411,7 +415,7 @@
       "label": "clear_negative",
       "agreement": 1.0,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 5
       },
       "tie": false,
       "domain": "content_moderation",
@@ -419,9 +423,9 @@
     },
     "item_039": {
       "label": "clear_negative",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_negative": 3,
+        "clear_negative": 4,
         "clear_positive": 1
       },
       "tie": false,
@@ -432,7 +436,7 @@
       "label": "clear_negative",
       "agreement": 1.0,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 5
       },
       "tie": false,
       "domain": "content_moderation",
@@ -440,9 +444,9 @@
     },
     "item_041": {
       "label": "clear_negative",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_negative": 3,
+        "clear_negative": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -451,9 +455,9 @@
     },
     "item_042": {
       "label": "clear_negative",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_negative": 3,
+        "clear_negative": 4,
         "clear_positive": 1
       },
       "tie": false,
@@ -464,7 +468,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "meals",
@@ -474,7 +478,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "meals",
@@ -482,9 +486,9 @@
     },
     "item_045": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_positive": 3,
+        "clear_positive": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -495,7 +499,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "meals",
@@ -505,7 +509,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "meals",
@@ -515,7 +519,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "meals",
@@ -525,7 +529,7 @@
       "label": "clear_positive",
       "agreement": 1.0,
       "votes": {
-        "clear_positive": 4
+        "clear_positive": 5
       },
       "tie": false,
       "domain": "meals",
@@ -535,28 +539,28 @@
       "label": "ambiguous",
       "agreement": 1.0,
       "votes": {
-        "ambiguous": 4
+        "ambiguous": 5
       },
       "tie": false,
       "domain": "meals",
       "author_label": "ambiguous"
     },
     "item_051": {
-      "label": null,
-      "agreement": 0.5,
+      "label": "clear_positive",
+      "agreement": 0.6,
       "votes": {
-        "clear_positive": 2,
+        "clear_positive": 3,
         "ambiguous": 2
       },
-      "tie": true,
+      "tie": false,
       "domain": "meals",
       "author_label": "ambiguous"
     },
     "item_052": {
       "label": "ambiguous",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "ambiguous": 3,
+        "ambiguous": 4,
         "clear_positive": 1
       },
       "tie": false,
@@ -565,30 +569,31 @@
     },
     "item_053": {
       "label": "ambiguous",
-      "agreement": 1.0,
+      "agreement": 0.8,
       "votes": {
-        "ambiguous": 4
+        "ambiguous": 4,
+        "clear_positive": 1
       },
       "tie": false,
       "domain": "meals",
       "author_label": "ambiguous"
     },
     "item_054": {
-      "label": null,
-      "agreement": 0.5,
+      "label": "ambiguous",
+      "agreement": 0.6,
       "votes": {
         "clear_positive": 2,
-        "ambiguous": 2
+        "ambiguous": 3
       },
-      "tie": true,
+      "tie": false,
       "domain": "meals",
       "author_label": "ambiguous"
     },
     "item_055": {
       "label": "ambiguous",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "ambiguous": 3,
+        "ambiguous": 4,
         "clear_positive": 1
       },
       "tie": false,
@@ -597,9 +602,9 @@
     },
     "item_056": {
       "label": "clear_positive",
-      "agreement": 0.75,
+      "agreement": 0.8,
       "votes": {
-        "clear_positive": 3,
+        "clear_positive": 4,
         "ambiguous": 1
       },
       "tie": false,
@@ -610,7 +615,7 @@
       "label": "clear_negative",
       "agreement": 1.0,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 5
       },
       "tie": false,
       "domain": "meals",
@@ -620,7 +625,7 @@
       "label": "clear_negative",
       "agreement": 1.0,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 5
       },
       "tie": false,
       "domain": "meals",
@@ -630,7 +635,7 @@
       "label": "clear_negative",
       "agreement": 1.0,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 5
       },
       "tie": false,
       "domain": "meals",
@@ -638,10 +643,10 @@
     },
     "item_060": {
       "label": "clear_negative",
-      "agreement": 0.75,
+      "agreement": 0.6,
       "votes": {
         "clear_negative": 3,
-        "ambiguous": 1
+        "ambiguous": 2
       },
       "tie": false,
       "domain": "meals",
@@ -651,7 +656,7 @@
       "label": "clear_negative",
       "agreement": 1.0,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 5
       },
       "tie": false,
       "domain": "meals",
@@ -659,9 +664,10 @@
     },
     "item_062": {
       "label": "clear_negative",
-      "agreement": 1.0,
+      "agreement": 0.8,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 4,
+        "ambiguous": 1
       },
       "tie": false,
       "domain": "meals",
@@ -671,7 +677,7 @@
       "label": "clear_negative",
       "agreement": 1.0,
       "votes": {
-        "clear_negative": 4
+        "clear_negative": 5
       },
       "tie": false,
       "domain": "meals",

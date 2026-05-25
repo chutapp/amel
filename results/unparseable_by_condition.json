@@ -1,24 +1,24 @@
 {
   "by_polarity": {
     "baseline": {
-      "total": 5824,
+      "total": 6454,
       "unparseable": 627,
-      "rate": 0.10765796703296704
+      "rate": 0.09714905484970561
     },
     "no_saturated": {
-      "total": 23367,
-      "unparseable": 1627,
-      "rate": 0.06962810801557752
+      "total": 25887,
+      "unparseable": 1628,
+      "rate": 0.06288870861822536
     },
     "yes_saturated": {
-      "total": 23369,
-      "unparseable": 1908,
-      "rate": 0.08164662587188155
+      "total": 25889,
+      "unparseable": 1910,
+      "rate": 0.07377650739696397
     },
     "neutral": {
-      "total": 23338,
-      "unparseable": 1799,
-      "rate": 0.07708458308338333
+      "total": 25858,
+      "unparseable": 1800,
+      "rate": 0.06961095212313403
     }
   },
   "by_model_polarity": {
@@ -81,6 +81,26 @@
       "total": 2520,
       "unparseable": 36,
       "rate": 0.014285714285714285
+    },
+    "deepseek-chat|baseline": {
+      "total": 630,
+      "unparseable": 0,
+      "rate": 0.0
+    },
+    "deepseek-chat|neutral": {
+      "total": 2520,
+      "unparseable": 1,
+      "rate": 0.0003968253968253968
+    },
+    "deepseek-chat|no_saturated": {
+      "total": 2520,
+      "unparseable": 1,
+      "rate": 0.0003968253968253968
+    },
+    "deepseek-chat|yes_saturated": {
+      "total": 2520,
+      "unparseable": 2,
+      "rate": 0.0007936507936507937
     },
     "gemini-2.5-flash|baseline": {
       "total": 97,
@@ -245,70 +265,70 @@
   },
   "by_domain_polarity": {
     "code_review|baseline": {
-      "total": 1941,
+      "total": 2151,
       "unparseable": 434,
-      "rate": 0.22359608449252963
+      "rate": 0.20176662017666203
     },
     "code_review|neutral": {
-      "total": 7778,
+      "total": 8618,
       "unparseable": 797,
-      "rate": 0.10246850089997428
+      "rate": 0.09248085402645626
     },
     "code_review|no_saturated": {
-      "total": 7786,
+      "total": 8626,
       "unparseable": 713,
-      "rate": 0.09157462111482148
+      "rate": 0.08265708323672617
     },
     "code_review|yes_saturated": {
-      "total": 7767,
+      "total": 8607,
       "unparseable": 926,
-      "rate": 0.11922235097206128
+      "rate": 0.1075868479144882
     },
     "content_moderation|baseline": {
-      "total": 1938,
+      "total": 2148,
       "unparseable": 115,
-      "rate": 0.05933952528379773
+      "rate": 0.053538175046554934
     },
     "content_moderation|neutral": {
-      "total": 7792,
+      "total": 8632,
       "unparseable": 581,
-      "rate": 0.07456365503080083
+      "rate": 0.0673076923076923
     },
     "content_moderation|no_saturated": {
-      "total": 7807,
+      "total": 8647,
       "unparseable": 592,
-      "rate": 0.07582938388625593
+      "rate": 0.06846305076905285
     },
     "content_moderation|yes_saturated": {
-      "total": 7786,
+      "total": 8626,
       "unparseable": 582,
-      "rate": 0.07474955047521192
+      "rate": 0.0674704382100626
     },
     "meals|baseline": {
-      "total": 1945,
+      "total": 2155,
       "unparseable": 78,
-      "rate": 0.04010282776349614
+      "rate": 0.03619489559164733
     },
     "meals|neutral": {
-      "total": 7768,
-      "unparseable": 421,
-      "rate": 0.05419670442842431
+      "total": 8608,
+      "unparseable": 422,
+      "rate": 0.04902416356877323
     },
     "meals|no_saturated": {
-      "total": 7774,
-      "unparseable": 322,
-      "rate": 0.04142011834319527
+      "total": 8614,
+      "unparseable": 323,
+      "rate": 0.037497097747852336
     },
     "meals|yes_saturated": {
-      "total": 7816,
-      "unparseable": 400,
-      "rate": 0.0511770726714432
+      "total": 8656,
+      "unparseable": 402,
+      "rate": 0.04644177449168207
     }
   },
   "polarity_independence_test": {
-    "chi2": 97.67339387751437,
+    "chi2": 96.58379796941664,
     "dof": 3,
-    "p_value": 4.917000441783132e-21,
+    "p_value": 8.431710173521433e-21,
     "significant": true,
     "interpretation": "Unparseable rate differs across polarities"
   }

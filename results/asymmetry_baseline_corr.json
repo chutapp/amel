@@ -1,24 +1,24 @@
 {
-  "n_pairs": 593,
-  "spearman_r": 0.0774,
-  "spearman_p": 0.059452671203084895,
-  "pearson_r": 0.2172,
-  "pearson_p": 9.171204107216713e-08,
-  "interpretation": "No significant correlation between baseline P(no) and asymmetry magnitude.",
+  "n_pairs": 656,
+  "spearman_r": 0.0848,
+  "spearman_p": 0.02982077014119962,
+  "pearson_r": 0.2209,
+  "pearson_p": 1.0790352928351489e-08,
+  "interpretation": "Positive correlation: items with higher baseline P(no) show stronger negativity asymmetry, suggesting negative context reinforces a pre-existing tendency.",
   "quartile_analysis": {
     "Low P(no)": {
-      "n": 258,
+      "n": 278,
       "mean_pno": 0.0,
-      "mean_asymmetry": 0.016,
-      "std_asymmetry": 0.1244
+      "mean_asymmetry": 0.0094,
+      "std_asymmetry": 0.1291
     },
     "Mid P(no)": {
-      "n": 335,
-      "mean_pno": 0.8999,
-      "mean_asymmetry": 0.0971,
-      "std_asymmetry": 0.2441
+      "n": 378,
+      "mean_pno": 0.9023,
+      "mean_asymmetry": 0.0902,
+      "std_asymmetry": 0.2382
     }
   },
-  "mean_baseline_pno": 0.5084,
-  "mean_asymmetry": 0.0618
+  "mean_baseline_pno": 0.5199,
+  "mean_asymmetry": 0.0559
 }

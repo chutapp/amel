@@ -1,7 +1,7 @@
 # AMEL annotator dataset
 
 External inter-rater validation for the test items used in the AMEL
-study (Temkit, 2026). Four annotators independently rated each of the
+study (Temkit, 2026). Five annotators independently rated each of the
 63 test items into one of three categories (`clear_positive`,
 `ambiguous`, `clear_negative`) using the codebook in this folder.
 
@@ -12,22 +12,21 @@ designed to be reusable by other researchers.
 
 | File | What it is |
 |---|---|
-| `anon_A.json` ... `anon_D.json` | Per-annotator pseudonymised rating files. Each row records the rating, an optional free-text comment, and per-item seconds-on-screen. |
-| `aggregate_labels.json` | Majority-vote label per item across the four annotators, with the per-category vote counts and a `tie` flag (set when no clear majority emerges). Items with `tie: true` are excluded from the primary per-category analysis in the paper. |
+| `anon_A.json` ... `anon_E.json` | Per-annotator pseudonymised rating files. Each row records the rating, an optional free-text comment, and per-item seconds-on-screen. |
+| `aggregate_labels.json` | Majority-vote label per item across the five annotators, with the per-category vote counts and a `tie` flag (set when no clear majority emerges, i.e. a 2-2-1 split). Items with `tie: true` are excluded from the primary per-category analysis in the paper. |
 | `codebook.md` | The same codebook the annotators received before rating. Two-three worked examples per category per domain plus an FAQ section. |
 | `../../results/iir_scores.json` | Krippendorff's α (nominal level), Fleiss' κ, full-agreement rate, and all pairwise Cohen's κ values, overall and per domain. |
 
 ## Methodology summary
 
-- **Recruitment.** Four annotators recruited via Upwork in May 2026
-  with prior NLP / CS / research experience (filter: ≥80 % job-success
-  score). All four signed digital consent allowing publication and
+- **Recruitment.** Five annotators recruited via Upwork in May 2026
+  with prior NLP / CS / data-science experience (filter: ≥80 % job-success
+  score). All five signed digital consent allowing publication and
   public dataset release.
-- **Demographics.** Three annotators in Pakistan, one in Serbia;
-  three with data-science / academic-research background, one
-  academic-research. Three reported "fluent" English, one "native"
-  (full per-annotator demographics fields are kept inside the
-  individual `anon_*.json` files).
+- **Demographics.** Four annotators in Pakistan, one in Serbia;
+  three data scientists / ML engineers, two academic researchers. All
+  reported "fluent (working proficiency)" English (full per-annotator
+  demographics fields are kept inside the individual `anon_*.json` files).
 - **Compensation.** $50 per annotator (~$40 / hour for a ~75-minute
   task), well above platform minimums.
 - **Order.** Items presented in a per-annotator deterministic
@@ -44,12 +43,12 @@ designed to be reusable by other researchers.
 
 ## Inter-rater agreement (results/iir_scores.json)
 
-| Domain | Krippendorff's α | Fleiss' κ | Full 4-way agreement |
+| Domain | Krippendorff's α | Fleiss' κ | Full 5-way agreement |
 |---|---|---|---|
-| Overall | 0.51 | 0.51 | 47 % |
-| Code review | 0.28 | 0.27 | 24 % |
-| Content moderation | 0.54 | 0.53 | 48 % |
-| Meals (nutrition) | **0.72** | **0.72** | 67 % |
+| Overall | 0.53 | 0.53 | 41 % |
+| Code review | 0.28 | 0.27 | 19 % |
+| Content moderation | 0.62 | 0.61 | 48 % |
+| Meals (nutrition) | **0.70** | **0.69** | 57 % |
 
 Interpretation: meals crosses the conventional NLP / HCI threshold
 (α ≥ 0.67); content moderation is moderate; code review is the
@@ -62,8 +61,9 @@ themselves.
 ## Adjudication rule (paper §3.2)
 
 The primary per-category analysis in the paper uses the **majority
-vote of the four annotators** as the item's category. Items with no
-clear majority (a 4-way or 2-2 split) are marked `tie: true` and are
+vote of the five annotators** as the item's category. Items with no
+clear majority (a 2-2-1 split — the only kind of tie that can occur
+with five raters on three categories) are marked `tie: true` and are
 not assigned a category for that analysis; they are included in all
 analyses that do not depend on per-category labels (overall effect
 size, polarity asymmetry, accumulation, contrast / assimilation,

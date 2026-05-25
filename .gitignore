@@ -60,3 +60,4 @@ data/annotators/_excluded/
 client_secret*.json
 *.json.credentials
 results-*.json
+data/annotators/_raw/

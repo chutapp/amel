@@ -1,0 +1,455 @@
+{
+  "annotator_id": "anon_E",
+  "started_at": "2026-05-25T10:03:24.760Z",
+  "completed_at": "2026-05-25T17:36:13.035Z",
+  "n_items": 63,
+  "demographics": {
+    "country": "Pakistan",
+    "profession": "data scientist or ML engineer",
+    "fluency": "fluent (working proficiency)"
+  },
+  "consent_given": true,
+  "ratings": [
+    {
+      "item_id": "item_001",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "no path traversal it is good sign",
+      "seconds_spent": 31.959
+    },
+    {
+      "item_id": "item_002",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "no chance of sql injection so it is good",
+      "seconds_spent": 29.399
+    },
+    {
+      "item_id": "item_003",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "simple and safe can merge to prod repo",
+      "seconds_spent": 26.112
+    },
+    {
+      "item_id": "item_004",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "yes the data class is good to merged I just pushed similar kind",
+      "seconds_spent": 129.707
+    },
+    {
+      "item_id": "item_005",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "admin auth, 404 check, proper commit so it is good for deployment",
+      "seconds_spent": 25.085
+    },
+    {
+      "item_id": "item_006",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "it is production ready used clear structures and imports",
+      "seconds_spent": 34.265
+    },
+    {
+      "item_id": "item_007",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "concurrent deploys can run migrations twice so not production ready",
+      "seconds_spent": 32.432
+    },
+    {
+      "item_id": "item_008",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "continue in exception what if the bug comes no logging and monitoring",
+      "seconds_spent": 37.033
+    },
+    {
+      "item_id": "item_009",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "0.0.0.0 exposes the host not a good approach",
+      "seconds_spent": 62.51
+    },
+    {
+      "item_id": "item_010",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "time is not imported and cache always growth, not for production",
+      "seconds_spent": 153.094
+    },
+    {
+      "item_id": "item_011",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "mergeable as it is simple",
+      "seconds_spent": 27.982
+    },
+    {
+      "item_id": "item_012",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "not thread safe and list.pop is also order of n O(n) try indexing with try except",
+      "seconds_spent": 52.6
+    },
+    {
+      "item_id": "item_013",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "error handling is not done for io operations",
+      "seconds_spent": 47.915
+    },
+    {
+      "item_id": "item_014",
+      "domain": "code_review",
+      "label": "clear_positive",
+      "comment": "yes it is clean and seems correct to me",
+      "seconds_spent": 23.582
+    },
+    {
+      "item_id": "item_015",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "authentication is handled incorrectly, not a good approach in query (url ) paremeters",
+      "seconds_spent": 39.513
+    },
+    {
+      "item_id": "item_016",
+      "domain": "code_review",
+      "label": "ambiguous",
+      "comment": "if it is in env ok but not in config",
+      "seconds_spent": 23.284
+    },
+    {
+      "item_id": "item_017",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "sql injection can happen",
+      "seconds_spent": 17.963
+    },
+    {
+      "item_id": "item_018",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "unwanted code execution with eval",
+      "seconds_spent": 27.316
+    },
+    {
+      "item_id": "item_019",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "signature is disabled, very very bad approach",
+      "seconds_spent": 36.582
+    },
+    {
+      "item_id": "item_020",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "broken password , should you bcrypt",
+      "seconds_spent": 155.931
+    },
+    {
+      "item_id": "item_021",
+      "domain": "code_review",
+      "label": "clear_negative",
+      "comment": "zero authentication is implemented inside it not good for production at all as a SE",
+      "seconds_spent": 45.944
+    },
+    {
+      "item_id": "item_022",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "sign of gratitude and praise on effort so ok",
+      "seconds_spent": 22.996
+    },
+    {
+      "item_id": "item_023",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "constructive n polite",
+      "seconds_spent": 20.016
+    },
+    {
+      "item_id": "item_024",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "like a msg from support staff so acceptable",
+      "seconds_spent": 37.104
+    },
+    {
+      "item_id": "item_025",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "it is polite and constructive to the person written",
+      "seconds_spent": 55.528
+    },
+    {
+      "item_id": "item_026",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "the content is. good askign for recommendatiosn and suggestions",
+      "seconds_spent": 31.276
+    },
+    {
+      "item_id": "item_027",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "praising the employee and positive feedback",
+      "seconds_spent": 29.648
+    },
+    {
+      "item_id": "item_028",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "asking for recommendation no issue and policy violation",
+      "seconds_spent": 25.031
+    },
+    {
+      "item_id": "item_029",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "customer is not happy with the service but he is right at this point",
+      "seconds_spent": 30.005
+    },
+    {
+      "item_id": "item_030",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "disagreement and crtism is allowed in most platfroms ex meta, twitter and linkedin",
+      "seconds_spent": 480.506
+    },
+    {
+      "item_id": "item_031",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "constructive critism towards government work",
+      "seconds_spent": 26.349
+    },
+    {
+      "item_id": "item_032",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "expressing frustation but their is no hate speech and no discrimation of any gender, cast or any",
+      "seconds_spent": 63.981
+    },
+    {
+      "item_id": "item_033",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "legitimate criticism of a company owner so ok",
+      "seconds_spent": 22.398
+    },
+    {
+      "item_id": "item_034",
+      "domain": "content_moderation",
+      "label": "clear_positive",
+      "comment": "giving his opinion so no issue",
+      "seconds_spent": 21.081
+    },
+    {
+      "item_id": "item_035",
+      "domain": "content_moderation",
+      "label": "ambiguous",
+      "comment": "harsh but just a criticism",
+      "seconds_spent": 24.799
+    },
+    {
+      "item_id": "item_036",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "insult and rudeness",
+      "seconds_spent": 20.265
+    },
+    {
+      "item_id": "item_037",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "the person is threatning and harrassing",
+      "seconds_spent": 19.696
+    },
+    {
+      "item_id": "item_038",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "it is hate speech related to race so removal is good",
+      "seconds_spent": 44.444
+    },
+    {
+      "item_id": "item_039",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "it is coordinated harassment thats why negative",
+      "seconds_spent": 181.532
+    },
+    {
+      "item_id": "item_040",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "wishing the person to die too rude",
+      "seconds_spent": 18.232
+    },
+    {
+      "item_id": "item_041",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "spam, trying to sell fake followers with no activities and posts I have experienced this and negative impact on my brand I ran 2 years",
+      "seconds_spent": 358.943
+    },
+    {
+      "item_id": "item_042",
+      "domain": "content_moderation",
+      "label": "clear_negative",
+      "comment": "considered as gender bias",
+      "seconds_spent": 23.864
+    },
+    {
+      "item_id": "item_043",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "protein higher, fibres and good for health",
+      "seconds_spent": 16.865
+    },
+    {
+      "item_id": "item_044",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "high fiber protein and fats.",
+      "seconds_spent": 17773.149
+    },
+    {
+      "item_id": "item_045",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "high fibre good for health and skin quality",
+      "seconds_spent": 70.031
+    },
+    {
+      "item_id": "item_046",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "it contains fibre which is really good for adults in their age and assist them in their old age for better health.",
+      "seconds_spent": 52.627
+    },
+    {
+      "item_id": "item_047",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "protein, fibre and fruits for skin are good in all ways",
+      "seconds_spent": 37.251
+    },
+    {
+      "item_id": "item_048",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "high in fibres gives energy",
+      "seconds_spent": 25.749
+    },
+    {
+      "item_id": "item_049",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "healthy food, protein and fats",
+      "seconds_spent": 22.097
+    },
+    {
+      "item_id": "item_050",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "healthy but contains fat and might be sodium I believe",
+      "seconds_spent": 38.448
+    },
+    {
+      "item_id": "item_051",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "protein fibre and healthy fats good for health",
+      "seconds_spent": 27.5
+    },
+    {
+      "item_id": "item_052",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "unhealthy but sometime in a month is ok",
+      "seconds_spent": 19.931
+    },
+    {
+      "item_id": "item_053",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "yes, as the bowl contains protien, fibres, fats but limited portion for the adult will be better",
+      "seconds_spent": 155.708
+    },
+    {
+      "item_id": "item_054",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "two slice is fine one or twice a month and salad is good for health",
+      "seconds_spent": 28.397
+    },
+    {
+      "item_id": "item_055",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "it is high in sodium but veges are good for health",
+      "seconds_spent": 32.882
+    },
+    {
+      "item_id": "item_056",
+      "domain": "meals",
+      "label": "clear_positive",
+      "comment": "fine as a snack weak as a meal",
+      "seconds_spent": 21.401
+    },
+    {
+      "item_id": "item_057",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "fast food and unhealthy",
+      "seconds_spent": 16.45
+    },
+    {
+      "item_id": "item_058",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "too unhealthy, fast food deep fried too",
+      "seconds_spent": 14.033
+    },
+    {
+      "item_id": "item_059",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "fat, sugar, zero fiber",
+      "seconds_spent": 24.381
+    },
+    {
+      "item_id": "item_060",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "milk is good but oreo is processed so not ok",
+      "seconds_spent": 19.733
+    },
+    {
+      "item_id": "item_061",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "it is unhealthy as deep fried not good for health for adult",
+      "seconds_spent": 43.232
+    },
+    {
+      "item_id": "item_062",
+      "domain": "meals",
+      "label": "ambiguous",
+      "comment": "no not everyday, we need to change the taste as humans",
+      "seconds_spent": 91.249
+    },
+    {
+      "item_id": "item_063",
+      "domain": "meals",
+      "label": "clear_negative",
+      "comment": "too sugary, should avoid",
+      "seconds_spent": 23.265
+    }
+  ]
+}
