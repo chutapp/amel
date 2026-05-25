@@ -56,7 +56,7 @@ LLMs are now used as judges. They review code, moderate user posts, mark exam an
 
 The setup is the same in each of three binary-judgment domains (code review, content moderation, nutrition): present each test item in a clean conversation, or after $N$ prior turns whose answers are mostly ``yes'' or mostly ``no,'' and ask whether the verdict shifts. Twelve models across five providers, 84,088 API calls after deduplication.
 
-The shift is real. Overall $d = -0.17$, $p < 10^{-54}$. It hits hardest on items the model is itself uncertain about at baseline ($d = -0.34$ for high-entropy items; $d = -0.15$ where the baseline is deterministic). It does not grow with context length: 5 turns and 50 produce the same shift (Spearman $|r| < 0.01$). Negative history pulls harder than positive: $1.52\times$ in a paired per-item test ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$). Bigger models help, but only a little. Haiku $-0.22 \to$ Opus $-0.17$; Nano $-0.34 \to$ GPT-5.2 $-0.17$.
+The shift is real. Overall $d = -0.17$, $p < 10^{-54}$. It hits hardest on items the model is itself uncertain about at baseline ($d = -0.36$ for high-entropy items; $d = -0.15$ where the baseline is deterministic). It does not grow with context length: 5 turns and 50 produce the same shift (Spearman $|r| < 0.01$). Negative history pulls harder than positive: $1.52\times$ in a paired per-item test ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$). Bigger models help, but only a little. Haiku $-0.22 \to$ Opus $-0.17$; Nano $-0.34 \to$ GPT-5.2 $-0.17$.
 
 Three follow-ups try to narrow what is going on. The first-token probability distribution shifts continuously, not at a threshold. The negativity asymmetry has both token-level and semantic flavours, though with $n = 21$ items per cell I cannot tell which dominates per model. Position does not matter: five biased turns anywhere in a 50-turn window produce the same shift. The simplest fix for an evaluation pipeline is a fresh context per item. If you must batch, interleave expected-yes and expected-no items and brace for a residual negativity drift.
 \end{abstract}
@@ -75,9 +75,9 @@ A few clarifications up front. AMEL is not sycophancy \cite{sharma2024understand
 Our main findings:
 \begin{enumerate}
     \item AMEL appears across all five provider families tested. Across 12 models, conversation history pulls responses toward its prevailing polarity ($d = -0.17$, $p < 10^{-54}$); 10 of 12 models show a significant effect after Bonferroni correction.
-    \item Susceptibility tracks the model's own baseline uncertainty. Items where the model is genuinely uncertain at baseline (nonzero binary entropy of $P(\text{yes}|\text{baseline})$) absorb $\approx 2\times$ more bias than items where the baseline is deterministic ($d = -0.34$ vs.\ $d = -0.15$). The author-coded ``ambiguous'' label predicts bias size only because some author-ambiguous items are also empirically uncertain; among items the model already finds clear-cut, author labels add little (Section~\ref{sec:empirical_entropy}).
+    \item Susceptibility tracks the model's own baseline uncertainty. Items where the model is genuinely uncertain at baseline (nonzero binary entropy of $P(\text{yes}|\text{baseline})$) absorb $\approx 2\times$ more bias than items where the baseline is deterministic ($d = -0.36$ vs.\ $d = -0.15$). The author-coded ``ambiguous'' label predicts bias size only because some author-ambiguous items are also empirically uncertain; among items the model already finds clear-cut, author labels add little (Section~\ref{sec:empirical_entropy}).
     \item Negative history biases more than positive history: paired per-item $|BS|$ ratio $1.52\times$ ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$). Marginal means give $\approx 2\times$ but mix item composition across cells; the paired test is the cleaner statistic.
-    \item Bias saturates early. Five turns of skewed history produce the same shift as fifty (Spearman $|r| < 0.01$, $p > 0.94$; OLS slope $-5 \times 10^{-5}$ BS/turn, $p = 0.80$). The model recognizes the pattern fast and additional examples do not strengthen it.
+    \item Bias saturates early. Five turns of skewed history produce the same shift as fifty (Spearman $|r| < 0.01$, $p = 0.92$; OLS slope $-4 \times 10^{-5}$ BS/turn, $p = 0.84$). The model recognizes the pattern fast and additional examples do not strengthen it.
     \item Larger models within provider families show less bias, but none are immune.
     \item The effect is detected in all three tested domains, all significant after Bonferroni correction: code review ($d = -0.24$) $>$ meals ($d = -0.13$) $>$ content moderation ($d = -0.12$).
     \item Three characterization experiments (Section~\ref{sec:mechanism}) narrow the plausible mechanisms but do not isolate a single cause: the probability distribution shifts continuously rather than crossing a threshold, the negativity asymmetry has both token-level and semantic components (per-model attribution is exploratory at $n = 21$ items), and position within the conversation does not matter.
@@ -89,7 +89,7 @@ Our main findings:
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/fig0_hero.pdf}
-    \caption{Overview of AMEL. (a) By author-coded item category, ambiguous items absorb the most bias ($d = -0.28$); clear negatives barely budge ($d = +0.03$, n.s.). The same pattern, sharper, when items are stratified by empirical baseline entropy instead: high-entropy items show $d = -0.34$, deterministic-baseline items $d = -0.15$ (Section~\ref{sec:empirical_entropy}). (b) Negative context biases models more than positive context (paired per-item ratio $1.52\times$, $p < 10^{-37}$); marginal means yield $\approx 2\times$ (Section~\ref{sec:polarity}). Even balanced history shifts models toward ``no.'' (c) Bias saturates immediately; 5 turns produce the same effect as 50.}
+    \caption{Overview of AMEL. (a) By author-coded item category, ambiguous items absorb the most bias ($d = -0.28$); clear negatives barely budge ($d = +0.03$, n.s.). The same pattern, sharper, when items are stratified by empirical baseline entropy instead: high-entropy items show $d = -0.36$, deterministic-baseline items $d = -0.15$ (Section~\ref{sec:empirical_entropy}). (b) Negative context biases models more than positive context (paired per-item ratio $1.52\times$, $p < 10^{-37}$); marginal means yield $\approx 2.1\times$ (Section~\ref{sec:polarity}). Even balanced history shifts models toward ``no.'' (c) Bias saturates immediately; 5 turns produce the same effect as 50.}
     \label{fig:hero}
 \end{figure*}
 
@@ -292,10 +292,10 @@ Accumulation is assessed via Spearman rank correlation between context length an
 
 We collected 84,088 API responses (86,274 raw responses; 2,186 duplicate-condition rows from a concurrent-resume bug on the Qwen3 30B run were deduplicated, keeping the first occurrence per condition; see Appendix~\ref{app:dedup}).
 After dropping unparseable outputs (7.09\%, concentrated in Claude Opus 4.6 which produces verbose conditional responses that resist binary extraction), 8,387 bias score observations remain.
-The unparseable rate differs across conditions ($\chi^2 = 97.7$, $p < 10^{-20}$, $df = 3$): baseline 9.71\%, no-saturated 6.29\%, yes-saturated 7.38\%, neutral 6.96\%.
+The unparseable rate differs across conditions ($\chi^2 = 96.58$, $p < 10^{-20}$, $df = 3$): baseline 9.71\%, no-saturated 6.29\%, yes-saturated 7.38\%, neutral 6.96\%.
 We report the differential rate explicitly and discuss its MAR/MNAR implications in Appendix~\ref{app:unparseable}; the headline conclusions are robust to per-model exclusion of Opus (which contributes most unparseable rows).
 Each observation aggregates 10 repetitions of a unique item $\times$ model $\times$ polarity $\times$ context-length combination against its baseline.
-Baseline consistency across repetitions averages 97.1\%, confirming that $T = 1.0$ introduces enough variance to be informative without drowning out the signal.
+Baseline consistency across repetitions averages 96.9\%, confirming that $T = 1.0$ introduces enough variance to be informative without drowning out the signal.
 Table~\ref{tab:summary} gives the headline numbers.
 
 \begin{table}[t]
@@ -309,7 +309,7 @@ Table~\ref{tab:summary} gives the headline numbers.
 Overall effect & $-0.17$ & $<10^{-54}$ & $\bar{BS} = -0.054$ \\
 High-entropy items & $-0.34$ & $<10^{-9}$ & Hardest hit \\
 Negativity asymmetry & --- & $<10^{-37}$ & paired $1.52\times$ \\
-Accumulation & --- & $0.94$ & Spearman $|r|<0.01$ \\
+Accumulation & --- & $0.92$ & Spearman $|r|<0.01$ \\
 Scaling (Anthropic) & \multicolumn{3}{l}{$-0.22 \to -0.18 \to -0.17$} \\
 \bottomrule
 \end{tabular}
@@ -388,7 +388,7 @@ A code reviewer that handles obvious bugs fine but becomes unreliable on borderl
 \label{sec:domain}
 
 The effect size varies across domains (Figure~\ref{fig:domain}).
-Code review is most affected ($\bar{BS} = -0.106$, $d = -0.24$, $p < 10^{-31}$), followed by meals ($\bar{BS} = -0.024$, $d = -0.13$, $p < 10^{-9}$) and content moderation ($\bar{BS} = -0.030$, $d = -0.12$, $p_\text{corrected} < 10^{-7}$).
+Code review is most affected ($\bar{BS} = -0.111$, $d = -0.24$, $p < 10^{-31}$), followed by meals ($\bar{BS} = -0.024$, $d = -0.13$, $p < 10^{-9}$) and content moderation ($\bar{BS} = -0.031$, $d = -0.12$, $p_\text{corrected} < 10^{-7}$).
 All three are robustly significant after Bonferroni correction; the magnitude range is $2\times$ from code review to content moderation, so ``replicates'' should be read as ``detected in all three with varying magnitude'' rather than ``uniform.''
 
 Why code review?
@@ -410,11 +410,11 @@ Code review prompts are also longer and more complex, which may interact differe
 The asymmetry between polarities is robust (Figure~\ref{fig:polarity}).
 No-saturated contexts shift models by $\bar{BS} = -0.113$ ($d = -0.33$).
 Yes-saturated contexts shift models by $\bar{BS} = +0.053$ ($d = +0.20$).
-Comparing marginal means gives a ratio of $\approx 2.2\times$, but this confounds item composition between the two cells.
+Comparing marginal means gives a ratio of $\approx 2.1\times$, but this confounds item composition between the two cells.
 The cleaner statistic is a paired per-item comparison: mean $|BS_\text{no}| = 0.169$ vs.\ $|BS_\text{yes}| = 0.111$, ratio $1.52\times$ ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$ pairs).
 We report the paired result as the headline statistic throughout.
 
-An unexpected result: the neutral condition (50/50 history) also produces a negative shift ($\bar{BS} = -0.097$, $d = -0.32$), close in magnitude to the no-saturated condition.
+An unexpected result: the neutral condition (50/50 history) also produces a negative shift ($\bar{BS} = -0.101$, $d = -0.33$), close in magnitude to the no-saturated condition.
 Apparently, \textit{any} conversation history, even balanced, pushes models toward ``no'' compared to a fresh start.
 One reading is that the presence of prior evaluation context triggers a more critical mode, independent of its content; this remains speculative because our ``neutral'' arm is itself composed of evaluative items (Section~\ref{sec:limitations}).
 
@@ -424,7 +424,7 @@ If models already lean toward ``no'' in binary tasks, negative context reinforce
 \begin{figure}[t]
     \centering
     \includegraphics[width=\columnwidth]{figures/fig8_polarity_asymmetry.pdf}
-    \caption{Polarity asymmetry. Negative context induces stronger bias than positive context (paired per-item ratio $1.52\times$, $p < 10^{-37}$; marginal means give $\approx 2.2\times$). Even balanced (50/50) history produces a negative shift. Error bars: 95\% CIs.}
+    \caption{Polarity asymmetry. Negative context induces stronger bias than positive context (paired per-item ratio $1.52\times$, $p < 10^{-37}$; marginal means give $\approx 2.1\times$). Even balanced (50/50) history produces a negative shift. Error bars: 95\% CIs.}
     \label{fig:polarity}
 \end{figure}
 
@@ -433,9 +433,9 @@ If models already lean toward ``no'' in binary tasks, negative context reinforce
 
 Does more history mean more bias?
 No.
-The Spearman correlation between context length and bias score is essentially zero (overall $r_s = +0.001$, $p = 0.94$).
-Because Spearman over only four distinct $x$ values $\{5, 10, 20, 50\}$ is statistically blunt, we also fit an OLS regression of $BS$ on $\log_2(\text{context length})$ and on raw context length: both slopes are essentially zero (linear $\hat{\beta} = -5 \times 10^{-5}$ per turn, $p = 0.80$, $R^2 < 0.001$).
-Within polarities the picture is similar: no-saturated $r_s = 0.019$ ($p = 0.35$), yes-saturated $r_s = 0.029$ ($p = 0.15$). Neutral shows a tiny but significant negative slope ($r_s = -0.049$, $p = 0.013$), meaning balanced history drifts $\bar{BS}$ slightly more negative with length. Even at the upper bound of the neutral-arm slope, the predicted shift across 45 additional turns is well below the noise floor of the main experiment.
+The Spearman correlation between context length and bias score is essentially zero (overall $r_s = -0.001$, $p = 0.92$).
+Because Spearman over only four distinct $x$ values $\{5, 10, 20, 50\}$ is statistically blunt, we also fit an OLS regression of $BS$ on $\log_2(\text{context length})$ and on raw context length: both slopes are essentially zero (linear $\hat{\beta} = -4 \times 10^{-5}$ per turn, $p = 0.84$, $R^2 < 0.001$).
+Within polarities the picture is similar: no-saturated $r_s = 0.014$ ($p = 0.45$), yes-saturated $r_s = 0.034$ ($p = 0.07$). Neutral shows a tiny but significant negative slope ($r_s = -0.055$, $p = 0.004$), meaning balanced history drifts $\bar{BS}$ slightly more negative with length. Even at the upper bound of the neutral-arm slope, the predicted shift across 45 additional turns is well below the noise floor of the main experiment.
 Five turns of biased history produce the same shift as fifty (Figure~\ref{fig:accumulation}).
 
 A gradual Bayesian-updating account does not fit the data.
@@ -464,9 +464,9 @@ We classify each bias observation as \textit{congruent} (the context polarity ma
 Recall that the bias score is defined in the direction of the saturated polarity (Section~\ref{sec:bias_score}), so a positive $BS$ means ``shifted toward the saturated polarity'' (i.e., conformed) and a negative $BS$ means ``shifted away from it'' (i.e., resisted).
 
 The two regimes go in opposite directions.
-For congruent items, the model conforms: $\bar{BS} = +0.051$ (95\% CI $[+0.041, +0.061]$), an \textbf{assimilation} effect, where the saturated polarity reinforces the response the item already calls for.
-For incongruent items, the model resists: $\bar{BS} = -0.110$ (95\% CI $[-0.123, -0.097]$). We use the term \textbf{contrast} for this pattern in the section title and elsewhere because it is the conventional umbrella term for context-opposite shifts, but the mechanism is closer to item-level \textit{anchoring} than to classical psychophysical contrast: the model does not overcorrect \textit{past} baseline, it simply stays near the item's own evidence and refuses to be pulled toward the context.
-A two-sample $t$-test on the magnitude of the congruent--incongruent difference gives $t = 19.10$, $p < 10^{-77}$, $d = 0.54$ (Appendix~\ref{app:assimilation}).
+For congruent items, the model conforms: $\bar{BS} = +0.055$ (95\% CI $[+0.045, +0.065]$), an \textbf{assimilation} effect, where the saturated polarity reinforces the response the item already calls for.
+For incongruent items, the model resists: $\bar{BS} = -0.116$ (95\% CI $[-0.128, -0.104]$). We use the term \textbf{contrast} for this pattern in the section title and elsewhere because it is the conventional umbrella term for context-opposite shifts, but the mechanism is closer to item-level \textit{anchoring} than to classical psychophysical contrast: the model does not overcorrect \textit{past} baseline, it simply stays near the item's own evidence and refuses to be pulled toward the context.
+A two-sample $t$-test on the magnitude of the congruent--incongruent difference gives $t = 20.89$, $p < 10^{-92}$, $d = 0.56$ (Appendix~\ref{app:assimilation}).
 
 This is a more layered pattern than pure assimilation.
 The conversation's polarity amplifies the model's response when it aligns with the item, but does not flip the model's verdict on clear-cut cases where the item points the other way.
@@ -478,9 +478,9 @@ The practical implication is unchanged. Items where the model is uncertain are t
 
 Section~\ref{sec:category} stratified items by author-coded label. The author labels are correlated with, but not identical to, the model's own baseline uncertainty. Here we re-stratify by the empirical baseline entropy of $P(\text{yes}|\text{baseline})$ across 10 repetitions per (model, item) pair, $H = -p\log_2 p - (1{-}p)\log_2(1{-}p)$.
 
-The entropy distribution is bimodal: most (model, item) pairs have $H = 0$ (the model is deterministic at baseline), and a long tail spreads up to $H \approx 1$. We split into three bins: $\mathbf{B_1}$ deterministic baseline ($H = 0$), $\mathbf{B_2}$ low uncertainty ($0 < H \le 0.76$, the median of nonzero entropies), and $\mathbf{B_3}$ high uncertainty ($H > 0.76$).
+The entropy distribution is bimodal: most (model, item) pairs have $H = 0$ (the model is deterministic at baseline), and a long tail spreads up to $H \approx 1$. We split into three bins: $\mathbf{B_1}$ deterministic baseline ($H = 0$), $\mathbf{B_2}$ low uncertainty ($0 < H \le 0.72$, the median of nonzero entropies), and $\mathbf{B_3}$ high uncertainty ($H > 0.72$).
 
-The empirical stratification gives a sharper picture than the author labels (Table~\ref{tab:entropy_bins}). $B_3$ items show $d = -0.34$, more than twice the effect on $B_1$ items ($d = -0.15$). Across the entire $|BS|$ distribution, Spearman $r = 0.47$ between baseline entropy and $|BS|$ ($p < 10^{-300}$).
+The empirical stratification gives a sharper picture than the author labels (Table~\ref{tab:entropy_bins}). $B_3$ items show $d = -0.36$, more than twice the effect on $B_1$ items ($d = -0.15$). Across the entire $|BS|$ distribution, Spearman $r = 0.47$ between baseline entropy and $|BS|$ ($p < 10^{-300}$).
 
 \begin{table}[h]
 \centering
@@ -490,9 +490,9 @@ The empirical stratification gives a sharper picture than the author labels (Tab
 \toprule
 \textbf{Bin} & $n$ & $\bar{BS}$ & $d$ & $p$ \\
 \midrule
-$B_1$ det. baseline ($H{=}0$) & 5{,}591 & $-0.041$ & $-0.15$ & $<10^{-200}$ \\
-$B_2$ low uncertainty ($0{<}H{\le}0.76$) & 384 & $-0.074$ & $-0.18$ & $<10^{-3}$ \\
-$B_3$ high uncertainty ($H{>}0.76$) & 348 & $-0.127$ & $-0.34$ & $<10^{-9}$ \\
+$B_1$ det. baseline ($H{=}0$) & 6{,}203 & $-0.041$ & $-0.15$ & $<10^{-29}$ \\
+$B_2$ low uncertainty ($0{<}H{\le}0.72$) & 444 & $-0.092$ & $-0.21$ & $<10^{-4}$ \\
+$B_3$ high uncertainty ($H{>}0.72$) & 432 & $-0.135$ & $-0.36$ & $<10^{-12}$ \\
 \bottomrule
 \end{tabular}
 \caption{Empirical-entropy stratification. Each bias-score observation is grouped by the binary entropy of $P(\text{yes}|\text{baseline})$ across 10 reps. The three bins sum to 7,079 observations, not the full 8,387: observations from (model, item) pairs where fewer than 5 baseline reps parsed cleanly are dropped from this analysis. The author-label crosstab (Appendix~\ref{app:entropy_crosstab}) shows that 81\% of author-coded ``ambiguous'' items are actually in $B_1$ (model is confident at baseline), so the entropy strata do not coincide with the author labels.}
@@ -562,7 +562,7 @@ We emphasize that the per-model differences in the asymmetry ratio between origi
 Both token-level and semantic accounts remain compatible with the data; given the per-cell sample size ($n = 21$ items per model), we cannot statistically distinguish them.
 
 An analysis of the existing data adds a third factor.
-Items with higher baseline $P(\text{no})$ show modestly stronger negativity asymmetry (Pearson $r = 0.22$, $p < 10^{-7}$; Spearman $r = 0.08$, $p = 0.06$, n.s.; $n = 593$ item$\times$model pairs). The Pearson--Spearman split suggests the relationship is driven by a few high-leverage items rather than a monotone rank pattern, so we treat it as suggestive rather than confirmatory.
+Items with higher baseline $P(\text{no})$ show modestly stronger negativity asymmetry (Pearson $r = 0.22$, $p < 10^{-7}$; Spearman $r = 0.08$, $p = 0.03$; $n = 656$ item$\times$model pairs). The Pearson--Spearman split suggests the relationship is driven by a few high-leverage items rather than a monotone rank pattern, so we treat it as suggestive rather than confirmatory.
 Negative context does not create a tendency from scratch. It reinforces one the model already has.
 
 \begin{figure}[t]
@@ -755,7 +755,7 @@ Two follow-up studies would directly strengthen the claims here: (1) a non-evalu
 
 \section{Conclusion}
 
-AMEL shows up in every provider family I tested: 10 of 12 models are significant after Bonferroni. The overall magnitude is moderate ($d = -0.17$). What I find more troubling is where it concentrates---on the items where the model itself is uncertain at baseline, exactly the borderline cases where a judge most needs to be unbiased ($d = -0.34$ for high-entropy items). The asymmetry is real too: negative history pulls $1.52\times$ harder than positive in the paired test ($p < 10^{-37}$). And the shift is immediate. Five turns of biased history are enough; fifty do not deepen it.
+AMEL shows up in every provider family I tested: 10 of 12 models are significant after Bonferroni. The overall magnitude is moderate ($d = -0.17$). What I find more troubling is where it concentrates---on the items where the model itself is uncertain at baseline, exactly the borderline cases where a judge most needs to be unbiased ($d = -0.36$ for high-entropy items). The asymmetry is real too: negative history pulls $1.52\times$ harder than positive in the paired test ($p < 10^{-37}$). And the shift is immediate. Five turns of biased history are enough; fifty do not deepen it.
 
 The three follow-ups in Section~\ref{sec:mechanism} narrow what is plausibly going on. The probability distribution shifts continuously, not at a threshold. The negativity asymmetry has both token-level and semantic flavours, with a per-model balance I cannot disentangle at $n = 21$. Position within the conversation does not matter. None of these are definitive on their own---each experiment covers only 1--2 models in one domain (Section~\ref{sec:limitations})---but together they narrow the space of explanations meaningfully.
 
@@ -802,7 +802,7 @@ The author thanks the five external annotators---annotator A, Marija Gavrilović
 \begin{figure}[h]
     \centering
     \includegraphics[width=\columnwidth]{figures/fig9_contrast_assimilation.pdf}
-    \caption{Two regimes. For congruent items (context polarity matches item ground truth), the model conforms to the context (assimilation, $\bar{BS} > 0$). For incongruent items (context polarity opposes the item), the model resists (contrast, $\bar{BS} < 0$). Difference: $d = 0.54$, $p < 10^{-77}$.}
+    \caption{Two regimes. For congruent items (context polarity matches item ground truth), the model conforms to the context (assimilation, $\bar{BS} > 0$). For incongruent items (context polarity opposes the item), the model resists (contrast, $\bar{BS} < 0$). Difference: $d = 0.56$, $p < 10^{-92}$.}
     \label{fig:contrast}
 \end{figure}
 
@@ -870,7 +870,7 @@ These illustrate the \textbf{incongruent / resistance} regime described in Secti
 In the baseline condition, the model says ``no'' on all 10 repetitions (the items are dismissive or inflammatory comments, plausibly inappropriate even though the author ground-truth coding is ``yes'' to enable directional measurement).
 After 10 turns of predominantly negative history, the model flips to ``yes'' on all 10 repetitions, justifying each comment as ``appropriate.''
 Because the bias-score formula targets the saturated polarity ($r^* = \text{no}$ for no-saturated), the resulting $BS = P(\text{no}|\text{treat}) - P(\text{no}|\text{base}) = 0 - 1 = -1.00$ reflects the model shifting \textit{away} from the context polarity, not toward it.
-This is the same resistance pattern that the aggregate $\bar{BS} = -0.110$ on incongruent items captures (Section~\ref{sec:assimilation}); these specific items are extreme exemplars because they sit at baseline P(no) $= 1$ where any cross-context shift is bounded toward negative $BS$.
+This is the same resistance pattern that the aggregate $\bar{BS} = -0.116$ on incongruent items captures (Section~\ref{sec:assimilation}); these specific items are extreme exemplars because they sit at baseline P(no) $= 1$ where any cross-context shift is bounded toward negative $BS$.
 In these five qualitative examples the treatment responses introduce new justifications (``expresses an opinion without violating guidelines,'' ``a critique, assuming it is expressed respectfully'') that are absent in the baseline rejections, suggesting that even when the model flips, it generates content-specific text rather than only swapping the yes/no token; a systematic test of whether this generalizes is left to future work.
 
 \input{qualitative_examples.tex}
@@ -965,7 +965,7 @@ Per-polarity rates: baseline 9.71\%, no-saturated 6.29\%, yes-saturated 7.38\%, 
 DeepSeek V4 Flash, added in v2 of this paper, is the cleanest model on the panel by this measure (4 unparseable out of 8,190 = 0.05\%), pulling the overall rate down from the v1 figure of 7.85\%.
 The baseline excess is the largest single contributor, with the implication that the BS = $P(\text{treat}) - P(\text{base})$ contrast is computed from a slightly more parser-attrited baseline than treatment.
 
-Per-model breakdown identifies Claude Opus 4.6 as the dominant source: it has 21.7--23.2\% unparseable across every condition (the model produces verbose conditional responses, e.g., ``This depends on \ldots'' that resist binary extraction even with the v2 symmetric parser; see Appendix~\ref{app:parser}).
+Per-model breakdown identifies two dominant sources: Qwen3 30B (28.4\% unparseable, 2{,}246 rows) and Claude Opus 4.6 (22.3\%, 1{,}822 rows). Qwen3 30B is the larger single contributor; both produce verbose conditional responses (e.g., ``This depends on \ldots'' that resist binary extraction even with the v2 symmetric parser; see Appendix~\ref{app:parser}).
 Within Opus the rate is roughly MAR (no significant cross-condition variation for that single model), so Opus contributes proportionally less to the BS pool but not systematically more toward one polarity.
 
 We re-ran the headline analysis with Opus excluded as a sensitivity check: overall $d = -0.17$ (unchanged to two decimal places), asymmetry ratio $1.61\times$ (unchanged), and the per-domain ordering preserved.

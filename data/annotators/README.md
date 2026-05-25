@@ -62,7 +62,7 @@ themselves.
 
 The primary per-category analysis in the paper uses the **majority
 vote of the five annotators** as the item's category. Items with no
-clear majority (a 2-2-1 split — the only kind of tie that can occur
+clear majority (a 2-2-1 split, the only kind of tie that can occur
 with five raters on three categories) are marked `tie: true` and are
 not assigned a category for that analysis; they are included in all
 analyses that do not depend on per-category labels (overall effect
