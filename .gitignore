@@ -59,3 +59,4 @@ data/annotators/_identities.md
 data/annotators/_excluded/
 client_secret*.json
 *.json.credentials
+results-*.json
