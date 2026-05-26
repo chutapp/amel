@@ -114,7 +114,7 @@ useful.
 6. At the end, the page will download a `results-<your-name>.json`
    file to your Downloads folder.
 7. **Send that JSON file back to the person who hired you, via
-   Upwork chat (paperclip icon to attach).**
+   the messaging channel the hirer used.**
 
 If your browser blocks the download, allow it for this local file
 and click the download button again.
@@ -671,7 +671,7 @@ HTML = r"""<!DOCTYPE html>
     <h2>All done. Thank you.</h2>
     <p>Click the button below to download a JSON file with your
        ratings, then send that file back to the person who hired
-       you via Upwork chat (paperclip icon to attach).</p>
+       you via the messaging channel the hirer used.</p>
     <p id="done-summary" style="color:var(--muted);font-size:14px"></p>
     <button id="btn-download">Download results file</button>
     <p style="margin-top:18px;font-size:13px;color:var(--muted)">

@@ -41,7 +41,7 @@ useful.
 6. At the end, the page will download a `results-<your-name>.json`
    file to your Downloads folder.
 7. **Send that JSON file back to the person who hired you, via
-   Upwork chat (paperclip icon to attach).**
+   the messaging channel they used to send you this package.**
 
 If your browser blocks the download, allow it for this local file
 and click the download button again.

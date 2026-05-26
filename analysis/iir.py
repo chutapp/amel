@@ -1,7 +1,7 @@
 """Inter-rater reliability for the AMEL 63-item categorization.
 
 Reads the four pseudonymized annotator files under data/annotators/anon_*.json
-(produced by the Upwork annotation task), computes:
+(produced by the external annotation task), computes:
 
   - Krippendorff's alpha (overall + per domain), nominal level
   - Fleiss' kappa (overall + per domain)
@@ -126,7 +126,7 @@ def majority_vote(item_ids: list[str], per_annot: dict[str, dict[str, str]]) -> 
 
 def author_labels(item_ids: list[str]) -> dict[str, str]:
     """Recover the author's original category for each pseudonymized item_id."""
-    # The Upwork form anonymises item_id (item_001 ..). The mapping back to the
+    # The annotation form anonymises item_id (item_001 ..). The mapping back to the
     # original test_item_id is in data/annotator_id_mapping.json. The original
     # test_item_id encodes the category via its suffix (_cp, _amb, _cn).
     if not ITEM_ID_MAPPING.exists():

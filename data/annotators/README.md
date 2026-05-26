@@ -19,7 +19,7 @@ designed to be reusable by other researchers.
 
 ## Methodology summary
 
-- **Recruitment.** Five annotators recruited via Upwork in May 2026
+- **Recruitment.** Five annotators recruited via an online freelance platform in May 2026
   with prior NLP / CS / data-science experience (filter: ≥80 % job-success
   score). All five signed digital consent allowing publication and
   public dataset release.
