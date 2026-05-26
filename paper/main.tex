@@ -72,14 +72,14 @@ The design is simple. Each item is presented either alone (baseline) or after $N
 
 A few clarifications up front. AMEL is not sycophancy \cite{sharma2024understanding}: no user opinion is expressed in the prompts; the model conforms to \textit{its own} previous answers. It is not the majority-label bias of few-shot classification \cite{zhao2021calibrate} either---the prior turns here are full question-answer exchanges on varied topics within the domain, not labelled demonstrations. And it is not anchoring in the \citet{jones2024anchoring} sense: no number is supplied; what shifts the model is the aggregate \textit{tone} of the conversation rather than an explicit reference value.
 
-Our main findings:
+Main findings:
 \begin{enumerate}
     \item AMEL appears across all five provider families tested. Across 12 models, conversation history pulls responses toward its prevailing polarity ($d = -0.17$, $p < 10^{-54}$); 10 of 12 models show a significant effect after Bonferroni correction.
     \item Susceptibility tracks the model's own baseline uncertainty. Items where the model is genuinely uncertain at baseline (nonzero binary entropy of $P(\text{yes}|\text{baseline})$) absorb $\approx 2\times$ more bias than items where the baseline is deterministic ($d = -0.36$ vs.\ $d = -0.15$). The author-coded ``ambiguous'' label predicts bias size only because some author-ambiguous items are also empirically uncertain; among items the model already finds clear-cut, author labels add little (Section~\ref{sec:empirical_entropy}).
     \item Negative history biases more than positive history: paired per-item $|BS|$ ratio $1.52\times$ ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$). Marginal means give $\approx 2\times$ but mix item composition across cells; the paired test is the cleaner statistic.
     \item Bias saturates early. Five turns of skewed history produce the same shift as fifty (Spearman $|r| < 0.01$, $p = 0.92$; OLS slope $-4 \times 10^{-5}$ BS/turn, $p = 0.84$). The model recognizes the pattern fast and additional examples do not strengthen it.
     \item Larger models within provider families show less bias, but none are immune.
-    \item The effect is detected in all three tested domains, all significant after Bonferroni correction: code review ($d = -0.24$) $>$ meals ($d = -0.13$) $>$ content moderation ($d = -0.12$).
+    \item The effect is detected in all three tested domains, all significant after Bonferroni correction: code review ($d = -0.25$) $>$ meals ($d = -0.13$) $\approx$ content moderation ($d = -0.12$). For content moderation the parametric test is significant but the item-clustered bootstrap CI just touches zero, so the per-domain content-moderation magnitude is the most stimulus-sensitive of the three.
     \item Three characterization experiments (Section~\ref{sec:mechanism}) narrow the plausible mechanisms but do not isolate a single cause: the probability distribution shifts continuously rather than crossing a threshold, the negativity asymmetry has both token-level and semantic components (per-model attribution is exploratory at $n = 21$ items), and position within the conversation does not matter.
 \end{enumerate}
 
@@ -99,13 +99,13 @@ Our main findings:
 \paragraph{In-context learning bias.}
 \citet{zhao2021calibrate} showed that few-shot prompting introduces majority label bias and recency bias.
 \citet{tang2024robust} found these biases persist across model scales; \citet{agarwal2024many} showed that many-shot learning can overcome some of them.
-Our work extends this line into multi-turn conversation, where the ``demonstrations'' are not formatted label examples but complete dialogues.
+This work extends this line into multi-turn conversation, where the ``demonstrations'' are not formatted label examples but complete dialogues.
 
 \paragraph{Position and order bias.}
 \citet{wang2024fair} demonstrated that LLM evaluators exhibit strong position bias: swapping the order of candidate answers can change win rates by up to 75\%.
 \citet{liu2024lost} showed that models attend disproportionately to information at the beginning and end of long contexts, degrading performance on middle content.
 \citet{chowdhury2026lost} recently argued that this U-shaped attention curve is an inherent geometric property of causal decoders, present at initialization before any training.
-AMEL is a related but distinct phenomenon: as we show in Section~\ref{sec:positional}, the position of biased turns within the conversation does not matter (START $\approx$ END $\approx$ SPREAD), so the U-shaped attention curve does not directly explain the polarity-bias effect we document.
+AMEL is a related but distinct phenomenon: as I show in Section~\ref{sec:positional}, the position of biased turns within the conversation does not matter (START $\approx$ END $\approx$ SPREAD), so the U-shaped attention curve does not directly explain the polarity-bias effect I document.
 
 \paragraph{Conversational inertia and multi-turn degradation.}
 Two concurrent papers investigate related phenomena from different angles.
@@ -113,7 +113,7 @@ Two concurrent papers investigate related phenomena from different angles.
 ``Mitigating Conversational Inertia'' \cite{convoinertia2026} coins the term for agent settings and proposes mitigation strategies.
 \citet{echterhoff2024cognitive} study sequential cognitive biases (anchoring, framing, group attribution) in LLM decision-making, finding that the order and framing of preceding information systematically shifts outputs.
 \citet{laban2025lost} document broader multi-turn degradation at Microsoft Research, showing that model performance declines systematically as conversation length increases.
-We complement these mechanistic accounts with a large-scale empirical study: 12 models, 3 domains, systematic variation of context length and polarity.
+I complement these mechanistic accounts with a large-scale empirical study: 12 models, 3 domains, systematic variation of context length and polarity.
 
 \paragraph{Sycophancy.}
 The tendency of LLMs to agree with users has received substantial attention \cite{sharma2024understanding, hong2025measuring, jain2025interaction}.
@@ -130,24 +130,24 @@ Several studies document a ``no'' tendency in LLM binary decisions.
 \citet{cheung2025amplified} document yes-no response bias in LLMs using cognitive science paradigms (PNAS), confirming the phenomenon across multiple model families and tracing it to RLHF fine-tuning.
 \citet{negbias2025nasa} traces this to attention score patterns; \citet{negbias2025multifacet} shows chain-of-thought amplifies it; \citet{sysbias2025binary} finds binary formats produce more negative judgments than continuous scales.
 \citet{bowen2024tokenbias} demonstrate a related surface-level effect: changing tokens while preserving logical content shifts model outputs, establishing that token-level preferences can operate independently of semantic reasoning.
-Our negativity asymmetry fits this picture, though we cannot separate a pre-existing ``no'' tendency from alternative explanations (e.g., context salience) with the present data.
+My negativity asymmetry fits this picture, though I cannot separate a pre-existing ``no'' tendency from alternative explanations (e.g., context salience) with the present data.
 
 \paragraph{Threshold priming.}
 \citet{thresholdpriming2024} demonstrated that in batch relevance assessment, the quality of previously judged documents shifts the threshold for subsequent ones.
-Our work extends this to multi-turn conversation with controlled polarity and systematic model comparison.
-\citet{priorsensitivity2025} examined multi-turn sensitivity across GPT, Claude, and Gemini, finding effects that match ours and reporting accuracy degradation of up to 73\% when items are evaluated within accumulated prior context rather than in isolation, supporting our primary recommendation.
+This work extends this to multi-turn conversation with controlled polarity and systematic model comparison.
+\citet{priorsensitivity2025} examined multi-turn sensitivity across GPT, Claude, and Gemini, finding effects that match the present results and reporting accuracy degradation of up to 73\% when items are evaluated within accumulated prior context rather than in isolation, supporting my primary recommendation.
 
 \paragraph{LLM-as-judge and cognitive bias.}
 \citet{wang2024justice} taxonomizes 12 bias types in LLM judges (position, verbosity, self-enhancement, and others).
 \citet{cogbias2024survey} surveys anchoring and priming effects; \citet{cbeval2024} proposes evaluation frameworks for them.
 \citet{bscore2025} introduces \textsc{B-score}, a response-history-based de-biasing method that is operationally similar but conceptually inverse: they compute a score from the model's prior responses to detect when the next response is likely biased, and use that score to correct or veto the output.
-The mechanism we document is what makes their method possible: AMEL is the bias-creation channel ($P(r|\text{history})$ deviates from $P(r|\text{fresh})$); B-score is a bias-detection consumer of that same channel.
-The two are not double-counting. A deployment that adopts our primary recommendation (fresh contexts) eliminates the channel and obviates the need for B-score. A deployment that requires batched evaluation for cost reasons can use B-score as a runtime corrector against the residual drift.
-Similarly, the logprobs-based response-bias correction of \citet{bhatt2026rbcorr} operates on the same continuous probability shift we document in Section~\ref{sec:logprobs} and would be a natural complement when fresh contexts are infeasible.
+The mechanism I document is what makes their method possible: AMEL is the bias-creation channel ($P(r|\text{history})$ deviates from $P(r|\text{fresh})$); B-score is a bias-detection consumer of that same channel.
+The two are not double-counting. A deployment that adopts my primary recommendation (fresh contexts) eliminates the channel and obviates the need for B-score. A deployment that requires batched evaluation for cost reasons can use B-score as a runtime corrector against the residual drift.
+Similarly, the logprobs-based response-bias correction of \citet{bhatt2026rbcorr} operates on the same continuous probability shift I document in Section~\ref{sec:logprobs} and would be a natural complement when fresh contexts are infeasible.
 
 \paragraph{Drift equilibria.}
 \citet{dongre2025drift} show that context drift in multi-turn interactions stabilizes at equilibria rather than growing indefinitely.
-Our flat accumulation curve (Section~\ref{sec:accumulation}) fits this framework.
+My flat accumulation curve (Section~\ref{sec:accumulation}) fits this framework.
 
 
 \section{Methodology}
@@ -155,8 +155,8 @@ Our flat accumulation curve (Section~\ref{sec:accumulation}) fits this framework
 
 \subsection{Experimental Design}
 
-We use a between-subjects design.
-The same test items appear under different context conditions, and we measure whether the context shifts the model's response.
+I use a between-subjects design.
+The same test items appear under different context conditions, and I measure whether the context shifts the model's response.
 
 \paragraph{Conditions.}
 Each test item is evaluated under four conditions (Figure~\ref{fig:design}):
@@ -170,11 +170,11 @@ Each test item is evaluated under four conditions (Figure~\ref{fig:design}):
 The 10\% minority responses in saturated conditions serve two purposes: they prevent trivially uniform histories, and they better approximate realistic evaluation sequences where not every item receives the same verdict.
 
 \paragraph{Context length.}
-We vary $N \in \{5, 10, 20, 50\}$ to test whether bias grows with exposure.
+I vary $N \in \{5, 10, 20, 50\}$ to test whether bias grows with exposure.
 
 \paragraph{Repetitions and randomization.}
 Each condition runs 10 times at temperature $T = 1.0$.
-We chose 10 repetitions based on pilot testing: at $T = 1.0$, baseline responses showed 95.9\% majority agreement across repetitions, indicating that 10 trials provide adequate signal for detecting shifts of the magnitude we observe while keeping API costs tractable ($\approx$76K calls total in the main experiment).
+I chose 10 repetitions based on pilot testing: at $T = 1.0$, baseline responses showed 95.9\% majority agreement across repetitions, indicating that 10 trials provide adequate signal for detecting shifts of the magnitude observed while keeping API costs tractable ($\approx$84K calls total in the main experiment after deduplication).
 Context items are sampled and shuffled with a deterministic seed per condition to control for order effects.
 
 \begin{figure*}[t]
@@ -187,7 +187,7 @@ Context items are sampled and shuffled with a deterministic seed per condition t
 \subsection{Evaluation Domains}
 \label{sec:domains}
 
-We test three binary evaluation domains that span different judgment types:
+I test three binary evaluation domains that span different judgment types:
 
 \paragraph{Code review.}
 The model acts as a senior code reviewer, answering ``Is this code production-ready?'' Items range from well-structured code with proper validation to code riddled with SQL injection, hardcoded secrets, and race conditions.
@@ -201,7 +201,7 @@ The model answers ``Is this a healthy choice?'' for meals ranging from grilled s
 Each domain provides 55 clearly positive and 55 clearly negative items for constructing context histories, plus 21 test items in three categories:
 \begin{itemize}
     \item \textbf{Clear positive} (7 items): Unambiguously good. Expected answer: ``yes.''
-    \item \textbf{Ambiguous} (7 items): Genuinely borderline cases. We code ground truth as ``yes'' to enable directional measurement, but these items are designed so that either answer is defensible. See Section~\ref{sec:limitations} for discussion of this coding choice.
+    \item \textbf{Ambiguous} (7 items): Genuinely borderline cases. I code ground truth as ``yes'' to enable directional measurement, but these items are designed so that either answer is defensible. See Section~\ref{sec:limitations} for discussion of this coding choice.
     \item \textbf{Clear negative} (7 items): Unambiguously bad. Expected answer: ``no.''
 \end{itemize}
 
@@ -210,12 +210,12 @@ The author wrote initial category labels, then re-classified all 63 items (21 pe
 The three disagreements, all on the boundary between ``ambiguous'' and ``clear,'' were resolved by re-examination and a written justification recorded in the repository.
 
 \paragraph{External inter-rater validation.}
-Five external annotators recruited via Upwork (NLP / CS / data-science backgrounds, compensated at $\sim$\$40 / hour, full demographics released with the dataset) independently rated all 63 items into the same three categories, blind to the author labels and to one another. Inter-rater agreement is moderate overall (Krippendorff's $\alpha = 0.53$, Fleiss' $\kappa = 0.53$, full 5-way agreement on 41\% of items) and varies sharply by domain: meals $\alpha = 0.70$ (right at the conventional $\alpha \geq 0.67$ NLP threshold), content moderation $\alpha = 0.62$, code review $\alpha = 0.28$. The lowest-agreement domain coincides with the most contested judgment (``is this code production-ready?''), which is itself consistent with this paper's core claim that ambiguous items are where the action is. For the per-category analyses in Section~\ref{sec:results} we use the majority-vote label across the five external annotators; items with no clear majority --- $n = 3$, all of them 2-2-1 splits --- are excluded from per-category analyses but retained for overall, polarity, accumulation, contrast, and empirical-entropy analyses. Adjudication moved 10 items from ``ambiguous'' (author) to ``clear positive'' (majority); the headline statistics do not change under the relabelling (overall $d = -0.17$ unchanged; bootstrap 95\% CI $[-0.19, -0.15]$). The full per-annotator ratings, the codebook, and the agreement breakdown are released at \url{https://github.com/chutapp/amel/tree/main/data/annotators}.
+Five external annotators recruited via an online freelance platform (NLP / CS / data-science backgrounds, compensated at $\sim$\$40 / hour) independently rated all 63 items into the same three categories, blind to the author labels and to one another. Inter-rater agreement is moderate overall (Krippendorff's $\alpha = 0.53$, Fleiss' $\kappa = 0.53$, full 5-way agreement on 41\% of items) and varies sharply by domain: meals $\alpha = 0.69$ (right at the conventional $\alpha \geq 0.67$ NLP threshold), content moderation $\alpha = 0.62$, code review $\alpha = 0.28$. The lowest-agreement domain coincides with the most contested judgment (``is this code production-ready?''), which is itself consistent with this paper's core claim that ambiguous items are where the action is. For the per-category analyses in Section~\ref{sec:results} I use the majority-vote label across the five external annotators; items with no clear majority --- $n = 3$, all of them 2-2-1 splits --- are excluded from per-category analyses but retained for overall, polarity, accumulation, contrast, and empirical-entropy analyses. Adjudication moved 10 items from ``ambiguous'' (author) to ``clear positive'' (majority); the headline statistics do not change under the relabelling (overall $d = -0.17$ unchanged; item-clustered bootstrap 95\% CI $[-0.21, -0.13]$). The full per-annotator ratings, the codebook, and the agreement breakdown are released at \url{https://github.com/chutapp/amel/tree/main/data/annotators}.
 
 \subsection{Models Tested}
 \label{sec:models}
 
-We test 12 models from 5 providers, covering a range of scales (Table~\ref{tab:models}).
+I test 12 models from 5 providers, covering a range of scales (Table~\ref{tab:models}).
 
 \begin{table}[t]
 \centering
@@ -245,7 +245,7 @@ DeepSeek & DeepSeek V4 Flash & \texttt{deepseek-chat}\textsuperscript{$\#$} & 8{
 \bottomrule
 \end{tabular}%
 }
-\caption{Models tested with exact API identifiers. $n$ = unique-condition API calls per model after deduplication. $\dagger$Gemini models have partial data due to daily API quota limits. $\ddagger$\texttt{thinkingBudget=0}. $\S$\texttt{thinkingBudget=256} (minimum the API permits). $\P$Qwen3 30B has 8,190 conditions scheduled; 7,918 distinct conditions were completed before a disk-full crash and post-resume; 2,186 duplicate-condition rows from a concurrent-resume bug were removed (see Appendix~\ref{app:dedup}). $\#$\texttt{deepseek-chat} is DeepSeek's flagship-non-reasoning alias; during the 2026-05-25 collection window it resolved to DeepSeek V4 Flash. API calls from the four originally-tested providers were collected between 2026-03-09 and 2026-03-22.}
+\caption{Models tested with exact API identifiers. $n$ = unique-condition API calls per model after deduplication. $\dagger$Gemini models have partial data due to daily API quota limits. $\ddagger$\texttt{thinkingBudget=0}. $\S$\texttt{thinkingBudget=256} (minimum the API permits). $\P$Qwen3 30B has 8,190 conditions scheduled; 7,918 distinct conditions were completed before a disk-full crash and post-resume; 2,186 duplicate-condition rows from a concurrent-resume bug were removed (see Appendix~\ref{app:dedup}). $\#$\texttt{deepseek-chat} is DeepSeek's flagship-non-reasoning alias; during the 2026-05-25 collection window it resolved to DeepSeek V4 Flash. API calls from the four originally-tested providers were collected between 2026-03-09 and 2026-03-22. Live API fingerprints captured 2026-05-26 (provided so that future re-runs can verify model identity at the rare-deployment level): \texttt{gpt-4.1-nano} $\to$ \texttt{gpt-4.1-nano-2025-04-14} (system fingerprint \texttt{fp\_7cb452fdd4}); \texttt{gpt-5.2} $\to$ \texttt{gpt-5.2-2025-12-11}; \texttt{deepseek-chat} $\to$ \texttt{deepseek-v4-flash} (system fingerprint \texttt{fp\_8b330d02d0\_prod0820\_fp8\_kvcache\_20260402}). Anthropic's API list-endpoint does not currently expose dated suffixes for the \texttt{claude-sonnet-4-6} / \texttt{claude-opus-4-6} aliases, so those rows cannot be pinned beyond the alias; future re-runs against the same alias may resolve to a silently-updated underlying model.}
 \label{tab:models}
 \end{table}
 
@@ -256,7 +256,7 @@ Local models run via Ollama.
 \subsection{Bias Score}
 \label{sec:bias_score}
 
-For each test item $i$, model $m$, polarity $p$, and context length $l$, we define the bias score as:
+For each test item $i$, model $m$, polarity $p$, and context length $l$, I define the bias score as:
 \begin{equation}
     BS_{i,m,p,l} = P(r^* \mid \text{treatment}_{p,l}) - P(r^* \mid \text{baseline})
 \end{equation}
@@ -266,34 +266,35 @@ A positive bias score means the model shifted \textit{toward} the saturated pola
 
 \subsection{Response Parsing}
 
-We extract binary yes/no judgments with a multi-strategy parser: first checking the opening word for explicit yes/no, then applying regex patterns to the first sentence, and falling back to position-weighted keyword counting.
-Responses that resist parsing are excluded (unparseable rate: 8.3\%, concentrated in local models that occasionally produce malformed output).
+I extract binary yes/no judgments with a multi-strategy parser: first checking the opening word for explicit yes/no, then applying regex patterns to the first sentence, and falling back to position-weighted keyword counting.
+Responses that resist parsing are excluded (unparseable rate: 7.09\%, concentrated in Qwen3 30B and Claude Opus 4.6 which produce malformed or verbose conditional output; see Appendix~\ref{app:unparseable}).
 
 \subsection{Statistical Analysis}
 
 \paragraph{Sample size justification.}
 With 8,387 bias score observations, the marginal one-sample $t$-test treating each observation as independent has $>$99\% power to detect $d = 0.10$ at $\alpha = 0.05/21$.
 This is an overstatement because observations are nested 10-deep within (model, item, condition) baselines; the bias-score construction collapses each 10-rep cell to a single $BS$ value (so the 8,387 figure is already at the cell level, not the per-call level), but cells within the same item or model remain correlated.
-The mixed-effects model in Section~\ref{sec:mixed} estimates an ICC of $0.031$ between models; using the Kish design effect $1 + (m-1)\,\text{ICC}$ with the average cluster size $m = 693$ per model gives an effective $n_\text{eff} \approx 8{,}387 / 22.5 \approx 339$.
-At $n_\text{eff} = 339$, 80\% power detects $d \approx 0.15$ at $\alpha = 0.05/21$, which is still below the observed overall $d = 0.17$.
-The smallest per-model subsample (Gemini Pro, $n = 402$ cells) provides $\approx 80\%$ power to detect $d = 0.20$ at the corrected $\alpha$, close to the smallest significant per-model effect we report.
+The crossed mixed-effects model in Section~\ref{sec:mixed} estimates ICC$_\text{model} = 0.026$ and ICC$_\text{item} = 0.066$; item-level clustering is the larger of the two non-residual variance components. Using the Kish design effect $1 + (m-1)\,\text{ICC}$ with the dominant (item-level) ICC and average cluster size $m = 8{,}387 / 63 \approx 133$ per item gives an effective $n_\text{eff} \approx 8{,}387 / (1 + 132 \cdot 0.066) \approx 870$.
+At $n_\text{eff} = 870$, 80\% power detects $d \approx 0.10$ at $\alpha = 0.05/21$, comfortably below the observed overall $d = 0.17$.
+The smallest per-model subsample (Gemini Pro, $n = 402$ cells) provides $\approx 80\%$ power to detect $d = 0.20$ at the corrected $\alpha$, close to the smallest significant per-model effect I report.
 
-We test $BS = 0$ (no bias) with one-sample $t$-tests for each grouping.
+I test $BS = 0$ (no bias) with one-sample $t$-tests for each grouping.
 Effect sizes are \cohend{} ($d = \bar{BS} / s_{BS}$).
-Confidence intervals: $\bar{BS} \pm 1.96 \cdot s_{BS}/\sqrt{n}$.
-We apply Bonferroni correction with a factor of 21, matching the count of primary group-level tests we report (1 overall + 11 per-model + 3 per-polarity + 3 per-domain + 3 per-category = 21).
-The same factor is applied consistently to secondary analyses for comparability.
+Parametric confidence intervals: $\bar{BS} \pm 1.96 \cdot s_{BS}/\sqrt{n}$.
+The headline Cohen's $d$ also carries an item-clustered nonparametric CI from a block bootstrap (1,000 resamples; sampling unit is item ID, all rows for each sampled item included), which respects the within-item correlation across (model, polarity, context-length) cells; this is the CI reported alongside the headline number.
+Bonferroni correction uses a factor of 22, matching the count of primary group-level tests reported (1 overall + 12 per-model + 3 per-polarity + 3 per-domain + 3 per-category = 22); secondary analyses use the same factor for comparability, which is conservative under positive dependence among the tests.
 The negativity asymmetry is tested with a paired $t$-test on absolute bias scores per item.
+The contrast-vs-assimilation comparison is tested with a paired $t$-test on per-item mean BS (one paired observation per item, $n = 63$), respecting the shared-stimulus design; an unpaired Welch version is reported as a sensitivity check.
 Accumulation is assessed via Spearman rank correlation between context length and bias score.
 
 
 \section{Results}
 \label{sec:results}
 
-We collected 84,088 API responses (86,274 raw responses; 2,186 duplicate-condition rows from a concurrent-resume bug on the Qwen3 30B run were deduplicated, keeping the first occurrence per condition; see Appendix~\ref{app:dedup}).
+I collected 84,088 API responses (86,274 raw responses; 2,186 duplicate-condition rows from a concurrent-resume bug on the Qwen3 30B run were deduplicated, keeping the first occurrence per condition; see Appendix~\ref{app:dedup}).
 After dropping unparseable outputs (7.09\%, concentrated in Claude Opus 4.6 which produces verbose conditional responses that resist binary extraction), 8,387 bias score observations remain.
 The unparseable rate differs across conditions ($\chi^2 = 96.58$, $p < 10^{-20}$, $df = 3$): baseline 9.71\%, no-saturated 6.29\%, yes-saturated 7.38\%, neutral 6.96\%.
-We report the differential rate explicitly and discuss its MAR/MNAR implications in Appendix~\ref{app:unparseable}; the headline conclusions are robust to per-model exclusion of Opus (which contributes most unparseable rows).
+I report the differential rate explicitly and discuss its MAR/MNAR implications in Appendix~\ref{app:unparseable}; the headline conclusions are robust to per-model exclusion of Opus (which contributes most unparseable rows).
 Each observation aggregates 10 repetitions of a unique item $\times$ model $\times$ polarity $\times$ context-length combination against its baseline.
 Baseline consistency across repetitions averages 96.9\%, confirming that $T = 1.0$ introduces enough variance to be informative without drowning out the signal.
 Table~\ref{tab:summary} gives the headline numbers.
@@ -307,7 +308,7 @@ Table~\ref{tab:summary} gives the headline numbers.
 \textbf{Finding} & $d$ & $p$ & \textbf{Key number} \\
 \midrule
 Overall effect & $-0.17$ & $<10^{-54}$ & $\bar{BS} = -0.054$ \\
-High-entropy items & $-0.34$ & $<10^{-9}$ & Hardest hit \\
+High-entropy items & $-0.36$ & $<10^{-12}$ & Hardest hit \\
 Negativity asymmetry & --- & $<10^{-37}$ & paired $1.52\times$ \\
 Accumulation & --- & $0.92$ & Spearman $|r|<0.01$ \\
 Scaling (Anthropic) & \multicolumn{3}{l}{$-0.22 \to -0.18 \to -0.17$} \\
@@ -320,13 +321,13 @@ Scaling (Anthropic) & \multicolumn{3}{l}{$-0.22 \to -0.18 \to -0.17$} \\
 \subsection{The Effect Is Real}
 \label{sec:overall}
 
-The overall bias score is $\bar{BS} = -0.054$ (95\% CI: $[-0.062, -0.046]$; $t(8386) = -15.68$, $p < 10^{-54}$, $d = -0.17$, bootstrap 95\% CI on $d$: $[-0.19, -0.15]$ from 1{,}000 item-level resamples).
+The overall bias score is $\bar{BS} = -0.054$ (95\% CI: $[-0.062, -0.046]$; $t(8386) = -15.68$, $p < 10^{-54}$, $d = -0.17$, item-clustered bootstrap 95\% CI on $d$: $[-0.21, -0.13]$ from 1{,}000 block-bootstrap resamples of items).
 The bias-induced flip rate is $15.3\%$: across all (model, item, polarity, context-length) cells, the modal treatment response differs from the modal baseline response on $1{,}280 / 8{,}387 = 15.3\%$ of cells (consistency rate $\mathrm{CR} = 84.7\%$; $\mathrm{CR} = 70.7\%$ in code review, $89.1\%$ in content moderation, $93.6\%$ in meals; per-polarity $\mathrm{CR}$ is lowest under no-saturated context at $81.9\%$).
 The negative sign means that, on aggregate, treatment contexts push models toward ``no'' compared to baseline, regardless of whether the context was positive, negative, or neutral.
 
 Two things drive this aggregate negative direction.
 First, no-saturated contexts do what you would expect: they push models further toward ``no'' (conforming bias).
-Second, yes-saturated contexts fail to push models equivalently toward ``yes'' (the negativity asymmetry we unpack in Section~\ref{sec:polarity}).
+Second, yes-saturated contexts fail to push models equivalently toward ``yes'' (the negativity asymmetry I unpack in Section~\ref{sec:polarity}).
 
 \subsection{Bigger Models, Less Bias (Usually)}
 \label{sec:models_results}
@@ -345,12 +346,12 @@ Bigger models are harder to sway, but none reach zero.
 \paragraph{Gemini reverses the trend.}
 Gemini 2.5 Pro ($d = -0.27$) shows \textit{more} bias than Flash ($d = -0.18$), not less.
 Pro's mandatory thinking tokens (minimum 256) may give it more opportunity to attend to conversation patterns, amplifying rather than damping the effect.
-But the Gemini sample sizes are small (990--1,470 calls vs.\ 8,190 for other models), so we flag this result as tentative.
+But the Gemini sample sizes are small (990--1,470 calls vs.\ 8,190 for other models), so I flag this result as tentative.
 
 \paragraph{Qwen3 4B goes the other way.}
 Qwen3 4B ($d = +0.19$, $p < 10^{-6}$) is the only model with significant \textit{contrarian} bias after Bonferroni correction: it shifts opposite to the conversation polarity.
 This looks like overcorrection, possibly from instruction tuning that penalizes repetitive patterns.
-The larger Qwen3 30B trends in the same direction but does not reach significance under the conservative first-occurrence dedup ($d = +0.10$, $p_\text{corr} = 0.17$); alternative dedup strategies (last-occurrence, random selection) give $d = +0.17$ to $+0.22$ with $p < 10^{-5}$ (Appendix~\ref{app:dedup}), so the contrarian pattern may persist at scale within this model family but our published per-model estimate is conservative.
+The larger Qwen3 30B trends in the same direction but does not reach significance under the conservative first-occurrence dedup ($d = +0.10$, $p_\text{corr} = 0.17$); alternative dedup strategies (last-occurrence, random selection) give $d = +0.17$ to $+0.22$ with $p < 10^{-5}$ (Appendix~\ref{app:dedup}), so the contrarian pattern may persist at scale within this model family but my published per-model estimate is conservative.
 
 \begin{figure*}[t]
     \centering
@@ -366,7 +367,8 @@ Item difficulty modulates the effect (Figure~\ref{fig:category}).
 Author-coded ambiguous items take the biggest hit: $\bar{BS} = -0.111$, $d = -0.28$, $p < 10^{-48}$.
 Clear positives show a moderate effect: $\bar{BS} = -0.056$, $d = -0.16$, $p < 10^{-16}$.
 Clear negatives do not move: $\bar{BS} = +0.004$, $d = +0.03$, $p_\text{corrected} = 1.00$.
-Section~\ref{sec:empirical_entropy} re-runs this analysis with empirical baseline uncertainty as the stratifier rather than author labels, and finds the underlying pattern is even sharper: the effect on items the model is genuinely uncertain about is twice as large as the effect on items it already calls confidently.
+These per-category numbers pool across the three domains; the per-domain code-review category labels in particular carry an external IRR of $\alpha = 0.28$ (Section~\ref{sec:domains}), so a per-category breakdown \emph{within} code review would be unreliable and is not reported. The pooled per-category result above is robust to dropping the code-review domain entirely (the same ordering ambiguous $>$ clear-positive $>$ clear-negative holds on the content-moderation $+$ meals subset where $\alpha \geq 0.62$).
+Section~\ref{sec:empirical_entropy} re-runs this analysis with empirical baseline uncertainty (the model's own behavior) as the stratifier rather than author labels, and finds the underlying pattern is even sharper. I treat the empirical-entropy version as the headline ``ambiguity absorbs bias'' result and the author-category version above as a secondary view useful for comparability with prior LLM-judge studies that rely on author labels.
 
 The pattern suggests a decision-boundary account.
 When a model's internal confidence is high, the contextual signal cannot override it.
@@ -388,7 +390,7 @@ A code reviewer that handles obvious bugs fine but becomes unreliable on borderl
 \label{sec:domain}
 
 The effect size varies across domains (Figure~\ref{fig:domain}).
-Code review is most affected ($\bar{BS} = -0.111$, $d = -0.24$, $p < 10^{-31}$), followed by meals ($\bar{BS} = -0.024$, $d = -0.13$, $p < 10^{-9}$) and content moderation ($\bar{BS} = -0.031$, $d = -0.12$, $p_\text{corrected} < 10^{-7}$).
+Code review is most affected ($\bar{BS} = -0.111$, $d = -0.25$, $p < 10^{-31}$, item-clustered 95\% CI $[-0.31, -0.19]$), followed by meals ($\bar{BS} = -0.024$, $d = -0.13$, $p < 10^{-9}$, CI $[-0.19, -0.04]$) and content moderation ($\bar{BS} = -0.031$, $d = -0.12$, $p_\text{corrected} < 10^{-7}$, CI $[-0.23, +0.01]$). The parametric and item-clustered intervals agree closely for code review and meals; for content moderation the parametric test is significant but the item-clustered CI just touches zero, so the per-domain content-moderation estimate is more sensitive to item composition than the other two. The meals--content-moderation difference is not significant (overlapping CIs); both domains show $|d| \approx 0.12$--$0.13$.
 All three are robustly significant after Bonferroni correction; the magnitude range is $2\times$ from code review to content moderation, so ``replicates'' should be read as ``detected in all three with varying magnitude'' rather than ``uniform.''
 
 Why code review?
@@ -400,7 +402,7 @@ Code review prompts are also longer and more complex, which may interact differe
 \begin{figure}[t]
     \centering
     \includegraphics[width=\columnwidth]{figures/fig4_domain_sensitivity.pdf}
-    \caption{Bias by domain. Code review shows the largest effect ($d = -0.24$); content moderation the smallest. Error bars: 95\% CIs.}
+    \caption{Bias by domain. Code review shows the largest effect ($d = -0.25$); content moderation the smallest. Error bars: 95\% CIs.}
     \label{fig:domain}
 \end{figure}
 
@@ -412,11 +414,11 @@ No-saturated contexts shift models by $\bar{BS} = -0.113$ ($d = -0.33$).
 Yes-saturated contexts shift models by $\bar{BS} = +0.053$ ($d = +0.20$).
 Comparing marginal means gives a ratio of $\approx 2.1\times$, but this confounds item composition between the two cells.
 The cleaner statistic is a paired per-item comparison: mean $|BS_\text{no}| = 0.169$ vs.\ $|BS_\text{yes}| = 0.111$, ratio $1.52\times$ ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$ pairs).
-We report the paired result as the headline statistic throughout.
+I report the paired result as the headline statistic throughout.
 
 An unexpected result: the neutral condition (50/50 history) also produces a negative shift ($\bar{BS} = -0.101$, $d = -0.33$), close in magnitude to the no-saturated condition.
 Apparently, \textit{any} conversation history, even balanced, pushes models toward ``no'' compared to a fresh start.
-One reading is that the presence of prior evaluation context triggers a more critical mode, independent of its content; this remains speculative because our ``neutral'' arm is itself composed of evaluative items (Section~\ref{sec:limitations}).
+One reading is that the presence of prior evaluation context triggers a more critical mode, independent of its content; this remains speculative because my ``neutral'' arm is itself composed of evaluative items (Section~\ref{sec:limitations}).
 
 The asymmetry aligns with the negativity literature \cite{braun2025acquiescence, negbias2025nasa}.
 If models already lean toward ``no'' in binary tasks, negative context reinforces this pull; positive context must fight against it.
@@ -434,13 +436,13 @@ If models already lean toward ``no'' in binary tasks, negative context reinforce
 Does more history mean more bias?
 No.
 The Spearman correlation between context length and bias score is essentially zero (overall $r_s = -0.001$, $p = 0.92$).
-Because Spearman over only four distinct $x$ values $\{5, 10, 20, 50\}$ is statistically blunt, we also fit an OLS regression of $BS$ on $\log_2(\text{context length})$ and on raw context length: both slopes are essentially zero (linear $\hat{\beta} = -4 \times 10^{-5}$ per turn, $p = 0.84$, $R^2 < 0.001$).
+Because Spearman over only four distinct $x$ values $\{5, 10, 20, 50\}$ is statistically blunt, I also fit an OLS regression of $BS$ on $\log_2(\text{context length})$ and on raw context length: both slopes are essentially zero (linear $\hat{\beta} = -4 \times 10^{-5}$ per turn, $p = 0.84$, $R^2 < 0.001$).
 Within polarities the picture is similar: no-saturated $r_s = 0.014$ ($p = 0.45$), yes-saturated $r_s = 0.034$ ($p = 0.07$). Neutral shows a tiny but significant negative slope ($r_s = -0.055$, $p = 0.004$), meaning balanced history drifts $\bar{BS}$ slightly more negative with length. Even at the upper bound of the neutral-arm slope, the predicted shift across 45 additional turns is well below the noise floor of the main experiment.
 Five turns of biased history produce the same shift as fifty (Figure~\ref{fig:accumulation}).
 
 A gradual Bayesian-updating account does not fit the data.
 The bias score does not slowly grow with context length; whatever process drives the shift appears to be saturated by five turns and remains flat thereafter.
-\citet{dongre2025drift} describe a similar equilibrium phenomenon in multi-turn interactions, and our data look exactly like their predicted stabilization pattern.
+\citet{dongre2025drift} describe a similar equilibrium phenomenon in multi-turn interactions, and my data look exactly like their predicted stabilization pattern.
 
 The practical implication: if you have any biased history, you already have the full bias.
 Adding more context does not make things worse, but it does not help either.
@@ -460,25 +462,25 @@ The full model$\times$context-length heatmap (Appendix~\ref{app:heatmap}) confir
 \label{sec:assimilation}
 
 Does AMEL work by \textit{assimilation} (pulling the model toward the prevailing polarity) or \textit{contrast} (pushing it away from the polarity for items that contradict the context)?
-We classify each bias observation as \textit{congruent} (the context polarity matches the item's ground truth, e.g., no-saturated context with a clear-negative item) or \textit{incongruent} (the opposite).
+I classify each bias observation as \textit{congruent} (the context polarity matches the item's ground truth, e.g., no-saturated context with a clear-negative item) or \textit{incongruent} (the opposite).
 Recall that the bias score is defined in the direction of the saturated polarity (Section~\ref{sec:bias_score}), so a positive $BS$ means ``shifted toward the saturated polarity'' (i.e., conformed) and a negative $BS$ means ``shifted away from it'' (i.e., resisted).
 
 The two regimes go in opposite directions.
 For congruent items, the model conforms: $\bar{BS} = +0.055$ (95\% CI $[+0.045, +0.065]$), an \textbf{assimilation} effect, where the saturated polarity reinforces the response the item already calls for.
-For incongruent items, the model resists: $\bar{BS} = -0.116$ (95\% CI $[-0.128, -0.104]$). We use the term \textbf{contrast} for this pattern in the section title and elsewhere because it is the conventional umbrella term for context-opposite shifts, but the mechanism is closer to item-level \textit{anchoring} than to classical psychophysical contrast: the model does not overcorrect \textit{past} baseline, it simply stays near the item's own evidence and refuses to be pulled toward the context.
-A two-sample $t$-test on the magnitude of the congruent--incongruent difference gives $t = 20.89$, $p < 10^{-92}$, $d = 0.56$ (Appendix~\ref{app:assimilation}).
+For incongruent items, the model resists: $\bar{BS} = -0.116$ (95\% CI $[-0.128, -0.104]$). I use the term \textbf{contrast} for this pattern in the section title and elsewhere because it is the conventional umbrella term for context-opposite shifts, but the mechanism is closer to item-level \textit{anchoring} than to classical psychophysical contrast: the model does not overcorrect \textit{past} baseline, it simply stays near the item's own evidence and refuses to be pulled toward the context.
+A paired-by-item $t$-test on the congruent--incongruent difference (one paired observation per item, $n = 63$) gives $t = 3.94$, $p < 10^{-3}$, $d = 0.50$ (Appendix~\ref{app:assimilation}); the unpaired Welch test gives $t = 20.89$, $p < 10^{-92}$, $d = 0.56$ but treats the same 63 stimuli as if they were independent across both groups and is reported as a sensitivity check only.
 
 This is a more layered pattern than pure assimilation.
 The conversation's polarity amplifies the model's response when it aligns with the item, but does not flip the model's verdict on clear-cut cases where the item points the other way.
-The threshold-priming account of \citet{thresholdpriming2024}, where exposure to high-quality documents raised the bar for subsequent ones, is a related cumulative-history effect; ours operates at the item--context congruence level rather than across the history.
+The threshold-priming account of \citet{thresholdpriming2024}, where exposure to high-quality documents raised the bar for subsequent ones, is a related cumulative-history effect; the AMEL account operates at the item--context congruence level rather than across the history.
 The practical implication is unchanged. Items where the model is uncertain are the ones that conform, and they are the same items that absorb the most bias in Section~\ref{sec:empirical_entropy}.
 
 \subsection{Empirical Uncertainty Predicts Susceptibility}
 \label{sec:empirical_entropy}
 
-Section~\ref{sec:category} stratified items by author-coded label. The author labels are correlated with, but not identical to, the model's own baseline uncertainty. Here we re-stratify by the empirical baseline entropy of $P(\text{yes}|\text{baseline})$ across 10 repetitions per (model, item) pair, $H = -p\log_2 p - (1{-}p)\log_2(1{-}p)$.
+Section~\ref{sec:category} stratified items by author-coded label. The author labels are correlated with, but not identical to, the model's own baseline uncertainty. Here I re-stratify by the empirical baseline entropy of $P(\text{yes}|\text{baseline})$ across 10 repetitions per (model, item) pair, $H = -p\log_2 p - (1{-}p)\log_2(1{-}p)$.
 
-The entropy distribution is bimodal: most (model, item) pairs have $H = 0$ (the model is deterministic at baseline), and a long tail spreads up to $H \approx 1$. We split into three bins: $\mathbf{B_1}$ deterministic baseline ($H = 0$), $\mathbf{B_2}$ low uncertainty ($0 < H \le 0.72$, the median of nonzero entropies), and $\mathbf{B_3}$ high uncertainty ($H > 0.72$).
+The entropy distribution is bimodal: most (model, item) pairs have $H = 0$ (the model is deterministic at baseline), and a long tail spreads up to $H \approx 1$. I split into three bins: $\mathbf{B_1}$ deterministic baseline ($H = 0$), $\mathbf{B_2}$ low uncertainty ($0 < H \le 0.72$, the median of nonzero entropies), and $\mathbf{B_3}$ high uncertainty ($H > 0.72$).
 
 The empirical stratification gives a sharper picture than the author labels (Table~\ref{tab:entropy_bins}). $B_3$ items show $d = -0.36$, more than twice the effect on $B_1$ items ($d = -0.15$). Across the entire $|BS|$ distribution, Spearman $r = 0.47$ between baseline entropy and $|BS|$ ($p < 10^{-300}$).
 
@@ -507,9 +509,9 @@ A mixed-effects model (Section~\ref{sec:mixed}) confirms these patterns while ac
 \subsection{Mixed-Effects Confirmation}
 \label{sec:mixed}
 
-To account for the hierarchical structure of our data (observations nested within models), we fit a linear mixed-effects model: $BS \sim \text{polarity} \times \text{category}$ with random intercepts for model.
+To account for the hierarchical structure of my data (observations nested within models), I fit a linear mixed-effects model: $BS \sim \text{polarity} \times \text{category}$ with random intercepts for model.
 The model confirms all major findings: the polarity$\times$category interaction is significant ($p < 0.001$), with yes-saturated$\times$clear-negative showing the strongest interaction ($\beta = -0.196$, $z = -9.88$, $p < 10^{-22}$).
-The between-model variance is small (ICC $= 0.031$): 10 of 12 models show a significant effect after Bonferroni correction, and the model-to-model differences in magnitude are modest relative to the within-model variation.
+The crossed-RE specification partitions variance into model (ICC $= 0.026$, 2.6\%), item (ICC $= 0.066$, 6.6\%), and residual: item-level clustering is roughly $2.5\times$ the between-model component, indicating that which 63 items happen to be in the panel matters more for an individual cell's bias score than which of the 12 models was queried. 10 of 12 models still show a significant effect after Bonferroni correction at the model level, and model-to-model differences in magnitude remain modest relative to within-model variation.
 
 
 \section{Characterizing AMEL}
@@ -517,14 +519,14 @@ The between-model variance is small (ICC $= 0.031$): 10 of 12 models show a sign
 
 The preceding sections establish that AMEL exists.
 This section narrows the plausible mechanisms with three targeted experiments (3,570 additional API calls) and one analysis of the existing data.
-We are deliberate about the language: the experiments distinguish between specific mechanistic hypotheses, but they do not in isolation prove a single mechanism.
-We use ``consistent with X'' to describe each result and clearly label the per-model attribution in Section~\ref{sec:flipped} as exploratory at the available sample sizes.
+I am deliberate about the language: the experiments distinguish between specific mechanistic hypotheses, but they do not in isolation prove a single mechanism.
+I use ``consistent with X'' to describe each result and clearly label the per-model attribution in Section~\ref{sec:flipped} as exploratory at the available sample sizes.
 
 \subsection{The Probability Distribution Shifts Continuously}
 \label{sec:logprobs}
 
-The response flips we measure could be a threshold artifact: the model's internal distribution barely changes, but a small nudge crosses the yes/no boundary.
-To test this, we run GPT-4.1 Nano on the code review domain with first-token logprobs across five conditions: baseline, no-saturated at 5 and 50 turns, and yes-saturated at 5 and 50 turns (1,050 calls).
+The response flips I measure could be a threshold artifact: the model's internal distribution barely changes, but a small nudge crosses the yes/no boundary.
+To test this, I run GPT-4.1 Nano on the code review domain with first-token logprobs across five conditions: baseline, no-saturated at 5 and 50 turns, and yes-saturated at 5 and 50 turns (1,050 calls).
 
 The probability distribution moves, not just the binary outcome (Figure~\ref{fig:logprobs}).
 Both polarities shift $P(\text{Yes})$ upward from the model's extreme baseline ($P(\text{Yes}) = 0.13$), with the magnitude varying by polarity.
@@ -547,22 +549,22 @@ Because the bias is a continuous probability shift, logprobs-based correction me
 
 Why is the negative direction stickier?
 Two hypotheses: (1) the ``no'' \textit{token} is inherently preferred, perhaps because it is more common in training data; or (2) \textit{rejection} as a concept is stickier, reinforced by RLHF safety training that rewards caution \cite{bai2022training}.
-We disentangle them by flipping the question.
+I disentangle them by flipping the question.
 
-Instead of ``Is this code production-ready?'' (yes = approve, no = reject), we ask ``Should this code be rejected?'' (yes = reject, no = approve), using the same code items.
+Instead of ``Is this code production-ready?'' (yes = approve, no = reject), I ask ``Should this code be rejected?'' (yes = reject, no = approve), using the same code items.
 Now a no-saturated history is full of approvals, and a yes-saturated history is full of rejections.
 If the token drives the asymmetry, no-saturated should still be stronger.
 If the semantic frame drives it, yes-saturated (rejection) should dominate.
-We run GPT-4.1 Nano and Llama 3.2 3B at 10 turns (1,260 calls).
+I run GPT-4.1 Nano and Llama 3.2 3B at 10 turns (1,260 calls).
 
 The answer depends on the model (Figure~\ref{fig:flipped}).
 GPT-4.1 Nano keeps the same direction: no-saturated is stronger in both framings (ratio $1.41 \to 1.12$), a pattern \textit{consistent with} a token-level preference, in line with \citet{bowen2024tokenbias}'s finding that surface tokens shift outputs independent of semantics.
 Llama 3.2 3B nearly reverses (ratio $1.11 \to 0.98$), pointing instead toward a semantic effect of the rejection concept, in line with \citet{shapira2026rlhf}'s analysis of how RLHF amplifies pattern-following and \citet{cheung2025amplified}'s evidence that fine-tuning creates the negativity bias.
-We emphasize that the per-model differences in the asymmetry ratio between original and flipped framings are not individually significant (Nano paired $|BS|$ test $p = 0.35$ original, $p = 0.76$ flipped; Llama $p = 0.64$ original, $p = 0.91$ flipped; $n = 21$ items each), so these mechanistic attributions are exploratory: the experiment narrows the plausible mechanisms but does not isolate them.
-Both token-level and semantic accounts remain compatible with the data; given the per-cell sample size ($n = 21$ items per model), we cannot statistically distinguish them.
+I emphasize that the per-model differences in the asymmetry ratio between original and flipped framings are not individually significant (Nano paired $|BS|$ test $p = 0.35$ original, $p = 0.76$ flipped; Llama $p = 0.64$ original, $p = 0.91$ flipped; $n = 21$ items each), so these mechanistic attributions are exploratory: the experiment narrows the plausible mechanisms but does not isolate them.
+Both token-level and semantic accounts remain compatible with the data; given the per-cell sample size ($n = 21$ items per model), I cannot statistically distinguish them.
 
 An analysis of the existing data adds a third factor.
-Items with higher baseline $P(\text{no})$ show modestly stronger negativity asymmetry (Pearson $r = 0.22$, $p < 10^{-7}$; Spearman $r = 0.08$, $p = 0.03$; $n = 656$ item$\times$model pairs). The Pearson--Spearman split suggests the relationship is driven by a few high-leverage items rather than a monotone rank pattern, so we treat it as suggestive rather than confirmatory.
+Items with higher baseline $P(\text{no})$ show modestly stronger negativity asymmetry (Pearson $r = 0.22$, $p < 10^{-7}$; Spearman $r = 0.08$, $p = 0.03$; $n = 656$ item$\times$model pairs). The Pearson--Spearman split suggests the relationship is driven by a few high-leverage items rather than a monotone rank pattern, so I treat it as suggestive rather than confirmatory.
 Negative context does not create a tendency from scratch. It reinforces one the model already has.
 
 \begin{figure}[t]
@@ -580,9 +582,9 @@ If the model relies on primacy, early turns should matter most.
 If recency, the end.
 If neither, any five will do.
 
-We embed 5 biased turns in 50-turn conversations at three positions: \textbf{START} (positions 0--4), \textbf{END} (45--49), and \textbf{SPREAD} (0, 12, 24, 36, 49).
+I embed 5 biased turns in 50-turn conversations at three positions: \textbf{START} (positions 0--4), \textbf{END} (45--49), and \textbf{SPREAD} (0, 12, 24, 36, 49).
 The other 45 turns are neutral (50/50).
-We run GPT-4.1 Nano and Llama 3.2 3B on code review, no-saturated, 10 reps (1,260 calls).
+I run GPT-4.1 Nano and Llama 3.2 3B on code review, no-saturated, 10 reps (1,260 calls).
 
 Any five will do (Figure~\ref{fig:positional}).
 The three placements are statistically indistinguishable (Kruskal-Wallis $H = 0.19$, $p = 0.91$): START $\bar{BS} = -0.36$, END $= -0.39$, SPREAD $= -0.38$.
@@ -617,17 +619,17 @@ It is a confluence of token-level preference, RLHF-trained caution, and pre-exis
 \paragraph{Pattern detection, not evidence accumulation.}
 The logprobs experiment (Section~\ref{sec:logprobs}) confirms that this is not a threshold artifact: the model's internal distribution genuinely shifts.
 The positional experiment (Section~\ref{sec:positional}) goes further: it does not matter where in the conversation the biased turns appear.
-Neither primacy nor recency explains the effect. One reading consistent with the data is that the model aggregates polarity signal globally, in line with the equilibrium framework of \citet{dongre2025drift}; we cannot rule out alternatives such as the model latching onto any sufficiently dense cluster of biased turns regardless of position.
+Neither primacy nor recency explains the effect. One reading consistent with the data is that the model aggregates polarity signal globally, in line with the equilibrium framework of \citet{dongre2025drift}; I cannot rule out alternatives such as the model latching onto any sufficiently dense cluster of biased turns regardless of position.
 
 \paragraph{Assimilation vs.\ contrast.}
-Our congruent/incongruent analysis (Section~\ref{sec:assimilation}) reveals a two-regime pattern: models \textit{assimilate} toward the conversation polarity for congruent items (where the context agrees with item ground truth) and \textit{contrast} away from it for incongruent items (where the context disagrees).
+My congruent/incongruent analysis (Section~\ref{sec:assimilation}) reveals a two-regime pattern: models \textit{assimilate} toward the conversation polarity for congruent items (where the context agrees with item ground truth) and \textit{contrast} away from it for incongruent items (where the context disagrees).
 Pure assimilation does not fit; the model is not blindly following the conversation polarity but amplifying responses that align with the item.
 This regime split is distinct from the cumulative threshold-priming contrast of \citet{thresholdpriming2024}, which operates across the history rather than per item.
 
 \paragraph{Not a positional effect.}
 \citet{liu2024lost} showed that models attend disproportionately to the beginning and end of long contexts, and \citet{chowdhury2026lost} argued this U-shaped attention curve is a geometric property of causal decoders, present at initialization.
 One might expect AMEL to ride on these positional effects, with early turns setting the pattern or recent turns dominating.
-Our positional experiment (Section~\ref{sec:positional}) rules this out: START, END, and SPREAD placements are indistinguishable.
+My positional experiment (Section~\ref{sec:positional}) rules this out: START, END, and SPREAD placements are indistinguishable.
 Whatever mechanism aggregates the polarity signal, it is not the same position-dependent attention that drives the U-shaped retrieval curve.
 
 \paragraph{The contrarian exception.}
@@ -649,32 +651,32 @@ This is speculative, though, and the small sample sizes for Gemini warrant cauti
 The main experiment uses artificially constructed context histories.
 Do models bias themselves naturally when evaluating items sequentially?
 And does balanced ordering help?
-We test both questions with a sequential batch design.
+I test both questions with a sequential batch design.
 
 \subsection{Does Bias Emerge in Sequential Evaluation?}
 \label{sec:sequential}
 
-We evaluate all 21 test items in a single conversation, where the model's own answers to previous items form the context for subsequent ones.
-We test two orderings: \textbf{fixed order} (all clear-positive items first, then ambiguous, then clear-negative) and \textbf{balanced order} (interleaving expected-yes and expected-no items).
-We use three representative models (GPT-4.1 Nano, Llama 3.2 3B, Qwen3.5 4B) across all three domains, with 10 repetitions each.
+I evaluate all 21 test items in a single conversation, where the model's own answers to previous items form the context for subsequent ones.
+I test two orderings: \textbf{fixed order} (all clear-positive items first, then ambiguous, then clear-negative) and \textbf{balanced order} (interleaving expected-yes and expected-no items).
+I use three representative models (GPT-4.1 Nano, Llama 3.2 3B, Qwen3.5 4B) across all three domains, with 10 repetitions each.
 
-In the fixed-order condition, bias is not significant overall ($d = -0.07$, $p = 0.35$), but position analysis reveals dramatic drift: P(no) increases monotonically from 0.07 at the start (clear-positive items) to 1.0 by position 14 (Spearman $r = 0.86$, $p < 10^{-6}$).
-As the model evaluates items sequentially, its own response history creates an increasingly biased context. This is the same mechanism our main experiment isolates.
+In the fixed-order condition, bias is not significant overall ($d = -0.07$, $p = 0.31$), but position analysis reveals dramatic drift: P(no) increases monotonically from 0.07 at the start (clear-positive items) to 1.0 by position 14 (Spearman $r = 0.86$, $p < 10^{-6}$).
+As the model evaluates items sequentially, its own response history creates an increasingly biased context. This is the same mechanism my main experiment isolates.
 
 In the balanced-order condition, the overall bias is significant ($d = -0.46$, $p < 10^{-9}$), indicating a general negativity shift, but critically there is no position-dependent drift ($r = -0.25$, $p = 0.28$).
 Interleaving expected-yes and expected-no items prevents the model from establishing a consistent polarity pattern.
-The fixed-order vs.\ balanced-order difference is significant ($t = 4.19$, $p < 10^{-4}$), confirming that ordering matters.
+The fixed-order vs.\ balanced-order difference is significant ($t = 4.17$, $p < 10^{-4}$), confirming that ordering matters.
 Full details are in Appendix~\ref{app:mitigation}.
 
 \subsection{Temperature Sensitivity}
 \label{sec:temperature}
 
 All main experiments use $T = 1.0$.
-To check whether temperature modulates AMEL, we run GPT-4.1 Nano on the code review domain at $T = 0.3$ and $T = 0.7$ (no-saturated + baseline, $N = 10$, all 21 items, 10 reps).
-We select GPT-4.1 Nano because it shows the strongest bias in the main experiment ($d = -0.34$), giving us the best chance to detect temperature effects.
+To check whether temperature modulates AMEL, I run GPT-4.1 Nano on the code review domain at $T = 0.3$ and $T = 0.7$ (no-saturated + baseline, $N = 10$, all 21 items, 10 reps).
+I select GPT-4.1 Nano because it shows the strongest bias in the main experiment ($d = -0.34$), giving me the best chance to detect temperature effects.
 
-Contrary to the intuition that lower temperature should reduce bias, we find that bias is \textit{at least as strong} at lower temperatures: $d = -0.69$ at $T = 0.3$ and $d = -0.72$ at $T = 0.7$, compared to $d = -0.28$ at $T = 1.0$ (all significant at $p < 0.05$).
-A Kruskal-Wallis test across the three temperatures is not significant ($H = 5.27$, $p = 0.07$), so we cannot claim a significant monotonic relationship. The directional pattern (lower $T$ does not reduce bias and may amplify it) fits a story in which lower temperature sharpens the output distribution and so reinforces whatever pattern the context has established, but our data lack the power to test this mechanism; we report it as a directional finding only.
+Contrary to the intuition that lower temperature should reduce bias, I find that bias is \textit{at least as strong} at lower temperatures: $d = -0.69$ at $T = 0.3$ and $d = -0.72$ at $T = 0.7$, compared to $d = -0.28$ at $T = 1.0$ (all significant at $p < 0.05$).
+A Kruskal-Wallis test across the three temperatures is not significant ($H = 5.27$, $p = 0.07$), so I cannot claim a significant monotonic relationship. The directional pattern (lower $T$ does not reduce bias and may amplify it) fits a story in which lower temperature sharpens the output distribution and so reinforces whatever pattern the context has established, but my data lack the power to test this mechanism; I report it as a directional finding only.
 Full details are in Appendix~\ref{app:temperature}.
 
 
@@ -698,23 +700,23 @@ Full details are in Appendix~\ref{app:temperature}.
 \label{sec:limitations}
 
 \paragraph{Binary judgments only.}
-We study yes/no tasks.
+I study yes/no tasks.
 Likert-scale ratings, open-ended evaluation, or multi-label classification may exhibit different patterns.
 
 \paragraph{Three domains.}
-Code review, content moderation, and nutritional assessment cover technical, social, and personal judgment, but we have not tested other high-stakes domains like medical triage, hiring, or academic grading.
+Code review, content moderation, and nutritional assessment cover technical, social, and personal judgment, but I have not tested other high-stakes domains like medical triage, hiring, or academic grading.
 
 \paragraph{Ambiguous item coding.}
-We code ambiguous items with a ``yes'' ground truth to enable directional bias measurement.
+I code ambiguous items with a ``yes'' ground truth to enable directional bias measurement.
 This is a methodological convenience, not a claim about the correct answer.
-The key result, that ambiguous items show larger bias scores, holds regardless of which direction we call ``correct,'' since the bias score measures the \textit{shift} from baseline rather than accuracy.
+The key result, that ambiguous items show larger bias scores, holds regardless of which direction I call ``correct,'' since the bias score measures the \textit{shift} from baseline rather than accuracy.
 
 \paragraph{Partial Gemini data.}
 Daily API quotas limited Gemini to 1,470 calls (Flash) and 990 (Pro), vs.\ 8,190 for all other models.
 Gemini results have wider confidence intervals as a result.
 
 \paragraph{Limited temperature variation.}
-Our main experiments use $T = 1.0$; the temperature spot-check (Section~\ref{sec:temperature}) covers only one model and one domain.
+The main experiments use $T = 1.0$; the temperature spot-check (Section~\ref{sec:temperature}) covers only one model and one domain.
 A full factorial temperature$\times$model design would strengthen the finding.
 
 \paragraph{Limited characterization coverage.}
@@ -723,31 +725,34 @@ The characterization findings should be verified across a broader set of models 
 
 \paragraph{English only.}
 All materials are in English.
-Cross-linguistic differences in LLM response tendencies \cite{braun2025acquiescence} mean our results may not transfer to other languages.
+Cross-linguistic differences in LLM response tendencies \cite{braun2025acquiescence} mean my results may not transfer to other languages.
 
 \paragraph{Correct context items.}
-Our context conversations contain accurate evaluations (bad code correctly rejected, good code correctly approved).
+My context conversations contain accurate evaluations (bad code correctly rejected, good code correctly approved).
 Contexts with \textit{incorrect} prior judgments (a bad review that approves buggy code) might interact with sycophancy mechanisms and produce different effects.
 
 \paragraph{Single-model data-quality incident.}
-The Qwen3 30B run experienced a disk-full crash with a concurrent-resume bug that produced 2,186 duplicate-condition rows; we deduplicate post-hoc by keeping the first occurrence per condition (Appendix~\ref{app:dedup}).
+The Qwen3 30B run experienced a disk-full crash with a concurrent-resume bug that produced 2,186 duplicate-condition rows; I deduplicate post-hoc by keeping the first occurrence per condition (Appendix~\ref{app:dedup}).
 This affects one of twelve models and does not change overall conclusions, but the dedup procedure is one more place where reviewer attention is warranted.
 
 \paragraph{Neutral arm uses evaluative filler.}
-Our ``neutral'' (50/50) context arm is composed of evaluative items from the same yes/no pool, not non-evaluative filler.
+My ``neutral'' (50/50) context arm is composed of evaluative items from the same yes/no pool, not non-evaluative filler.
 The finding that the neutral arm also produces a negative shift therefore admits two readings: (i) any conversation history (evaluative or not) shifts models toward ``no,'' or (ii) any history composed of evaluative judgments shifts models toward ``no,'' regardless of polarity balance.
-Distinguishing these requires a non-evaluative-filler control we do not run here (see Future Work).
+Distinguishing these requires a non-evaluative-filler control I do not run here (see Future Work).
 
 \paragraph{Per-category label reliability is uneven by domain.}
-The external 5-annotator IRR study (Section~\ref{sec:domains}) reports overall $\alpha = 0.53$ and per-domain $\alpha$ from $0.28$ (code review) to $0.70$ (meals). Code-review category labels are therefore the weakest link in any per-category analysis; the empirical-entropy stratification in Section~\ref{sec:empirical_entropy} bypasses this concern entirely by using the model's own baseline behavior to group items, and we treat that version of the ``uncertainty absorbs bias'' result as primary. Headline statistics that do not depend on per-category labels (overall, polarity, accumulation, contrast, empirical-entropy) are unaffected.
+The external 5-annotator IRR study (Section~\ref{sec:domains}) reports overall $\alpha = 0.53$ and per-domain $\alpha$ from $0.28$ (code review) to $0.69$ (meals). Code-review category labels are therefore the weakest link in any per-category analysis; the empirical-entropy stratification in Section~\ref{sec:empirical_entropy} groups items by the model's own baseline behavior rather than by author label, and I treat that version of the ``uncertainty absorbs bias'' result as primary. However, the item pool itself was constructed by the author, so the entropy bins still inherit the underlying item-design choices: the empirical stratification reduces, but does not fully eliminate, dependence on the author-coded category structure. Headline statistics that do not depend on per-category labels (overall, polarity, accumulation, contrast, empirical-entropy) are unaffected.
 
 \paragraph{Closed APIs and open-weight models are not the same unit of analysis.}
-Closed APIs (OpenAI, Anthropic, Google, DeepSeek) include unobservable platform layers between the user and the raw weights: system prompts, safety post-filters, output post-processing. Local open-weight runs (Llama, Qwen via Ollama) do not. Cross-cell comparisons between API and OSS models therefore conflate the model with the platform; within-provider scaling comparisons (\eg{} GPT-4.1 Nano vs.\ GPT-5.2, Qwen3 4B vs.\ Qwen3 30B) are unaffected. We split Figure~\ref{fig:model_comparison} into API and OSS sub-panels so this boundary is visually explicit.
+Closed APIs (OpenAI, Anthropic, Google, DeepSeek) include unobservable platform layers between the user and the raw weights: system prompts, safety post-filters, output post-processing. Local open-weight runs (Llama, Qwen via Ollama) do not. Cross-cell comparisons between API and OSS models therefore conflate the model with the platform; within-provider scaling comparisons (\eg{} GPT-4.1 Nano vs.\ GPT-5.2, Qwen3 4B vs.\ Qwen3 30B) are unaffected. I split Figure~\ref{fig:model_comparison} into API and OSS sub-panels so this boundary is visually explicit.
 
 \paragraph{Differential unparseable rates across conditions.}
 The 7.09\% unparseable rate is not independent of polarity (Appendix~\ref{app:unparseable}): baseline 9.71\%, no-saturated 6.29\%, yes-saturated 7.38\%, neutral 6.96\%.
 Most of the differential is driven by Claude Opus 4.6 (22\% unparseable across all conditions due to verbose conditional responses), which is roughly MAR.
-The headline conclusions reproduce if Opus is excluded from the model panel; we report this as a sensitivity check rather than a primary result.
+The headline conclusions reproduce if Opus is excluded from the model panel; I report this as a sensitivity check rather than a primary result.
+
+\paragraph{Training-corpus contamination not directly measured.}
+The 63 test items are author-built rather than drawn from a held-out benchmark, but several context-pool items (e.g., classic security anti-patterns like SQL injection by f-string, MD5 password hashing, $\texttt{eval(user\_input)}$) and generic forum-style comments are short and generic enough that near-duplicates almost certainly appear in any sufficiently large training corpus. I report no explicit n-gram-overlap contamination check against any model's training data; for the closed-API models this is infeasible. I argue the bias-score construction itself partially neutralises this concern: $BS$ measures the \emph{shift} from a fresh-context baseline to a treatment-context baseline on the same item-model pair, so any per-item baseline tendency the model has absorbed from memorisation is differenced out. Memorisation would inflate baseline accuracy on individual items but should not, on its own, produce a systematic context-conditional shift. This argument does not eliminate the concern but bounds it: contamination would have to interact with conversation polarity to produce AMEL, not merely with item content.
 
 \paragraph{Future work.}
 Two follow-up studies would directly strengthen the claims here: (1) a non-evaluative neutral-arm control to distinguish ``any history'' from ``any evaluative history''; and (2) the flipped-framing experiment (Section~\ref{sec:flipped}) extended across all 12 models to test whether the token-vs-semantic balance of the negativity asymmetry has a more robust per-model signature than the underpowered 2-model design here can detect. External inter-rater agreement on the author-coded categories was added in this version of the paper (Section~\ref{sec:domains}); a third useful follow-up would be a larger second-round IRR specifically targeting the low-agreement code-review category.
@@ -767,18 +772,21 @@ If you are running an LLM-judge pipeline, the operational takeaway is short: do 
 \section*{Reproducibility}
 All code, data, and analysis scripts are available at \url{https://github.com/chutapp/amel}.
 The complete dataset (84,088 deduplicated API responses) is provided in JSONL format with deterministic seeds for all random operations.
-Data were collected between 2026-03-09 and 2026-03-22.
-The exact API model strings used are listed in Table~\ref{tab:models}; provider aliases without dated suffixes (\eg{} \texttt{gpt-5.2}, \texttt{claude-opus-4-6}) may receive silent updates from providers after the collection window.
+Data were collected between 2026-03-09 and 2026-03-25 (DeepSeek V4 Flash added 2026-05-25).
+The exact API model strings used are listed in Table~\ref{tab:models}; provider aliases without dated suffixes (\eg{} \texttt{gpt-5.2}, \texttt{claude-opus-4-6}, \texttt{deepseek-chat}) may receive silent updates from providers after the collection window, so exact quantitative reproduction in the future is not guaranteed for those rows.
+Per-condition seeds are derived from the test-item ID via Python's hash; for bit-exact replay, set \texttt{PYTHONHASHSEED=0} in the runner environment.
+The repository \texttt{requirements.txt} pins the Python dependency set; tested with Python 3.11.
+Local open-weight runs use Ollama; the exact tags are listed in Table~\ref{tab:models}.
 
 \section*{Ethics Statement}
 This work studies systematic bias in AI evaluation systems with the goal of improving their reliability.
 Content moderation test items reference harmful content categories (hate speech, threats) as examples of clearly inappropriate material; these were designed to test model behavior and are not intended to promote or normalize such content.
-The only human-subject component is the five-annotator external IRR study (Section~\ref{sec:domains}): annotators were recruited via Upwork, gave informed digital consent for publication and public dataset release, were compensated at $\sim$\$40 / hour for a $\sim$75-minute task, and rated only synthetic research stimuli (no personal or sensitive data). No demographic field was used to filter recruitment.
+The only human-subject component is the five-annotator external IRR study (Section~\ref{sec:domains}): annotators were recruited through an online freelance platform, gave informed digital consent for publication and public dataset release, were compensated at $\sim$\$40 / hour for a $\sim$75-minute task, and rated only synthetic research stimuli (no personal or sensitive data). No demographic field was used to filter recruitment.
 All model interactions used standard commercial APIs and locally hosted open-source models; no models were fine-tuned or modified.
-We note that our findings could theoretically be used to deliberately bias LLM evaluators (by manipulating conversation history), but we believe the defensive value of documenting this vulnerability outweighs the offensive risk, particularly given the simplicity of the mitigation (fresh contexts).
+I note that my findings could theoretically be used to deliberately bias LLM evaluators (by manipulating conversation history), but I believe the defensive value of documenting this vulnerability outweighs the offensive risk, particularly given the simplicity of the mitigation (fresh contexts).
 
 \section*{Acknowledgments}
-The author thanks the five external annotators---annotator A, Marija Gavrilović, Ali, Amna, and annotator E (consenting to be named)---for their independent ratings of the 63 test items used in the IRR study (Section~\ref{sec:domains}), and (volunteer, dropped from primary IRR) for a parallel exploratory pass kept separate from the headline statistics. All annotators consented to the public release of their pseudonymised ratings; pseudonymised data and the codebook are available at \url{https://github.com/chutapp/amel/tree/main/data/annotators}.
+The author thanks the five external annotators (pseudonymised as A through E in the released dataset) for their independent ratings of the 63 test items used in the IRR study (Section~\ref{sec:domains}), and a sixth volunteer (dropped from primary IRR) for a parallel exploratory pass kept separate from the headline statistics. All annotators consented to the public release of their pseudonymised ratings; pseudonymised data and the codebook are available at \url{https://github.com/chutapp/amel/tree/main/data/annotators}.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
@@ -802,7 +810,7 @@ The author thanks the five external annotators---annotator A, Marija Gavrilović
 \begin{figure}[h]
     \centering
     \includegraphics[width=\columnwidth]{figures/fig9_contrast_assimilation.pdf}
-    \caption{Two regimes. For congruent items (context polarity matches item ground truth), the model conforms to the context (assimilation, $\bar{BS} > 0$). For incongruent items (context polarity opposes the item), the model resists (contrast, $\bar{BS} < 0$). Difference: $d = 0.56$, $p < 10^{-92}$.}
+    \caption{Two regimes. For congruent items (context polarity matches item ground truth), the model conforms to the context (assimilation, $\bar{BS} > 0$). For incongruent items (context polarity opposes the item), the model resists (contrast, $\bar{BS} < 0$). Paired-by-item difference: $d = 0.50$, $p < 10^{-3}$ ($n = 63$ items); unpaired sensitivity $d = 0.56$, $p < 10^{-92}$.}
     \label{fig:contrast}
 \end{figure}
 
@@ -888,7 +896,7 @@ The sequential batch experiment (Section~\ref{sec:sequential}) used 3,780 API ca
 \toprule
 \textbf{Condition} & $n$ & $\bar{BS}$ & $d$ & $p$ & Sig. \\
 \midrule
-Sequential fixed & 189 & $-0.015$ & $-0.07$ & $0.352$ & n.s. \\
+Sequential fixed & 189 & $-0.015$ & $-0.07$ & $0.306$ & n.s. \\
 Sequential balanced & 189 & $-0.116$ & $-0.46$ & $< 10^{-9}$ & *** \\
 \bottomrule
 \end{tabular}
@@ -898,7 +906,7 @@ Sequential balanced & 189 & $-0.116$ & $-0.46$ & $< 10^{-9}$ & *** \\
 
 \paragraph{Position-dependent drift.}
 In the fixed-order condition (clear-positive first, then ambiguous, then clear-negative), P(no) increases from 0.07 at position 3 to 1.0 by position 14 and remains saturated ($r_s = 0.86$, $p < 10^{-6}$).
-The position trajectory fits a self-reinforcing bias loop, in which early approvals form a ``yes'' context that keeps P(no) low and later rejections form a ``no'' context that persists. We note that the fixed-order design confounds this candidate mechanism with item difficulty (clear-negative items occupy positions 14+), so we cannot separate it from a fresh-context account in which late items would also score negative without any contextual lock-in.
+The position trajectory fits a self-reinforcing bias loop, in which early approvals form a ``yes'' context that keeps P(no) low and later rejections form a ``no'' context that persists. I note that the fixed-order design confounds this candidate mechanism with item difficulty (clear-negative items occupy positions 14+), so I cannot separate it from a fresh-context account in which late items would also score negative without any contextual lock-in.
 
 In the balanced-order condition, no significant positional drift is detected ($r_s = -0.25$, $p = 0.28$).
 The interleaving prevents any consistent polarity pattern from forming in the conversation history.
@@ -926,7 +934,7 @@ $T$ & $\bar{BS}$ & $d$ & $p$ & Sig. \\
 
 The directional finding here (lower temperature does not mitigate AMEL and may amplify it) should be read cautiously: the Kruskal-Wallis omnibus test is non-significant ($p = 0.07$), so the comparison is at most suggestive.
 A plausible reading is that lower temperature sharpens the output distribution and so reinforces whatever pattern the context has established rather than diluting it, but this would need a properly powered factorial design across temperatures and models to test.
-The practical takeaway is narrower: lowering temperature is not a confirmed mitigation strategy for AMEL based on the data we have.
+The practical takeaway is narrower: lowering temperature is not a confirmed mitigation strategy for AMEL based on the data I have.
 
 \section{Response Latency Analysis}
 \label{app:latency}
@@ -937,7 +945,7 @@ Per-item response time variability (coefficient of variation) correlates weakly 
 \section{Mixed-Effects Model Full Output}
 \label{app:mixed}
 
-We fit $BS \sim C(\text{polarity}) \times C(\text{category})$ with random intercepts for model using REML estimation.
+I fit $BS \sim C(\text{polarity}) \times C(\text{category})$ with random intercepts for model using REML estimation.
 Key fixed effects (reference: neutral polarity, ambiguous category):
 
 \begin{itemize}
@@ -948,19 +956,16 @@ Key fixed effects (reference: neutral polarity, ambiguous category):
     \item \textbf{Yes-sat $\times$ Clear neg}: $\beta = -0.196$, $z = -9.88$, $p < 10^{-22}$ (strongest interaction)
 \end{itemize}
 
-The between-model random intercept variance gives an ICC of $0.031$, indicating that only about 3.1\% of variance in bias scores is between-model; AMEL is overwhelmingly a within-model phenomenon.
-AMEL is a universal phenomenon with model-specific magnitude, not an artifact of a few outlier models.
+The crossed mixed model with random intercepts for both model and item gives ICC$_\text{model} = 0.026$ (2.6\%) and ICC$_\text{item} = 0.066$ (6.6\%); item-level clustering accounts for $\approx 2.5\times$ the variance that between-model differences do, with the remaining $\approx 91\%$ within-cell. The pattern is consistent across the 12 tested models from 5 providers; AMEL is not the artifact of a single outlier model, though I cannot extrapolate to model families I did not test.
 
 \paragraph{Convergence note.}
-The REML optimizer converged but reported that the MLE may be on the boundary of the parameter space, which typically indicates the random-effect variance is near zero.
-The low ICC tells the same story: most variance is within-model, and the random intercepts add little.
-An OLS model with cluster-robust standard errors (clustering on model) produces identical fixed-effect conclusions, confirming the results are not sensitive to the random-effects specification.
+The REML optimizer converged on the crossed-RE specification. An OLS sensitivity model with item-clustered robust standard errors produces the same fixed-effect signs and significance pattern; a second OLS sensitivity with model-clustered SEs is reported alongside in \texttt{results/mixed\_effects.json}.
 
 \section{Unparseable Rate by Condition (MAR/MNAR Check)}
 \label{app:unparseable}
 
 Of the 84,088 deduplicated raw responses, 5,965 (7.09\%) failed to parse to a yes/no label.
-A chi-squared test against the polarity factor rejects the null of independence ($\chi^2 = 97.7$, $df = 3$, $p < 10^{-20}$).
+A chi-squared test against the polarity factor rejects the null of independence ($\chi^2 = 96.58$, $df = 3$, $p < 10^{-20}$).
 Per-polarity rates: baseline 9.71\%, no-saturated 6.29\%, yes-saturated 7.38\%, neutral 6.96\%.
 DeepSeek V4 Flash, added in v2 of this paper, is the cleanest model on the panel by this measure (4 unparseable out of 8,190 = 0.05\%), pulling the overall rate down from the v1 figure of 7.85\%.
 The baseline excess is the largest single contributor, with the implication that the BS = $P(\text{treat}) - P(\text{base})$ contrast is computed from a slightly more parser-attrited baseline than treatment.
@@ -968,8 +973,8 @@ The baseline excess is the largest single contributor, with the implication that
 Per-model breakdown identifies two dominant sources: Qwen3 30B (28.4\% unparseable, 2{,}246 rows) and Claude Opus 4.6 (22.3\%, 1{,}822 rows). Qwen3 30B is the larger single contributor; both produce verbose conditional responses (e.g., ``This depends on \ldots'' that resist binary extraction even with the v2 symmetric parser; see Appendix~\ref{app:parser}).
 Within Opus the rate is roughly MAR (no significant cross-condition variation for that single model), so Opus contributes proportionally less to the BS pool but not systematically more toward one polarity.
 
-We re-ran the headline analysis with Opus excluded as a sensitivity check: overall $d = -0.17$ (unchanged to two decimal places), asymmetry ratio $1.61\times$ (unchanged), and the per-domain ordering preserved.
-We therefore retain Opus in the main panel but flag the model's parsing peculiarity here.
+I re-ran the headline analysis with Opus excluded as a sensitivity check: overall $d = -0.17$ (unchanged to two decimal places), asymmetry ratio $1.61\times$ (unchanged), and the per-domain ordering preserved.
+I therefore retain Opus in the main panel but flag the model's parsing peculiarity here.
 
 \section{Parser v2 (Symmetric Yes/No Extraction)}
 \label{app:parser}
@@ -977,7 +982,7 @@ We therefore retain Opus in the main panel but flag the model's parsing peculiar
 The original parser had 12 ``no'' patterns vs.\ 10 ``yes'' patterns with asymmetric specificity (broad ``no'' patterns such as \texttt{\textbackslash bavoid\textbackslash b} and \texttt{\textbackslash bpoor\textbackslash s+choice\textbackslash b}; the matching ``yes'' patterns required specific phrases such as \texttt{\textbackslash bthis is a healthy\textbackslash b} with the article).
 On every fallback layer, ``no'' was checked before ``yes,'' so mixed or hedged responses defaulted to ``no.''
 
-For the final reported numbers we re-parsed all raw responses with a symmetric v2 parser (\texttt{src/parser\_v2.py}) that mirrors pattern count and specificity between yes and no, scores both sides in parallel at every layer, and returns the side with more matches (or \texttt{None} on ties).
+For the final reported numbers I re-parsed all raw responses with a symmetric v2 parser (\texttt{src/parser\_v2.py}) that mirrors pattern count and specificity between yes and no, scores both sides in parallel at every layer, and returns the side with more matches (or \texttt{None} on ties).
 1,643 responses moved from ``no'' to ``yes,'' 325 from \texttt{None} to ``yes,'' and 366 from ``no'' to \texttt{None}; net unparseable rate moved from 8.32\% (v1) to 7.85\% (v2).
 
 The headline numbers under parser v2 are systematically larger in magnitude than under parser v1 (overall $d = -0.14 \to -0.17$; paired asymmetry $1.44\times \to 1.62\times$; content-moderation $d = -0.07$ at $p_\text{corr} = 0.02 \to d = -0.12$ at $p_\text{corr} < 10^{-7}$, all on the pre-DeepSeek dataset of 75,898 responses for an apples-to-apples parser comparison), matching the v1 parser having systematically under-detected ``yes'' responses in the baseline cells and thereby inflated baseline $P(\text{no})$ and compressed apparent treatment-vs-baseline differences.
@@ -1011,7 +1016,7 @@ Both processes loaded the same snapshot of 26,930 completed conditions and proce
 Because Python randomizes \texttt{PYTHONHASHSEED} per process, the two interpreters generated different per-condition seeds and produced two independent samples for the overlapping conditions.
 The result was 2,186 duplicate-condition rows for Qwen3 30B (out of 5,830 remaining conditions, $\approx 37\%$ collision rate); duplicates are distinguishable by their \texttt{seed} field.
 
-We deduplicate by keeping the first occurrence per \texttt{(domain, polarity, context\_length, test\_item\_id, repetition)} key for Qwen3 30B only; all other models pass through unchanged.
+I deduplicate by keeping the first occurrence per \texttt{(domain, polarity, context\_length, test\_item\_id, repetition)} key for Qwen3 30B only; all other models pass through unchanged.
 Total dataset size goes from 86,274 raw rows to 84,088 deduplicated rows.
 For Qwen3 30B specifically (after the symmetric v2 parser), the published first-occurrence dedup gives $\bar{BS} = +0.032$ ($d = +0.10$, $p_\text{raw} = 0.008$, $p_\text{corr} = 0.17$, n.s.); last-occurrence dedup gives $\bar{BS} = +0.058$ ($d = +0.22$, $p < 10^{-7}$); random selection between the two duplicate samples gives $\bar{BS} = +0.049$ ($d = +0.17$, $p < 10^{-5}$). Direction is stable across all three; magnitude depends on the dedup choice.
 Across-paper headline numbers (overall $d = -0.17$, ambiguous $d = -0.28$, asymmetry $1.52\times$ paired) are unaffected by the dedup choice to the displayed precision.

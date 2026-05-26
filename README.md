@@ -152,18 +152,25 @@ For local models, install [Ollama](https://ollama.ai) and pull the required mode
 ### Running Experiments
 
 ```bash
+# For bit-exact seed reproduction across processes, fix the Python hash seed.
+export PYTHONHASHSEED=0
+
 # Local models (Ollama)
 python run_experiment.py run
 
 # API models (set environment variables first)
 export OPENAI_API_KEY="..."
 python run_openai.py
+python run_openai_5_2.py
 
 export ANTHROPIC_API_KEY="..."
 python run_claude.py
 
 export GEMINI_API_KEY="..."
 python run_gemini.py
+
+export DEEPSEEK_API_KEY="..."
+python run_deepseek.py
 
 # Mitigation experiment (sequential batch)
 python run_mitigation.py

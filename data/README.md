@@ -10,10 +10,10 @@ or `../NOTICE` at the repository root.
 
 ## Contents
 
-- `all_results.jsonl` — Main experiment dataset, **75,898 deduplicated rows**
-  spanning 11 models, 3 evaluation domains, 4 polarity conditions, and 4
-  context lengths (5, 10, 20, 50 turns), plus baselines. Each row is one API
-  call.
+- `all_results.jsonl` — Main experiment dataset, **84,088 deduplicated rows**
+  spanning 12 models from 5 providers, 3 evaluation domains, 4 polarity
+  conditions, and 4 context lengths (5, 10, 20, 50 turns), plus baselines.
+  Each row is one API call.
 - `mitigation/` — Sequential batch mitigation experiment (3,780 rows).
 - `temperature/` — Temperature spot-check (840 rows at T ∈ {0.3, 0.7}; the
   T=1.0 cells come from the main experiment).

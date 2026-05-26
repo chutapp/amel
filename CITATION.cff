@@ -8,10 +8,10 @@ authors:
     affiliation: chut.app
 abstract: >-
   Empirical study of accumulated message effects on LLM judgments across
-  11 models from 4 providers. 75,898 deduplicated API responses on three
+  12 models from 5 providers. 84,088 deduplicated API responses on three
   binary-judgment domains plus three follow-up characterization
   experiments.
-date-released: 2026-05-21
+date-released: 2026-05-26
 license: MIT
 repository-code: "https://github.com/chutapp/amel"
 url: "https://arxiv.org/abs/2605.22714"
