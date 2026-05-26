@@ -1,82 +1,87 @@
 {
+  "spec": "bias_score ~ C(polarity) * C(category) + (1|model) + (1|item_id)",
   "fixed_effects": {
     "Intercept": {
-      "coef": -0.161326,
-      "se": 0.018458,
-      "z": -8.7403,
-      "p": 2.3257646185182347e-18,
+      "coef": -0.157492,
+      "se": 0.023678,
+      "z": -6.6515,
+      "p": 2.90170183525899e-11,
       "significant": true
     },
     "C(polarity)[T.no_saturated]": {
-      "coef": -0.046361,
-      "se": 0.013923,
-      "z": -3.3299,
-      "p": 0.000868846739191571,
+      "coef": -0.05352,
+      "se": 0.013087,
+      "z": -4.0894,
+      "p": 4.32423723417839e-05,
       "significant": true
     },
     "C(polarity)[T.yes_saturated]": {
-      "coef": 0.199938,
-      "se": 0.013995,
-      "z": 14.2862,
-      "p": 2.6664486410654984e-46,
+      "coef": 0.192873,
+      "se": 0.01315,
+      "z": 14.667,
+      "p": 1.0484869642890286e-48,
       "significant": true
     },
     "C(category)[T.clear_positive]": {
-      "coef": 0.028184,
-      "se": 0.014056,
-      "z": 2.005,
-      "p": 0.044958091240166934,
-      "significant": true
+      "coef": 0.006853,
+      "se": 0.027092,
+      "z": 0.2529,
+      "p": 0.8003099925902897,
+      "significant": false
     },
     "C(category)[T.clear_negative]": {
-      "coef": 0.159544,
-      "se": 0.014017,
-      "z": 11.382,
-      "p": 5.141839555339285e-30,
+      "coef": 0.157031,
+      "se": 0.027072,
+      "z": 5.8005,
+      "p": 6.612319727739159e-09,
       "significant": true
     },
     "C(polarity)[T.no_saturated]:C(category)[T.clear_positive]": {
-      "coef": 0.053229,
-      "se": 0.019848,
-      "z": 2.6818,
-      "p": 0.007321749131056487,
+      "coef": 0.059528,
+      "se": 0.018644,
+      "z": 3.1929,
+      "p": 0.0014086294992371644,
       "significant": true
     },
     "C(polarity)[T.yes_saturated]:C(category)[T.clear_positive]": {
-      "coef": 0.036147,
-      "se": 0.019901,
-      "z": 1.8163,
-      "p": 0.06932459725673182,
-      "significant": false
+      "coef": 0.071916,
+      "se": 0.01869,
+      "z": 3.8479,
+      "p": 0.00011915238601031072,
+      "significant": true
     },
     "C(polarity)[T.no_saturated]:C(category)[T.clear_negative]": {
-      "coef": 0.057843,
-      "se": 0.019735,
-      "z": 2.931,
-      "p": 0.003378898678751738,
+      "coef": 0.063937,
+      "se": 0.018547,
+      "z": 3.4472,
+      "p": 0.0005664135337783849,
       "significant": true
     },
     "C(polarity)[T.yes_saturated]:C(category)[T.clear_negative]": {
-      "coef": -0.195617,
-      "se": 0.019807,
-      "z": -9.8761,
-      "p": 5.286670132997029e-23,
+      "coef": -0.189796,
+      "se": 0.01861,
+      "z": -10.1988,
+      "p": 2.006773475735628e-24,
       "significant": true
     }
   },
   "random_effects": {
-    "model_variance": 0.002668,
-    "residual_variance": 0.083435,
-    "icc": 0.031
+    "model_variance": 0.002331,
+    "item_variance": 0.005873,
+    "residual_variance": 0.080908,
+    "icc_model": 0.0262,
+    "icc_item": 0.0659
   },
   "model_fit": {
-    "log_likelihood": -1395.78,
+    "log_likelihood": -1473.27,
     "converged": true,
-    "n_obs": 7631,
-    "n_groups": 11
+    "n_obs": 8387,
+    "n_models": 12,
+    "n_items": 63
   },
   "interpretation": {
-    "icc_meaning": "3.1% of variance in bias scores is between-model",
+    "icc_model_meaning": "2.6% of variance is between-model",
+    "icc_item_meaning": "6.6% of variance is between-item",
     "confirms_ttests": true
   }
 }

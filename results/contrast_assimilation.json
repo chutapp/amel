@@ -13,10 +13,23 @@
     "ci_lower": -0.12842,
     "ci_upper": -0.103613
   },
-  "t_test": {
+  "t_test_unpaired": {
     "t": 20.8873,
     "p": 3.1482431152266086e-93,
     "cohens_d": 0.5581,
+    "significant": true,
+    "note": "Unpaired Welch test retained for backward comparison only. The published estimate is t_test_paired below (council audit 2026-05-26: 63 items are fixed stimuli shared across both groups)."
+  },
+  "t_test_paired": {
+    "n_items": 63,
+    "mean_diff": 0.179818,
+    "ci95_diff": [
+      0.088501,
+      0.271135
+    ],
+    "t": 3.9363,
+    "p": 0.00021202067521418236,
+    "cohens_d": 0.4959,
     "significant": true
   },
   "interpretation": "contrast_for_incongruent",

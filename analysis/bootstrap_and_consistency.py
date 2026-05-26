@@ -39,7 +39,8 @@ SEED = 20260525
 
 
 def bootstrap_d(bs_values: np.ndarray, n_boot: int = N_BOOT, seed: int = SEED) -> dict:
-    """Bootstrap CI for Cohen's d = mean/sd over an array of bias-score values."""
+    """Bootstrap CI for Cohen's d (unclustered row-level). Retained for backward
+    comparison only; the published CI uses ``bootstrap_d_clustered`` below."""
     if len(bs_values) < 2:
         return {"n": int(len(bs_values)), "d": None, "ci95": [None, None]}
     rng = np.random.default_rng(seed)
@@ -57,15 +58,49 @@ def bootstrap_d(bs_values: np.ndarray, n_boot: int = N_BOOT, seed: int = SEED) -
     }
 
 
+def bootstrap_d_clustered(records: list[dict], n_boot: int = N_BOOT, seed: int = SEED) -> dict:
+    """Item-clustered bootstrap CI for Cohen's d.
+
+    The 63 test items are fixed stimuli repeated across all (model, polarity,
+    context_length) cells; rows therefore share within-item correlation that
+    a row-level resample treats as independent. Following the council audit
+    (2026-05-26) we resample item IDs with replacement and include every row
+    for each sampled item -- the standard block-bootstrap for clustered data.
+    """
+    if not records:
+        return {"n": 0, "n_items": 0, "d": None, "ci95": [None, None]}
+    by_item: dict[str, list[float]] = defaultdict(list)
+    for r in records:
+        by_item[r["item_id"]].append(r["bias_score"])
+    item_ids = list(by_item.keys())
+    full = np.array([v for vals in by_item.values() for v in vals])
+    point_d = float(full.mean() / full.std(ddof=1)) if full.std(ddof=1) > 0 else 0.0
+
+    rng = np.random.default_rng(seed)
+    ds = np.empty(n_boot)
+    for i in range(n_boot):
+        sampled = rng.choice(item_ids, size=len(item_ids), replace=True)
+        vals = np.concatenate([by_item[iid] for iid in sampled])
+        sd = vals.std(ddof=1)
+        ds[i] = vals.mean() / sd if sd > 0 else 0.0
+    return {
+        "n": int(len(full)),
+        "n_items": int(len(item_ids)),
+        "d": point_d,
+        "ci95": [round(float(np.percentile(ds, 2.5)), 4),
+                 round(float(np.percentile(ds, 97.5)), 4)],
+    }
+
+
 def stratified_bootstrap(records: list[dict], group_key: str) -> dict[str, dict]:
     out: dict[str, dict] = {}
-    groups: dict[str, list[float]] = defaultdict(list)
+    groups: dict[str, list[dict]] = defaultdict(list)
     for r in records:
-        groups[r[group_key]].append(r["bias_score"])
-    for grp, vals in groups.items():
-        out[grp] = bootstrap_d(np.array(vals))
+        groups[r[group_key]].append(r)
+    for grp, recs in groups.items():
+        out[grp] = bootstrap_d_clustered(recs)
     # overall
-    out["__overall__"] = bootstrap_d(np.array([r["bias_score"] for r in records]))
+    out["__overall__"] = bootstrap_d_clustered(records)
     return out
 
 
@@ -146,12 +181,14 @@ def main() -> None:
     bs = compute_bias_scores(rows)
     print(f"  rows: {len(rows):,}  bias-score cells: {len(bs):,}")
 
-    # Bootstrap CIs
-    print("\nBootstrap CIs (1000 resamples over items)...")
+    # Bootstrap CIs (item-clustered)
+    print("\nBootstrap CIs (1000 item-clustered resamples)...")
     boot = {
         "n_resamples": N_BOOT,
         "seed": SEED,
-        "headline_overall": bootstrap_d(np.array([r["bias_score"] for r in bs])),
+        "cluster_unit": "item_id",
+        "method": "block-bootstrap: resample item IDs with replacement, include all rows per sampled item",
+        "headline_overall": bootstrap_d_clustered(bs),
         "per_polarity": stratified_bootstrap(bs, "polarity"),
         "per_domain": stratified_bootstrap(bs, "domain"),
         "per_category": stratified_bootstrap(bs, "category"),

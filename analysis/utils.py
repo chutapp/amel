@@ -11,8 +11,9 @@ from scipy import stats
 # Default data file; override with AMEL_DATA_FILE env var for v2 / adjudicated runs.
 DEFAULT_DATA_FILE = Path(os.environ.get("AMEL_DATA_FILE", "data/all_results.jsonl"))
 
-# Bonferroni correction factor (21 test items)
-N_COMPARISONS = 21
+# Bonferroni correction factor: 1 overall + 12 per-model + 3 per-polarity
+# + 3 per-domain + 3 per-category = 22 primary group-level tests.
+N_COMPARISONS = 22
 
 
 def load_results(path=None):
