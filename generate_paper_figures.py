@@ -213,7 +213,7 @@ def fig0_hero(scores, results, out_dir):
             fontweight="bold", va="top", ha="left")
 
     ratio = abs(means_b[0]) / abs(means_b[2]) if abs(means_b[2]) > 0 else float("inf")
-    ax.text(0.02, 0.87, f"Negativity asymmetry ({ratio:.1f}x)",
+    ax.text(0.02, 0.87, f"Marginal ratio {ratio:.1f}x (paired 1.52x)",
             transform=ax.transAxes, fontsize=8, va="top", ha="left", color="#555555")
 
     for i, (m, d) in enumerate(zip(means_b, ds_b)):
