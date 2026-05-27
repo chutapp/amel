@@ -1,0 +1,55 @@
+{
+  "domain": "code_review",
+  "models": [
+    "gpt-4.1-nano",
+    "llama3.2:3b"
+  ],
+  "context_length": 50,
+  "n_items": 21,
+  "per_model": {
+    "gpt-4.1-nano": {
+      "n_items": 21,
+      "evaluative_neutral": {
+        "mean_BS": -0.3,
+        "std": 0.3987,
+        "cohens_d": -0.7524,
+        "t_vs_zero": -3.448,
+        "p_vs_zero": 0.0025449742722362194
+      },
+      "non_evaluative_neutral": {
+        "mean_BS": -0.0476,
+        "std": 0.1632,
+        "cohens_d": -0.2919,
+        "t_vs_zero": -1.338,
+        "p_vs_zero": 0.19607176357914002
+      },
+      "eval_minus_nef": {
+        "mean_diff": -0.2524,
+        "t_paired": -2.842,
+        "p_paired": 0.010076344398324727
+      }
+    },
+    "llama3.2:3b": {
+      "n_items": 21,
+      "evaluative_neutral": {
+        "mean_BS": -0.4524,
+        "std": 0.4445,
+        "cohens_d": -1.0176,
+        "t_vs_zero": -4.663,
+        "p_vs_zero": 0.00014961450645290772
+      },
+      "non_evaluative_neutral": {
+        "mean_BS": -0.181,
+        "std": 0.26,
+        "cohens_d": -0.6959,
+        "t_vs_zero": -3.189,
+        "p_vs_zero": 0.004611650473448056
+      },
+      "eval_minus_nef": {
+        "mean_diff": -0.2714,
+        "t_paired": -4.166,
+        "p_paired": 0.0004771564840029539
+      }
+    }
+  }
+}

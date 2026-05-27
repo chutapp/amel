@@ -603,6 +603,40 @@ Five biased turns out of fifty, in any position, suffice.
 \end{figure}
 
 
+\subsection{Non-Evaluative Filler Produces a Smaller Shift}
+\label{sec:nef}
+
+The main experiment's neutral arm fills prior turns with balanced 50/50 yes/no judgments on other items; the prior conversation is evaluative even when its polarity is balanced. This leaves the comparison ``baseline (no history) vs.\ neutral arm'' unable to separate a polarity-of-history effect from a presence-of-evaluative-history effect (see Limitations in the previous version of this paper). I now run an explicit control.
+
+I replace the 50 evaluative prior turns with 50 non-evaluative factual Q\&A pairs (e.g., ``What is the capital of France? Paris.'') drawn from a fixed pool of 102 pairs (\texttt{src/non\_evaluative\_filler.py}); the test item, system prompt, model, and reps are identical to the main experiment's neutral arm at $N = 50$. The experiment runs GPT-4.1 Nano and Llama 3.2 3B on all 21 code-review items, 10 reps each, paired with the same items' baseline cells.
+
+Both models still shift toward ``no'' under non-evaluative filler, but the shift is roughly $4\times$ smaller for Nano and $2.5\times$ smaller for Llama compared to the evaluative-neutral arm on the same items.
+
+\begin{table}[h]
+\centering
+\footnotesize
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Model} & \textbf{Arm} & $\bar{BS}$ & $d$ & $p$ \\
+\midrule
+\multirow{3}{*}{Nano}  & evaluative neutral     & $-0.30$ & $-0.75$ & $0.003$ \\
+                       & non-evaluative neutral & $-0.05$ & $-0.29$ & $0.20$ (n.s.) \\
+                       & paired difference      & $-0.25$ & ---     & $0.010$ \\
+\midrule
+\multirow{3}{*}{Llama} & evaluative neutral     & $-0.45$ & $-1.02$ & $<10^{-3}$ \\
+                       & non-evaluative neutral & $-0.18$ & $-0.70$ & $0.005$ \\
+                       & paired difference      & $-0.27$ & ---     & $<10^{-3}$ \\
+\bottomrule
+\end{tabular}
+\caption{Paired per-item comparison ($n = 21$ code-review items, $N = 50$ turns) of the main experiment's neutral arm (evaluative filler) against the non-evaluative-filler control. Paired difference $p$-values are from paired $t$-tests on per-item BS differences.}
+\label{tab:nef}
+\end{table}
+
+For GPT-4.1 Nano the non-evaluative shift is no longer significantly different from zero ($p = 0.20$, $n = 21$); the negative shift in the main experiment's neutral arm is therefore predominantly driven by the evaluative nature of the prior turns. For Llama 3.2 3B both effects are real, but the evaluative-neutral shift is roughly $2.5\times$ the non-evaluative one, so the same conclusion holds in attenuated form. The paired difference between the two arms is significant in both models, so I retract the prior framing in which non-evaluative filler was treated as an open question: the data are now in. The neutral-arm asymmetry in the main experiment is mostly a polarity-of-history effect, not a presence-of-history effect; but there is a residual presence-of-history component (particularly for the smaller open-weight model) that the main experiment's design alone could not isolate.
+
+These numbers are not panel-wide ---the control was run on only two models and the most affected domain--- and should be read as a probe rather than a definitive resolution. Extending the control to the full 12-model panel would let me say whether the residual presence component is open-weight-specific or general.
+
+
 \section{Discussion}
 \label{sec:discussion}
 
@@ -734,10 +768,8 @@ Contexts with \textit{incorrect} prior judgments (a bad review that approves bug
 The Qwen3 30B run experienced a disk-full crash with a concurrent-resume bug that produced 2,186 duplicate-condition rows; I deduplicate post-hoc by keeping the first occurrence per condition (Appendix~\ref{app:dedup}).
 This affects one of twelve models and does not change overall conclusions, but the dedup procedure is one more place where reviewer attention is warranted.
 
-\paragraph{Neutral arm uses evaluative filler.}
-My ``neutral'' (50/50) context arm is composed of evaluative items from the same yes/no pool, not non-evaluative filler.
-The finding that the neutral arm also produces a negative shift therefore admits two readings: (i) any conversation history (evaluative or not) shifts models toward ``no,'' or (ii) any history composed of evaluative judgments shifts models toward ``no,'' regardless of polarity balance.
-Distinguishing these requires a non-evaluative-filler control I do not run here (see Future Work).
+\paragraph{Neutral arm uses evaluative filler (now controlled).}
+The main experiment's ``neutral'' (50/50) context arm is composed of evaluative items from the same yes/no pool, not non-evaluative filler. The non-evaluative-filler control in Section~\ref{sec:nef} runs the comparison for GPT-4.1 Nano and Llama 3.2 3B on code review and finds that the neutral-arm shift is mostly attributable to the evaluative nature of the prior turns: Nano shows no significant shift under non-evaluative filler ($p = 0.20$), and Llama shows a shift roughly $2.5\times$ smaller than under evaluative filler. The control is two models in one domain, not a panel-wide result; for the other 10 models and the other 2 domains the same ambiguity persists.
 
 \paragraph{Per-category label reliability is uneven by domain.}
 The external 5-annotator IRR study (Section~\ref{sec:domains}) reports overall $\alpha = 0.53$ and per-domain $\alpha$ from $0.28$ (code review) to $0.69$ (meals). Code-review category labels are therefore the weakest link in any per-category analysis; the empirical-entropy stratification in Section~\ref{sec:empirical_entropy} groups items by the model's own baseline behavior rather than by author label, and I treat that version of the ``uncertainty absorbs bias'' result as primary. However, the item pool itself was constructed by the author, so the entropy bins still inherit the underlying item-design choices: the empirical stratification reduces, but does not fully eliminate, dependence on the author-coded category structure. Headline statistics that do not depend on per-category labels (overall, polarity, accumulation, contrast, empirical-entropy) are unaffected.
