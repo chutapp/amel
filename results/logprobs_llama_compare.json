@@ -1,0 +1,149 @@
+{
+  "models": {
+    "gpt-4.1-nano": {
+      "baseline": {
+        "n": 210,
+        "p_yes_mean": 0.1263,
+        "p_yes_median": 0.0,
+        "p_yes_std": 0.2649
+      },
+      "no_saturated@5": {
+        "n": 210,
+        "p_yes_mean": 0.3722,
+        "p_yes_median": 0.0002,
+        "p_yes_std": 0.4661
+      },
+      "yes_saturated@5": {
+        "n": 210,
+        "p_yes_mean": 0.2244,
+        "p_yes_median": 0.0,
+        "p_yes_std": 0.3899
+      },
+      "no_saturated@50": {
+        "n": 210,
+        "p_yes_mean": 0.4629,
+        "p_yes_median": 0.1073,
+        "p_yes_std": 0.487
+      },
+      "yes_saturated@50": {
+        "n": 210,
+        "p_yes_mean": 0.3911,
+        "p_yes_median": 0.0,
+        "p_yes_std": 0.4723
+      }
+    },
+    "llama3.2:3b": {
+      "baseline": {
+        "n": 210,
+        "p_yes_mean": 0.1443,
+        "p_yes_median": 0.0546,
+        "p_yes_std": 0.2195
+      },
+      "no_saturated@5": {
+        "n": 210,
+        "p_yes_mean": 0.5764,
+        "p_yes_median": 0.8821,
+        "p_yes_std": 0.4563
+      },
+      "yes_saturated@5": {
+        "n": 210,
+        "p_yes_mean": 0.4957,
+        "p_yes_median": 0.619,
+        "p_yes_std": 0.4236
+      },
+      "no_saturated@50": {
+        "n": 210,
+        "p_yes_mean": 0.6164,
+        "p_yes_median": 0.9924,
+        "p_yes_std": 0.4814
+      },
+      "yes_saturated@50": {
+        "n": 210,
+        "p_yes_mean": 0.6214,
+        "p_yes_median": 0.9814,
+        "p_yes_std": 0.4642
+      }
+    }
+  },
+  "tests": {
+    "gpt-4.1-nano": {
+      "baseline_vs_no_saturated@5": {
+        "U": 14704.0,
+        "p": 5.141111380222753e-10,
+        "mean_diff": 0.246,
+        "direction": "P(Yes) rises"
+      },
+      "baseline_vs_yes_saturated@5": {
+        "U": 18585.0,
+        "p": 0.0025825938182189715,
+        "mean_diff": 0.0982,
+        "direction": "P(Yes) rises"
+      },
+      "baseline_vs_no_saturated@50": {
+        "U": 13502.0,
+        "p": 4.560912757581106e-13,
+        "mean_diff": 0.3366,
+        "direction": "P(Yes) rises"
+      },
+      "baseline_vs_yes_saturated@50": {
+        "U": 17004.0,
+        "p": 1.0617103642239324e-05,
+        "mean_diff": 0.2649,
+        "direction": "P(Yes) rises"
+      },
+      "no_saturated_5_vs_50": {
+        "U": 19803.0,
+        "p": 0.06487966610440163,
+        "mean_diff": 0.0907
+      },
+      "yes_saturated_5_vs_50": {
+        "U": 19915.0,
+        "p": 0.06793363836273494,
+        "mean_diff": 0.1667
+      }
+    },
+    "llama3.2:3b": {
+      "baseline_vs_no_saturated@5": {
+        "U": 13027.0,
+        "p": 4.034465503557046e-13,
+        "mean_diff": 0.4321,
+        "direction": "P(Yes) rises"
+      },
+      "baseline_vs_yes_saturated@5": {
+        "U": 14624.0,
+        "p": 2.3673494725435196e-09,
+        "mean_diff": 0.3514,
+        "direction": "P(Yes) rises"
+      },
+      "baseline_vs_no_saturated@50": {
+        "U": 13225.0,
+        "p": 1.2916354028501008e-12,
+        "mean_diff": 0.4721,
+        "direction": "P(Yes) rises"
+      },
+      "baseline_vs_yes_saturated@50": {
+        "U": 13027.0,
+        "p": 4.034465503557046e-13,
+        "mean_diff": 0.4771,
+        "direction": "P(Yes) rises"
+      },
+      "no_saturated_5_vs_50": {
+        "U": 15868.0,
+        "p": 6.708039473439715e-07,
+        "mean_diff": 0.0401
+      },
+      "yes_saturated_5_vs_50": {
+        "U": 15735.0,
+        "p": 3.84335983680446e-07,
+        "mean_diff": 0.1257
+      }
+    }
+  },
+  "cross_model": {
+    "nano_no_sat_5_pyes_shift": 0.3722,
+    "llama_no_sat_5_pyes_shift": 0.5764,
+    "nano_yes_sat_5_pyes": 0.2244,
+    "llama_yes_sat_5_pyes": 0.4957,
+    "interpretation": "Both models should show the same qualitative pattern: P(Yes) lower under no_saturated than baseline, higher under yes_saturated than baseline, with the 5-turn and 50-turn versions of each polarity statistically indistinguishable (saturation). Quantitative magnitudes may differ across models."
+  }
+}

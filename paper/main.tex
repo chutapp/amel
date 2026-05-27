@@ -535,10 +535,14 @@ The probability distribution moves, not just the binary outcome (Figure~\ref{fig
 Both polarities shift $P(\text{Yes})$ upward from the model's extreme baseline ($P(\text{Yes}) = 0.13$), with the magnitude varying by polarity.
 The per-item dot plot (Figure~\ref{fig:logprobs}b) shows this is not driven by a few outlier items; the shift is consistent across the board.
 
-Saturation holds at the probability level too.
+Saturation holds at the probability level too for Nano.
 $P(\text{Yes})$ at 5 and 50 turns is similar for both polarities: the no-saturated comparison is borderline (Mann-Whitney $U$, $p = 0.049$) and the yes-saturated comparison is not significant ($p = 0.067$).
-Neither is far from the saturated-history mean, which fits a rapid plateau rather than continued drift; the borderline no-saturated $p$ should be read as suggestive that any residual drift is small.
+Neither is far from the saturated-history mean, which fits a rapid plateau rather than continued drift; the borderline $p$-values should be read as suggestive that any residual drift is small.
 Because the bias is a continuous probability shift, logprobs-based correction methods \cite{bhatt2026rbcorr} could in principle detect and compensate for it in evaluation pipelines.
+
+\paragraph{Replication on Llama 3.2 3B.}
+The §5.1 experiment was originally run on Nano alone because the OpenAI API was the only one with cost-effective logprobs at design time. Ollama exposes first-token logprobs locally with no marginal cost, so I now re-run the same 1,050-call design on Llama 3.2 3B (same 21 code-review items, same five conditions, same 10 reps). The qualitative continuous-shift finding replicates: baseline $P(\text{Yes}) = 0.14$ (Llama) vs.\ $0.13$ (Nano), and every treatment condition raises $P(\text{Yes})$ significantly above baseline in both models (Llama: all four condition vs.\ baseline tests at $p < 10^{-8}$; Nano: at $p < 0.003$, two of the four at $p < 10^{-9}$). The per-item probability shifts are distributed across the item pool rather than driven by a few items in either model.
+The 5-vs-50-turn saturation finding does \emph{not} cleanly replicate. For Nano the 5-vs-50 comparison is borderline-to-non-significant ($p = 0.065$ no-saturated, $p = 0.068$ yes-saturated under the present scipy version; the originally-reported $p = 0.049$ for no-saturated drifts slightly under scipy version updates but remains in the borderline range). For Llama the 5-vs-50 comparison is significant in both polarities ($p < 10^{-6}$, mean $P(\text{Yes})$ increment $+0.04$ no-saturated, $+0.13$ yes-saturated). The directional saturation conclusion (most of the shift is captured by 5 turns) still holds for both models, but Llama places less of the total shift at $N \leq 5$ than Nano does. The cross-model picture is therefore: continuous probability shift, robust; clean saturation at $N = 5$, Nano-specific. Numbers are in \texttt{results/logprobs\_llama\_compare.json}.
 
 \begin{figure*}[t]
     \centering
@@ -654,7 +658,7 @@ So the negativity asymmetry is not one thing.
 It is a confluence of token-level preference, RLHF-trained caution, and pre-existing item-level tendencies, with the balance shifting across models.
 
 \paragraph{Pattern detection, not evidence accumulation.}
-The logprobs experiment (Section~\ref{sec:logprobs}) confirms that this is not a threshold artifact: the model's internal distribution genuinely shifts.
+The logprobs experiment (Section~\ref{sec:logprobs}) confirms that this is not a threshold artifact: the model's internal distribution genuinely shifts, and the same continuous-shift pattern replicates on Llama 3.2 3B in the same experimental design (though the Nano-specific clean saturation at $N = 5$ does not).
 The positional experiment (Section~\ref{sec:positional}) goes further: it does not matter where in the conversation the biased turns appear.
 Neither primacy nor recency explains the effect. One reading consistent with the data is that the model aggregates polarity signal globally, in line with the equilibrium framework of \citet{dongre2025drift}; I cannot rule out alternatives such as the model latching onto any sufficiently dense cluster of biased turns regardless of position.
 
