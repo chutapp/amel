@@ -338,7 +338,7 @@ Second, yes-saturated contexts fail to push models equivalently toward ``yes'' (
 Figure~\ref{fig:model_comparison} shows susceptibility across all 12 models.
 Ten out of twelve show significant bias after Bonferroni correction.
 
-The most susceptible models are GPT-4.1 Nano ($d = -0.34$), Llama 3.2 3B ($d = -0.32$), and Gemini 2.5 Pro ($d = -0.27$).
+The most susceptible models are GPT-4.1 Nano ($d = -0.34$), Llama 3.2 3B ($d = -0.32$), and Gemini 2.5 Pro ($d = -0.27$; partial data, $n = 402$ cells vs.\ the panel typical $n = 693$, so the Pro estimate has roughly $\sqrt{693/402} \approx 1.3\times$ wider CIs than the others and the Pro vs.\ Flash comparison should be interpreted with that caveat).
 The least affected (toward conformity) are Qwen3.5 4B ($d = -0.08$, $p_\text{corrected} = 0.46$, n.s.) and Qwen3 30B ($d = +0.10$, $p_\text{corrected} = 0.17$, n.s.\ under first-occurrence dedup); among API models, GPT-5.2 and Opus 4.6 tie at $d = -0.17$.
 
 \paragraph{Scaling trends.}
@@ -680,12 +680,14 @@ All main experiments use $T = 1.0$. As a single-model, single-domain spot-check 
 \section{Practical Recommendations}
 \label{sec:implications}
 
+The operationally relevant number is not the overall $d = -0.17$ but the per-cell flip rate: 15.3\% of (model, item, polarity, context-length) cells flip their modal binary answer relative to the baseline. For an evaluation pipeline that touches 10,000 items, that is roughly 1,500 verdicts changed by conversation history; for one that touches 100, it is about 15. Whether that is acceptable depends on the downstream cost of each flip (a flipped hiring decision and a flipped meal-rating do not carry the same consequences). The recommendations below should be read against that 15\% headline, with priority weighted by the cost of a single incorrect judgment in the deployment in question.
+
 \begin{enumerate}
-    \item \textbf{Fresh contexts by default, including for high-stakes calls.} Evaluate each item in its own conversation, with no prior history. This costs more (no prompt caching) but eliminates the channel that creates AMEL. For consequential decisions (hiring, content moderation at scale, code review of safety-critical changes), the fresh-context cost is unambiguously the right trade.
+    \item \textbf{Fresh contexts for high-stakes, consequential calls.} If a single flipped verdict carries real downstream cost (hiring, safety-critical code review, large-scale content moderation), evaluate each item in its own conversation with no prior history. This costs more (no prompt caching) but eliminates the channel that creates AMEL. The cost-benefit is unambiguous only above some per-flip cost threshold; for low-stakes batched ratings the trade may go the other way.
 
-    \item \textbf{Randomize and balance batches when fresh contexts are infeasible.} If batching is required for cost reasons, shuffle item order and balance expected positive/negative outcomes within each batch. Do not sort by expected verdict; sorted orders generate self-reinforcing positional drift (Section~\ref{sec:sequential}).
+    \item \textbf{Protect uncertain items even when batching.} If full fresh-context is impractical, prioritise it for items where the model's first-token logprobs are non-deterministic. These are the items that absorb the most bias (Section~\ref{sec:empirical_entropy}, $d = -0.36$ for high-entropy items vs.\ $d = -0.15$ for deterministic), and they are also the items where a flipped verdict matters most.
 
-    \item \textbf{Protect uncertain items.} The model's own baseline uncertainty predicts susceptibility (Section~\ref{sec:empirical_entropy}). If fresh contexts for everything is impractical, at least use them for items where the model's first-token logprobs are non-deterministic.
+    \item \textbf{Randomize and balance batches when fresh contexts are infeasible.} Shuffle item order and balance expected positive/negative outcomes within each batch. Do not sort by expected verdict; sorted orders generate self-reinforcing positional drift (Section~\ref{sec:sequential}).
 
     \item \textbf{Pair batched evaluation with a response-history bias detector or logprobs-based corrector.} B-score \citep{bscore2025} or logprobs correction \citep{bhatt2026rbcorr} can detect and partially correct AMEL drift at runtime in deployments where fresh contexts are not viable.
 
@@ -748,6 +750,9 @@ The 7.09\% unparseable rate is not independent of polarity (Appendix~\ref{app:un
 Most of the differential is driven by Claude Opus 4.6 (22\% unparseable across all conditions due to verbose conditional responses), which is roughly MAR.
 The headline conclusions reproduce if Opus is excluded from the model panel; I report this as a sensitivity check rather than a primary result.
 
+\paragraph{No human-baseline comparison.}
+Humans exhibit similar history-driven drift on sequential evaluation tasks (anchoring, sequential contrast effects; see \citealp{tversky1974judgment}). I do not run a parallel human IRR-on-bias study, so I cannot say whether the LLM drift documented here is larger, smaller, or comparable to what a human reviewer would show under the same conversation-history manipulation. The practical recommendations would carry more force if a human baseline established that LLM judges drift more than humans on the same items; conversely, they would carry less force if the drift turned out to be comparable. A parallel human study is a natural follow-on but is out of scope for this paper.
+
 \paragraph{Training-corpus contamination not directly measured.}
 The 63 test items are author-built rather than drawn from a held-out benchmark, but several context-pool items (e.g., classic security anti-patterns like SQL injection by f-string, MD5 password hashing, $\texttt{eval(user\_input)}$) and generic forum-style comments are short and generic enough that near-duplicates almost certainly appear in any sufficiently large training corpus. I report no explicit n-gram-overlap contamination check against any model's training data; for the closed-API models this is infeasible. I argue the bias-score construction itself partially neutralises this concern: $BS$ measures the \emph{shift} from a fresh-context baseline to a treatment-context baseline on the same item-model pair, so any per-item baseline tendency the model has absorbed from memorisation is differenced out. Memorisation would inflate baseline accuracy on individual items but should not, on its own, produce a systematic context-conditional shift. This argument does not eliminate the concern but bounds it: contamination would have to interact with conversation polarity to produce AMEL, not merely with item content.
 
@@ -774,6 +779,7 @@ The exact API model strings used are listed in Table~\ref{tab:models}; provider 
 Per-condition seeds are derived from the test-item ID via Python's hash; for bit-exact replay, set \texttt{PYTHONHASHSEED=0} in the runner environment.
 The repository \texttt{requirements.txt} pins the Python dependency set; tested with Python 3.11.
 Local open-weight runs use Ollama; the exact tags are listed in Table~\ref{tab:models}.
+System prompts and conversation-construction logic live in \texttt{src/conversation.py}; they are minimal (the system prompt is the question itself, no persona or instruction scaffolding) but are reproduced in source rather than in the main text for length reasons.
 
 \section*{Ethics Statement}
 This work studies systematic bias in AI evaluation systems with the goal of improving their reliability.
