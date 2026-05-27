@@ -266,8 +266,11 @@ A positive bias score means the model shifted \textit{toward} the saturated pola
 
 \subsection{Response Parsing}
 
-I extract binary yes/no judgments with a multi-strategy parser: first checking the opening word for explicit yes/no, then applying regex patterns to the first sentence, and falling back to position-weighted keyword counting.
-Responses that resist parsing are excluded (unparseable rate: 7.09\%, concentrated in Qwen3 30B and Claude Opus 4.6 which produce malformed or verbose conditional output; see Appendix~\ref{app:unparseable}).
+I extract binary yes/no judgments with a multi-strategy parser: first checking the opening word for explicit yes/no, then applying regex patterns to the first sentence, and falling back to position-weighted keyword counting. Responses that resist parsing are excluded (unparseable rate: 7.09\%, concentrated in Qwen3 30B and Claude Opus 4.6 which produce malformed or verbose conditional output; see Appendix~\ref{app:unparseable}).
+
+The parser used throughout this paper (v2) is a symmetric revision of an earlier asymmetric version (v1). The v1 parser had asymmetric yes/no patterns favoring ``no'' (Appendix~\ref{app:parser}), which under-detected ``yes'' responses in the baseline cells, inflated baseline $P(\text{no})$, and thereby compressed apparent treatment-vs-baseline differences. The v2 parser was developed and applied to the full dataset before any v2 numbers were reported in this paper. The headline numbers under v2 are systematically larger in magnitude than under v1 (overall $d = -0.14 \to -0.17$ on the pre-DeepSeek dataset of 75,898 responses, for an apples-to-apples comparison). Readers should note that the v1 figures previously circulated were biased \textit{toward} finding less bias, not more.
+
+Appendix~\ref{app:unparseable} also reports an adversarial-imputation sensitivity for the 7.09\% unparseable rate. Under the worst-case anti-adversarial imputation (in which every unparseable response would, if forced, have given the answer that minimizes the observed effect), the headline $d$ shrinks from $-0.17$ to $-0.025$ ($t = -2.33$, $n = 8{,}387$); under the opposite adversarial imputation it grows to $-0.32$. The realistic range, assuming non-coherent missingness, sits closer to the observed estimate, but the headline figure should be read as the optimistic end of a $d \in [-0.32, -0.03]$ bound.
 
 \subsection{Statistical Analysis}
 
@@ -969,6 +972,17 @@ Within Opus the rate is roughly MAR (no significant cross-condition variation fo
 
 I re-ran the headline analysis with Opus excluded as a sensitivity check: overall $d = -0.17$ (unchanged to two decimal places), asymmetry ratio $1.61\times$ (unchanged), and the per-domain ordering preserved.
 I therefore retain Opus in the main panel but flag the model's parsing peculiarity here.
+
+\paragraph{Adversarial imputation bound.}
+The above per-model exclusion check addresses one source of missingness sensitivity (concentration in a single model) but not the more general MAR/MNAR question. To bound the headline $d$ under arbitrary missingness mechanisms, I re-impute every unparseable response under two adversarial choices and recompute the per-cell BS.
+
+\begin{itemize}
+    \item \textbf{Anti-adversarial:} every unparseable response in baseline cells is assigned the model's saturated-polarity target answer (raising baseline $P(\text{target})$); every unparseable response in treatment cells is assigned the opposite (lowering treatment $P(\text{target})$). This is the imputation choice that maximally shrinks the apparent treatment-vs-baseline difference.
+
+    \item \textbf{Adversarial:} the opposite imputation, which maximally inflates the apparent difference.
+\end{itemize}
+
+Computed on the deduplicated dataset ($n = 8{,}387$ cells), the headline $d$ moves to $-0.025$ under the anti-adversarial imputation ($t = -2.33$, still negative but marginal under Bonferroni) and to $-0.32$ under the adversarial imputation. Neither extreme is plausible: both assume every unparseable response would coherently bias the result in the same direction, which is unlikely under any realistic missingness mechanism. The observed estimate ($d = -0.17$) sits closer to the middle of this bound than to either extreme. The honest reading is that the headline figure is robust to most plausible missingness mechanisms (the sign is preserved across the full bound), but the precise magnitude is not pinned without an additional assumption about the joint behavior of the unparseable subset.
 
 \section{Parser v2 (Symmetric Yes/No Extraction)}
 \label{app:parser}
