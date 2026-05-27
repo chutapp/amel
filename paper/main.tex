@@ -437,8 +437,8 @@ Does more history mean more bias?
 No.
 The Spearman correlation between context length and bias score is essentially zero (overall $r_s = -0.001$, $p = 0.92$).
 Because Spearman over only four distinct $x$ values $\{5, 10, 20, 50\}$ is statistically blunt, I also fit an OLS regression of $BS$ on $\log_2(\text{context length})$ and on raw context length: both slopes are essentially zero (linear $\hat{\beta} = -4 \times 10^{-5}$ per turn, $p = 0.84$, $R^2 < 0.001$).
-Within polarities the picture is similar: no-saturated $r_s = 0.014$ ($p = 0.45$), yes-saturated $r_s = 0.034$ ($p = 0.07$). Neutral shows a tiny but significant negative slope ($r_s = -0.055$, $p = 0.004$), meaning balanced history drifts $\bar{BS}$ slightly more negative with length. Even at the upper bound of the neutral-arm slope, the predicted shift across 45 additional turns is well below the noise floor of the main experiment.
-Five turns of biased history produce the same shift as fifty (Figure~\ref{fig:accumulation}).
+Within polarities the picture is similar: no-saturated $r_s = 0.014$ ($p = 0.45$), yes-saturated $r_s = 0.034$ ($p = 0.07$). Neutral shows a small but statistically significant negative slope ($r_s = -0.055$, $p = 0.004$): balanced history does drift $\bar{BS}$ slightly more negative as length grows. The effect is below the noise floor of the main experiment in absolute magnitude (predicted shift across 45 additional turns is small relative to the overall $d$), but I do not want to paper over the fact that it is a real and significant accumulation pattern in the neutral arm. The flat curve is a statement about the main experiment's resolution between $N = 5$ and $N = 50$, not a proof of strict invariance.
+Five turns of biased history produce roughly the same shift as fifty (Figure~\ref{fig:accumulation}). I do not have data at $N \in \{1, 2, 3, 4\}$, so I cannot resolve where below $N = 5$ the effect actually saturates --- it could plateau at one turn, three, or five, and the present design does not distinguish.
 
 A gradual Bayesian-updating account does not fit the data.
 The bias score does not slowly grow with context length; whatever process drives the shift appears to be saturated by five turns and remains flat thereafter.
@@ -668,16 +668,10 @@ Interleaving expected-yes and expected-no items prevents the model from establis
 The fixed-order vs.\ balanced-order difference is significant ($t = 4.17$, $p < 10^{-4}$), confirming that ordering matters.
 Full details are in Appendix~\ref{app:mitigation}.
 
-\subsection{Temperature Sensitivity}
+\subsection{Temperature Spot-Check}
 \label{sec:temperature}
 
-All main experiments use $T = 1.0$.
-To check whether temperature modulates AMEL, I run GPT-4.1 Nano on the code review domain at $T = 0.3$ and $T = 0.7$ (no-saturated + baseline, $N = 10$, all 21 items, 10 reps).
-I select GPT-4.1 Nano because it shows the strongest bias in the main experiment ($d = -0.34$), giving me the best chance to detect temperature effects.
-
-Contrary to the intuition that lower temperature should reduce bias, I find that bias is \textit{at least as strong} at lower temperatures: $d = -0.69$ at $T = 0.3$ and $d = -0.72$ at $T = 0.7$, compared to $d = -0.28$ at $T = 1.0$ (all significant at $p < 0.05$).
-A Kruskal-Wallis test across the three temperatures is not significant ($H = 5.27$, $p = 0.07$), so I cannot claim a significant monotonic relationship. The directional pattern (lower $T$ does not reduce bias and may amplify it) fits a story in which lower temperature sharpens the output distribution and so reinforces whatever pattern the context has established, but my data lack the power to test this mechanism; I report it as a directional finding only.
-Full details are in Appendix~\ref{app:temperature}.
+All main experiments use $T = 1.0$. As a single-model, single-domain spot-check on whether temperature modulates AMEL, I run GPT-4.1 Nano on the code review domain at $T \in \{0.3, 0.7, 1.0\}$ (full details in Appendix~\ref{app:temperature}). The Kruskal-Wallis omnibus across the three temperatures is not significant ($H = 5.27$, $p = 0.07$), so I cannot claim a temperature effect at this design. The directional pattern (lower $T$ does not reduce bias) is reported in the appendix as exploratory only; it should not inform deployment decisions on the basis of this spot-check.
 
 
 \section{Practical Recommendations}
