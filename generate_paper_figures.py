@@ -151,8 +151,32 @@ def compute_bias_scores(results):
 
 # ── Figure 0: Hero Figure ─────────────────────────────────────────────────
 def fig0_hero(scores, results, out_dir):
-    """Hero figure: 3-panel overview of AMEL."""
-    fig, axes = plt.subplots(1, 3, figsize=(12, 3.8))
+    """Hero figure: 3-panel overview of AMEL.
+
+    Layout rules (so annotations never fight the data):
+      - Panel letter (a)/(b)/(c) and a one-line subtitle go ABOVE each axes
+        via set_title, never inside the plotting region.
+      - Bar value labels (d=..., ***) are placed just past the END of the
+        error whisker so they cannot overlap the whisker or the y-axis.
+      - The stats box in panel (c) sits in the top-right; the data line
+        lives near y = -0.10 so the top-right corner is always empty.
+    """
+    fig, axes = plt.subplots(1, 3, figsize=(12, 4.6))
+
+    def _panel_title(ax, letter, subtitle):
+        ax.set_title(f"({letter})  {subtitle}", loc="left",
+                     fontsize=9, fontweight="bold", pad=8, color="#1f2937")
+
+    def _label_bar(ax, x, mean, ci, text):
+        """Place a value label just past the end of the error whisker."""
+        if mean < 0:
+            y = mean - ci - 0.006
+            va = "top"
+        else:
+            y = mean + ci + 0.006
+            va = "bottom"
+        ax.text(x, y, text, ha="center", va=va,
+                fontsize=7.5, fontweight="bold", color="#1f2937")
 
     # ── Panel A: Category interaction ──
     ax = axes[0]
@@ -175,21 +199,16 @@ def fig0_hero(scores, results, out_dir):
            error_kw=dict(capsize=5, capthick=1.2, elinewidth=1.2, color="#374151"))
     ax.set_xticks(x)
     ax.set_xticklabels(cat_labels_short, fontsize=8)
-    ax.set_ylabel("Mean Bias Score", fontsize=9)
+    ax.set_ylabel("Mean Bias Score  (negative = shift toward \"no\")", fontsize=8.5)
     ax.axhline(0, color="#374151", lw=0.8)
-    ax.text(0.02, 0.97, "(a)", transform=ax.transAxes, fontsize=11,
-            fontweight="bold", va="top", ha="left")
-    ax.text(0.02, 0.87, "Ambiguity modulates\nthe effect", transform=ax.transAxes,
-            fontsize=8, va="top", ha="left", color="#555555")
+    _panel_title(ax, "a", "Ambiguity modulates the effect")
 
     n_comparisons = N_COMPARISONS
-    for i, (m, d) in enumerate(zip(means_a, ds_a)):
-        y_off = -0.008 if m < 0 else 0.008
-        va = "top" if m < 0 else "bottom"
+    for i, (m, ci, d) in enumerate(zip(means_a, cis_a, ds_a)):
         t, p = stats.ttest_1samp(cat_scores[categories[i]], 0)
         p_corr = min(p * n_comparisons, 1.0)
-        sig = "***" if p_corr < 0.001 else "**" if p_corr < 0.01 else "*" if p_corr < 0.05 else "ns"
-        ax.text(i, m + y_off, f"d={d:.2f} {sig}", ha="center", va=va, fontsize=7, fontweight="bold")
+        sig = "***" if p_corr < 0.001 else "**" if p_corr < 0.01 else "*" if p_corr < 0.05 else "n.s."
+        _label_bar(ax, i, m, ci, f"d={d:.2f}\n{sig}")
 
     # ── Panel B: Polarity asymmetry ──
     ax = axes[1]
@@ -212,18 +231,13 @@ def fig0_hero(scores, results, out_dir):
            error_kw=dict(capsize=5, capthick=1.2, elinewidth=1.2, color="#374151"))
     ax.set_xticks(x)
     ax.set_xticklabels(pol_labels_short, fontsize=8)
+    ax.set_ylabel("Mean Bias Score", fontsize=8.5)
     ax.axhline(0, color="#374151", lw=0.8)
-    ax.text(0.02, 0.97, "(b)", transform=ax.transAxes, fontsize=11,
-            fontweight="bold", va="top", ha="left")
-
     ratio = abs(means_b[0]) / abs(means_b[2]) if abs(means_b[2]) > 0 else float("inf")
-    ax.text(0.02, 0.87, f"Marginal ratio {ratio:.1f}x (paired 1.52x)",
-            transform=ax.transAxes, fontsize=8, va="top", ha="left", color="#555555")
+    _panel_title(ax, "b", f"Negative pulls harder ({ratio:.1f}x marginal, 1.52x paired)")
 
-    for i, (m, d) in enumerate(zip(means_b, ds_b)):
-        y_off = -0.005 if m < 0 else 0.005
-        va = "top" if m < 0 else "bottom"
-        ax.text(i, m + y_off, f"d={d:.2f}", ha="center", va=va, fontsize=7, fontweight="bold")
+    for i, (m, ci, d) in enumerate(zip(means_b, cis_b, ds_b)):
+        _label_bar(ax, i, m, ci, f"d={d:.2f}")
 
     # ── Panel C: Accumulation flatness (no_saturated only) ──
     ax = axes[2]
@@ -240,12 +254,10 @@ def fig0_hero(scores, results, out_dir):
                 color=POL_COLORS["no_saturated"], linewidth=2, capsize=4, capthick=1.2,
                 markerfacecolor="white", markeredgewidth=2)
     ax.axhline(0, color="#374151", lw=0.8, ls="-")
-    ax.set_xlabel("Context length (turns)", fontsize=9)
+    ax.set_xlabel("Context length (prior turns of no-saturated history)", fontsize=8.5)
+    ax.set_ylabel("Mean Bias Score", fontsize=8.5)
     ax.set_xticks(lengths)
-    ax.text(0.02, 0.97, "(c)", transform=ax.transAxes, fontsize=11,
-            fontweight="bold", va="top", ha="left")
-    ax.text(0.02, 0.87, "Bias saturates immediately", transform=ax.transAxes,
-            fontsize=8, va="top", ha="left", color="#555555")
+    _panel_title(ax, "c", "Bias saturates at ≤5 turns")
 
     all_lens = []
     all_scores_c = []
@@ -255,12 +267,19 @@ def fig0_hero(scores, results, out_dir):
             all_scores_c.append(s["bias_score"])
     if all_lens:
         r, p = stats.spearmanr(all_lens, all_scores_c)
-        ax.text(0.97, 0.05, f"r = {r:.3f}\np = {p:.3f}",
-                transform=ax.transAxes, ha="right", va="bottom",
+        ax.text(0.97, 0.95, f"Spearman r = {r:.3f}\np = {p:.3f}",
+                transform=ax.transAxes, ha="right", va="top",
                 fontsize=7, color="#6b7280",
-                bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#e5e7eb", alpha=0.9))
+                bbox=dict(boxstyle="round,pad=0.35", facecolor="white",
+                          edgecolor="#e5e7eb", alpha=0.95))
 
-    fig.tight_layout(w_pad=3)
+    # Add headroom on every panel so titles + bar labels never crowd the bars
+    for ax in axes:
+        ymin, ymax = ax.get_ylim()
+        span = ymax - ymin
+        ax.set_ylim(ymin - 0.08 * span, ymax + 0.18 * span)
+
+    fig.tight_layout(w_pad=2.5)
     fig.savefig(out_dir / "fig0_hero.pdf")
     fig.savefig(out_dir / "fig0_hero.png")
     plt.close(fig)
@@ -432,12 +451,17 @@ def fig2_model_comparison(scores, out_dir):
     )
     _bar_panel(axes[0], api_models, "Closed APIs (model + platform layer)")
     _bar_panel(axes[1], oss_models, "Open-weight, run locally (raw model)")
-    axes[1].set_xlabel("Mean Bias Score (conforming <-- | --> contrarian)")
+    axes[1].set_xlabel(r"Mean Bias Score (conforming $\leftarrow$ $\mid$ $\rightarrow$ contrarian)")
     handles = [mpatches.Patch(color=c, label=p) for p, c in PROVIDER_COLORS.items()]
-    axes[1].legend(handles=handles, loc="lower right", framealpha=0.9, fontsize=8)
+    # Park the legend BELOW the x-axis as a horizontal strip so it cannot
+    # overlap the OSS-panel bars (the bottom panel has few bars and a
+    # right-anchored legend lands on top of them).
+    fig.legend(handles=handles, loc="lower center",
+               bbox_to_anchor=(0.5, -0.02), ncol=len(PROVIDER_COLORS),
+               frameon=False, fontsize=8)
     fig.suptitle("Model Susceptibility to AMEL (API vs OSS panels)",
                  fontweight="bold", y=0.995, fontsize=11)
-    fig.tight_layout(rect=[0, 0, 1, 0.97])
+    fig.tight_layout(rect=[0, 0.04, 1, 0.97])
 
     fig.savefig(out_dir / "fig2_model_comparison.pdf")
     fig.savefig(out_dir / "fig2_model_comparison.png")
@@ -708,23 +732,30 @@ def fig8_polarity(scores, out_dir):
 
     ax.set_xticks(x)
     ax.set_xticklabels(pol_labels, fontsize=9)
-    ax.set_ylabel("Mean Bias Score")
+    ax.set_ylabel("Mean Bias Score  (negative = shift toward \"no\")")
     ax.axhline(0, color="#374151", lw=0.8)
-    ax.set_title("Negativity Asymmetry: \"No\" Bias Is Stronger", fontweight="bold", pad=12)
-
-    for i, (m, d) in enumerate(zip(means, ds)):
-        y_off = -0.005 if m < 0 else 0.005
-        va = "top" if m < 0 else "bottom"
-        ax.text(i, m + y_off, f"d = {d:.2f}", ha="center", va=va, fontsize=8, fontweight="bold")
-
-    # Asymmetry annotation
-    ax.annotate("", xy=(0, means[0] - 0.015), xytext=(2, means[2] + 0.015),
-                arrowprops=dict(arrowstyle="<->", color="#4477AA", lw=1.5))
     ratio = abs(means[0]) / abs(means[2]) if abs(means[2]) > 0 else float("inf")
-    mid_y = (means[0] + means[2]) / 2
-    ax.text(1, mid_y - 0.02, f"{ratio:.1f}x stronger", ha="center", fontsize=8,
-            color="#4477AA", fontweight="bold")
+    ax.set_title(
+        f"Negativity asymmetry: marginal ratio {ratio:.1f}× (paired per-item 1.52×)",
+        fontweight="bold", pad=12, fontsize=10,
+    )
 
+    # Bar value labels — past the end of each whisker, never crossing the bar
+    for i, (m, ci, d) in enumerate(zip(means, cis, ds)):
+        if m < 0:
+            y = m - ci - 0.006
+            va = "top"
+        else:
+            y = m + ci + 0.006
+            va = "bottom"
+        ax.text(i, y, f"d = {d:.2f}", ha="center", va=va, fontsize=8, fontweight="bold")
+
+    # Headroom so the labels never collide with the title
+    ymin, ymax = ax.get_ylim()
+    span = ymax - ymin
+    ax.set_ylim(ymin - 0.08 * span, ymax + 0.18 * span)
+
+    fig.tight_layout()
     fig.savefig(out_dir / "fig8_polarity_asymmetry.pdf")
     fig.savefig(out_dir / "fig8_polarity_asymmetry.png")
     plt.close(fig)
@@ -986,13 +1017,15 @@ def fig11_logprobs(out_dir):
     ax.axvline(0, color="#374151", lw=0.8, ls="-")
     ax.set_yticks(y)
     ax.set_yticklabels(item_labels, fontsize=6)
-    ax.set_xlabel("Shift in P(Yes) from Baseline")
+    ax.set_xlabel("Shift in P(Yes) from Baseline (treatment − baseline)", fontsize=9)
+    ax.set_ylabel("Code-review item ID (CP = clear-positive,\nA = ambiguous, CN = clear-negative)",
+                  fontsize=8.5)
     ax.set_title("(b) Per-Item P(Yes) Shifts", fontweight="bold", fontsize=10)
-    ax.legend(fontsize=7, loc="lower right")
+    ax.legend(fontsize=7, loc="lower right", framealpha=0.95)
 
-    fig.suptitle("Logprobs: Probability Distribution Shifts Under AMEL",
-                 fontweight="bold", fontsize=11, y=1.02)
-    fig.tight_layout()
+    fig.suptitle("Logprobs: Probability Distribution Shifts Under AMEL (GPT-4.1 Nano, code review)",
+                 fontweight="bold", fontsize=11, y=1.00)
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
 
     fig.savefig(out_dir / "fig11_logprobs.pdf")
     fig.savefig(out_dir / "fig11_logprobs.png")
