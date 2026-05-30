@@ -7,7 +7,7 @@ This repository contains the code, data, and analysis for our study on how conve
 - **AMEL is cross-provider** (d = -0.17, p < 10^-53, N = 84,088 main-experiment API calls after dedup; 10/12 models significant after Bonferroni; item-clustered 95% CI on d: [-0.21, -0.13])
 - **Uncertainty predicts susceptibility**: items where the model is genuinely uncertain at baseline (nonzero binary entropy) absorb roughly twice the bias of confident-baseline items (d = -0.36 vs d = -0.15)
 - **Two regimes**: assimilation for congruent items (model conforms when context matches item ground truth), resistance/anchoring for incongruent items (model shifts away from context when item contradicts it); paired difference d = 0.50 (unpaired sensitivity check d = 0.56)
-- **Negativity asymmetry**: paired per-item ratio 1.52x (t = 13.03, p < 10^-37, n = 2,733 pairs); marginal-means ratio is ~2.1x but mixes item composition
+- **Negativity asymmetry**: paired per-item ratio 1.52x (t = 13.03, p < 10^-36, n = 2,733 pairs); marginal-means ratio is ~2.1x but mixes item composition
 - **No accumulation**: 5 turns of biased history produce the same effect as 50 (Spearman |r| < 0.01; linear-slope OLS p = 0.84)
 - **Scaling reduces but doesn't eliminate**: Haiku d=-0.22 > Sonnet d=-0.18 > Opus d=-0.17
 - **Temperature doesn't help**: lower temperature trends toward stronger bias, not weaker
@@ -215,16 +215,30 @@ python run_mitigation.py
 python run_temperature.py
 
 # Mechanistic experiments
-python run_logprobs.py      # Logprobs (OpenAI only)
-python run_flipped.py       # Flipped framing (OpenAI + Ollama)
-python run_positional.py    # Positional placement (OpenAI + Ollama)
+python run_logprobs.py        # Logprobs (OpenAI only)
+python run_logprobs_llama.py  # Logprobs replication on Llama 3.2 3B (v2)
+python run_flipped.py         # Flipped framing (OpenAI + Ollama)
+python run_positional.py      # Positional placement (OpenAI + Ollama)
+python run_neutral_filler.py  # Non-evaluative filler control (v2)
+
+# Re-parse collected JSONL with the symmetric v2 parser (mandatory if you
+# collected fresh data; the committed all_results.jsonl already has v2 labels).
+# Writes data/all_results_v2_parser.jsonl; mv it into place to use as canonical.
+python scripts/reparse_with_v2.py
 ```
+
+**Reproducibility note.** All runners require `PYTHONHASHSEED=0` so per-condition
+seeds are stable across resumes. `src/seed_guard.require_hashseed()` aborts at
+startup if it is unset.
 
 ### Analysis
 
 ```bash
 # Generate comprehensive statistics
 python -m analysis.paper_statistics
+python -m analysis.bootstrap_and_consistency   # item-clustered bootstrap CIs + consistency rate
+python -m analysis.entropy_stratified          # high- vs low-entropy split
+python -m analysis.accumulation_slope          # OLS slope on context length
 
 # Run all supplementary analyses
 python -m analysis.contrast_assimilation
@@ -234,15 +248,21 @@ python -m analysis.response_time
 python -m analysis.qualitative_examples
 python -m analysis.mitigation_analysis
 python -m analysis.temperature_analysis
+python -m analysis.qwen30b_dedup_sensitivity   # Qwen3 30B dedup-choice sensitivity
+python -m analysis.unparseable_by_condition    # missingness breakdown
 
 # Mechanistic analyses
 python -m analysis.asymmetry_baseline_corr
 python -m analysis.logprobs_analysis
+python -m analysis.logprobs_llama_compare      # Llama vs Nano logprobs (v2)
 python -m analysis.flipped_analysis
 python -m analysis.positional_analysis
+python -m analysis.neutral_filler_compare      # Non-evaluative filler vs neutral arm (v2)
 
 # Generate paper figures (0-13, 14 total)
 python generate_paper_figures.py
+# Run from repo root; the script reads data/all_results.jsonl and writes to
+# results/paper_figures/ and then mirrors PDFs into paper/figures/.
 ```
 
 ### Building the Paper

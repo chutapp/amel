@@ -76,7 +76,7 @@ Main findings:
 \begin{enumerate}
     \item Across the 12 tested models (drawn from 5 providers, with 1--4 models per provider), conversation history pulls responses toward its prevailing polarity ($d = -0.17$, $p < 10^{-53}$); 10 of 12 models show a significant effect after Bonferroni correction under the conservative first-occurrence Qwen3 30B deduplication. Under last-occurrence or random-selection dedup the count is 11 of 12 (Qwen3 30B significant contrarian, $d = +0.17$ to $+0.22$). The choice is load-bearing for this single row; the other 11 model classifications are stable across dedup schemes (Appendix~\ref{app:dedup}). The result holds in every provider sub-panel, but at 1--4 models per provider this is a coverage observation, not a provider-level claim.
     \item Susceptibility tracks the model's own baseline uncertainty. Items where the model is genuinely uncertain at baseline (nonzero binary entropy of $P(\text{yes}|\text{baseline})$) absorb $\approx 2\times$ more bias than items where the baseline is deterministic ($d = -0.36$ vs.\ $d = -0.15$). The author-coded ``ambiguous'' label predicts bias size only because some author-ambiguous items are also empirically uncertain; among items the model already finds clear-cut, author labels add little (Section~\ref{sec:empirical_entropy}).
-    \item Negative history biases more than positive history: paired per-item $|BS|$ ratio $1.52\times$ ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$). Marginal means give $\approx 2.1\times$ but mix item composition across cells; the paired test is the cleaner statistic.
+    \item Negative history biases more than positive history: paired per-item $|BS|$ ratio $1.52\times$ ($t = 13.03$, $p < 10^{-36}$, $n = 2{,}733$). Marginal means give $\approx 2.1\times$ but mix item composition across cells; the paired test is the cleaner statistic.
     \item Bias saturates early. Five turns of skewed history produce the same shift as fifty (Spearman $|r| < 0.01$, $p = 0.92$; OLS slope $-4 \times 10^{-5}$ BS/turn, $p = 0.84$). The model recognizes the pattern fast and additional examples do not strengthen it.
     \item Larger models within provider families show less bias, but none are immune.
     \item The effect is detected in all three tested domains, all significant after Bonferroni correction: code review ($d = -0.25$) $>$ meals ($d = -0.13$) $\approx$ content moderation ($d = -0.12$). For content moderation the parametric test is significant but the item-clustered bootstrap CI just touches zero, so the per-domain content-moderation magnitude is the most stimulus-sensitive of the three.
@@ -89,7 +89,7 @@ Main findings:
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/fig0_hero.pdf}
-    \caption{Overview of AMEL. (a) By author-coded item category, ambiguous items absorb the most bias ($d = -0.28$); clear negatives barely budge ($d = +0.03$, n.s.). The same pattern, sharper, when items are stratified by empirical baseline entropy instead: high-entropy items show $d = -0.36$, deterministic-baseline items $d = -0.15$ (Section~\ref{sec:empirical_entropy}). (b) Negative context biases models more than positive context (paired per-item ratio $1.52\times$, $p < 10^{-37}$); marginal means yield $\approx 2.1\times$ (Section~\ref{sec:polarity}). Even balanced history shifts models toward ``no.'' (c) Bias saturates immediately; 5 turns produce the same effect as 50.}
+    \caption{Overview of AMEL. (a) By author-coded item category, ambiguous items absorb the most bias ($d = -0.28$); clear negatives barely budge ($d = +0.03$, n.s.). The same pattern, sharper, when items are stratified by empirical baseline entropy instead: high-entropy items show $d = -0.36$, deterministic-baseline items $d = -0.15$ (Section~\ref{sec:empirical_entropy}). (b) Negative context biases models more than positive context (paired per-item ratio $1.52\times$, $p < 10^{-36}$); marginal means yield $\approx 2.1\times$ (Section~\ref{sec:polarity}). Even balanced history shifts models toward ``no.'' (c) Bias saturates immediately; 5 turns produce the same effect as 50.}
     \label{fig:hero}
 \end{figure*}
 
@@ -312,7 +312,7 @@ Table~\ref{tab:summary} gives the headline numbers.
 \midrule
 Overall effect & $-0.17$ & $<10^{-53}$ & $\bar{BS} = -0.054$ \\
 High-entropy items & $-0.36$ & $<10^{-12}$ & Hardest hit \\
-Negativity asymmetry & --- & $<10^{-37}$ & paired $1.52\times$ \\
+Negativity asymmetry & --- & $<10^{-36}$ & paired $1.52\times$ \\
 Accumulation & --- & $0.92$ & Spearman $|r|<0.01$ \\
 Scaling (Anthropic) & \multicolumn{3}{l}{$-0.22 \to -0.18 \to -0.17$} \\
 \bottomrule
@@ -367,8 +367,8 @@ The larger Qwen3 30B trends in the same direction but does not reach significanc
 \label{sec:category}
 
 Item difficulty modulates the effect (Figure~\ref{fig:category}).
-Author-coded ambiguous items take the biggest hit: $\bar{BS} = -0.111$, $d = -0.28$, $p < 10^{-48}$.
-Clear positives show a moderate effect: $\bar{BS} = -0.056$, $d = -0.16$, $p < 10^{-16}$.
+Author-coded ambiguous items take the biggest hit: $\bar{BS} = -0.111$, $d = -0.28$, $p < 10^{-46}$.
+Clear positives show a moderate effect: $\bar{BS} = -0.056$, $d = -0.16$, $p < 10^{-14}$.
 Clear negatives do not move: $\bar{BS} = +0.004$, $d = +0.03$, $p_\text{corrected} = 1.00$.
 These per-category numbers pool across the three domains; the per-domain code-review category labels in particular carry an external IRR of $\alpha = 0.28$ (Section~\ref{sec:domains}), so a per-category breakdown \emph{within} code review would be unreliable and is not reported. The pooled per-category result above is robust to dropping the code-review domain entirely (the same ordering ambiguous $>$ clear-positive $>$ clear-negative holds on the content-moderation $+$ meals subset where $\alpha \geq 0.62$).
 Section~\ref{sec:empirical_entropy} re-runs this analysis with empirical baseline uncertainty (the model's own behavior) as the stratifier rather than author labels, and finds the underlying pattern is even sharper. I treat the empirical-entropy version as the headline ``ambiguity absorbs bias'' result and the author-category version above as a secondary view useful for comparability with prior LLM-judge studies that rely on author labels.
@@ -416,7 +416,7 @@ The asymmetry between polarities is robust (Figure~\ref{fig:polarity}).
 No-saturated contexts shift models by $\bar{BS} = -0.113$ ($d = -0.33$).
 Yes-saturated contexts shift models by $\bar{BS} = +0.053$ ($d = +0.20$).
 Comparing marginal means gives a ratio of $\approx 2.1\times$, but this confounds item composition between the two cells.
-The cleaner statistic is a paired per-item comparison: mean $|BS_\text{no}| = 0.169$ vs.\ $|BS_\text{yes}| = 0.111$, ratio $1.52\times$ ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$ pairs).
+The cleaner statistic is a paired per-item comparison: mean $|BS_\text{no}| = 0.169$ vs.\ $|BS_\text{yes}| = 0.111$, ratio $1.52\times$ ($t = 13.03$, $p < 10^{-36}$, $n = 2{,}733$ pairs).
 I report the paired result as the headline statistic throughout.
 
 An unexpected result: the neutral condition (50/50 history) also produces a negative shift ($\bar{BS} = -0.101$, $d = -0.33$), close in magnitude to the no-saturated condition.
@@ -429,7 +429,7 @@ If models already lean toward ``no'' in binary tasks, negative context reinforce
 \begin{figure}[t]
     \centering
     \includegraphics[width=\columnwidth]{figures/fig8_polarity_asymmetry.pdf}
-    \caption{Polarity asymmetry. Negative context induces stronger bias than positive context (paired per-item ratio $1.52\times$, $p < 10^{-37}$; marginal means give $\approx 2.1\times$). Even balanced (50/50) history produces a negative shift. Error bars: 95\% CIs.}
+    \caption{Polarity asymmetry. Negative context induces stronger bias than positive context (paired per-item ratio $1.52\times$, $p < 10^{-36}$; marginal means give $\approx 2.1\times$). Even balanced (50/50) history produces a negative shift. Error bars: 95\% CIs.}
     \label{fig:polarity}
 \end{figure}
 
@@ -798,7 +798,7 @@ Two follow-up studies would directly strengthen the claims here: (1) a non-evalu
 
 \section{Conclusion}
 
-AMEL shows up in every provider sub-panel I tested, though with only 1--4 models per provider this is a coverage observation rather than a provider-level claim: 10 of 12 models are significant after Bonferroni under the conservative Qwen3 30B dedup, 11 of 12 under the alternative. The overall magnitude is small but consistent ($d = -0.17$, item-clustered CI $[-0.21, -0.13]$). What I find more troubling is where it concentrates---on the items where the model itself is uncertain at baseline, exactly the borderline cases where a judge most needs to be unbiased ($d = -0.36$ for high-entropy items). The asymmetry is real too: negative history pulls $1.52\times$ harder than positive in the paired test ($p < 10^{-37}$). And the shift is immediate. Five turns of biased history are enough; fifty do not deepen it.
+AMEL shows up in every provider sub-panel I tested, though with only 1--4 models per provider this is a coverage observation rather than a provider-level claim: 10 of 12 models are significant after Bonferroni under the conservative Qwen3 30B dedup, 11 of 12 under the alternative. The overall magnitude is small but consistent ($d = -0.17$, item-clustered CI $[-0.21, -0.13]$). What I find more troubling is where it concentrates---on the items where the model itself is uncertain at baseline, exactly the borderline cases where a judge most needs to be unbiased ($d = -0.36$ for high-entropy items). The asymmetry is real too: negative history pulls $1.52\times$ harder than positive in the paired test ($p < 10^{-36}$). And the shift is immediate. Five turns of biased history are enough; fifty do not deepen it.
 
 The three follow-ups in Section~\ref{sec:mechanism} narrow what is plausibly going on. The probability distribution shifts continuously, not at a threshold. The negativity asymmetry has both token-level and semantic flavours, with a per-model balance I cannot disentangle at $n = 21$. Position within the conversation does not matter. None of these are definitive on their own---each experiment covers only 1--2 models in one domain (Section~\ref{sec:limitations})---but together they narrow the space of explanations meaningfully.
 
