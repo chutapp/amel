@@ -8,6 +8,9 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent))
 
+from src.seed_guard import require_hashseed
+require_hashseed()
+
 from src.runner import run_experiment, generate_conditions
 from analysis.analyze import generate_report
 
