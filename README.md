@@ -4,15 +4,15 @@ This repository contains the code, data, and analysis for our study on how conve
 
 ## Key Findings
 
-- **AMEL is cross-provider** (d = -0.17, p < 10^-54, N = 84,088 main-experiment API calls after dedup; 10/12 models significant after Bonferroni; bootstrap 95% CI on d: [-0.19, -0.15])
-- **Uncertainty predicts susceptibility**: items where the model is genuinely uncertain at baseline (nonzero binary entropy) absorb roughly twice the bias of confident-baseline items (d = -0.34 vs d = -0.15)
-- **Two regimes**: assimilation for congruent items (model conforms when context matches item ground truth), resistance/anchoring for incongruent items (model shifts away from context when item contradicts it); difference d = 0.56
-- **Negativity asymmetry**: paired per-item ratio 1.52x (t = 13.03, p < 10^-37, n = 2,733 pairs); marginal-means ratio is ~2.2x but mixes item composition
-- **No accumulation**: 5 turns of biased history produce the same effect as 50 (Spearman |r| < 0.01; linear-slope OLS p = 0.80)
+- **AMEL is cross-provider** (d = -0.17, p < 10^-54, N = 84,088 main-experiment API calls after dedup; 10/12 models significant after Bonferroni; item-clustered 95% CI on d: [-0.21, -0.13])
+- **Uncertainty predicts susceptibility**: items where the model is genuinely uncertain at baseline (nonzero binary entropy) absorb roughly twice the bias of confident-baseline items (d = -0.36 vs d = -0.15)
+- **Two regimes**: assimilation for congruent items (model conforms when context matches item ground truth), resistance/anchoring for incongruent items (model shifts away from context when item contradicts it); paired difference d = 0.50 (unpaired sensitivity check d = 0.56)
+- **Negativity asymmetry**: paired per-item ratio 1.52x (t = 13.03, p < 10^-37, n = 2,733 pairs); marginal-means ratio is ~2.1x but mixes item composition
+- **No accumulation**: 5 turns of biased history produce the same effect as 50 (Spearman |r| < 0.01; linear-slope OLS p = 0.84)
 - **Scaling reduces but doesn't eliminate**: Haiku d=-0.22 > Sonnet d=-0.18 > Opus d=-0.17
 - **Temperature doesn't help**: lower temperature trends toward stronger bias, not weaker
 - **Balanced ordering mitigates drift**: interleaving expected-yes/no items prevents positional drift in sequential evaluation
-- **External 5-annotator IRR validation**: Krippendorff α = 0.53 overall; per-domain α = 0.28 (code), 0.62 (content), 0.70 (meals); full per-annotator ratings + codebook released under data/annotators/ (CC-BY-4.0)
+- **External 5-annotator IRR validation**: Krippendorff α = 0.53 overall; per-domain α = 0.28 (code), 0.62 (content), 0.69 (meals); full per-annotator ratings + codebook released under data/annotators/ (CC-BY-4.0)
 - **Consistency rate**: 84.7% of (model, item, polarity, context-length) cells have the same modal answer under treatment as baseline; lowest in code review (70.7%)
 
 ### Characterization Experiments (Section 5)
@@ -52,14 +52,20 @@ This repository contains the code, data, and analysis for our study on how conve
 ├── run_deepseek.py             # DeepSeek runner (added in paper v2)
 ├── run_mitigation.py           # Sequential batch mitigation experiment
 ├── run_temperature.py          # Temperature sensitivity experiment
-├── run_logprobs.py             # Logprobs mechanistic experiment (Phase 1)
+├── run_logprobs.py             # Logprobs mechanistic experiment (OpenAI, Phase 1)
+├── run_logprobs_llama.py       # Logprobs replication on Llama 3.2 3B (added in v2)
 ├── run_flipped.py              # Flipped framing experiment (Phase 2)
 ├── run_positional.py           # Positional placement experiment (Phase 3)
+├── run_neutral_filler.py       # Non-evaluative filler control (§5.4, added in v2)
 │
 ├── analysis/                   # Statistical analysis
-│   ├── utils.py                # Shared utilities (load_results, compute_bias_scores)
+│   ├── utils.py                # Shared utilities (load_results, compute_bias_scores, N_COMPARISONS)
 │   ├── analyze.py              # Core analysis functions
 │   ├── paper_statistics.py     # Comprehensive stats for paper
+│   ├── paper_statistics_adjudicated.py # Stats on the adjudicated dataset
+│   ├── bootstrap_and_consistency.py    # Item-clustered bootstrap CIs + consistency rate
+│   ├── accumulation_slope.py   # OLS slope test on context-length accumulation
+│   ├── entropy_stratified.py   # High- vs low-entropy bias-susceptibility split
 │   ├── contrast_assimilation.py # Congruent vs incongruent bias analysis
 │   ├── continuous_confidence.py # Baseline entropy vs bias susceptibility
 │   ├── mixed_effects.py        # Mixed-effects model (BS ~ polarity * category | model)
@@ -68,20 +74,39 @@ This repository contains the code, data, and analysis for our study on how conve
 │   ├── mitigation_analysis.py  # Sequential batch experiment analysis
 │   ├── temperature_analysis.py # Temperature sensitivity analysis
 │   ├── asymmetry_baseline_corr.py # Baseline P(no) vs asymmetry correlation
-│   ├── logprobs_analysis.py    # First-token probability analysis
+│   ├── logprobs_analysis.py    # First-token probability analysis (OpenAI)
+│   ├── logprobs_llama_compare.py # Llama logprobs vs OpenAI comparison
 │   ├── flipped_analysis.py     # Original vs flipped framing comparison
-│   └── positional_analysis.py  # START/END/SPREAD placement analysis
+│   ├── positional_analysis.py  # START/END/SPREAD placement analysis
+│   ├── neutral_filler_compare.py # Non-evaluative filler control comparison
+│   ├── qwen30b_dedup_sensitivity.py # Sensitivity to Qwen3 30B dedup choice
+│   ├── unparseable_by_condition.py # Unparseable-response breakdown
+│   └── iir.py                  # Inter-rater reliability (Krippendorff)
 │
 ├── generate_paper_figures.py   # Publication figure generation (14 figures)
 │
+├── scripts/                    # Utility scripts
+│   ├── build_arxiv_tarball.sh  # Build the arXiv submission tarball
+│   ├── build_annotator_package.py # Package annotator IRR materials
+│   ├── dedupe_qwen30b.py       # Dedup procedure for the qwen3:30b duplicate rows
+│   ├── ingest_deepseek.py      # Merge DeepSeek raw runs into all_results.jsonl
+│   ├── redact_log.py           # Strip local paths from experiment.log
+│   ├── reparse_side_experiments_v2.py # Re-parse §5 data with parser_v2
+│   └── reparse_with_v2.py      # Re-parse main dataset with parser_v2
+│
 ├── data/
-│   ├── all_results.jsonl       # Main experiment dataset (84,088 deduplicated responses; see scripts/dedupe_qwen30b.py for the dedup procedure)
+│   ├── all_results.jsonl              # Main experiment dataset (84,088 deduplicated responses; see scripts/dedupe_qwen30b.py)
+│   ├── all_results.adjudicated.jsonl  # Same rows after annotator-adjudication ground-truth update
+│   ├── annotator_id_mapping.json      # Opaque-ID mapping for IRR annotators
 │   ├── annotators/             # External 5-annotator IRR ratings + codebook (CC-BY-4.0; see data/annotators/README.md)
+│   ├── validated_samples/      # 2-of-2 spot-check validation samples
 │   ├── mitigation/             # Sequential batch experiment (3,780 responses)
 │   ├── temperature/            # Temperature spot-check (840 responses)
-│   ├── logprobs/               # Logprobs experiment (1,050 responses)
+│   ├── logprobs/               # Logprobs experiment, OpenAI (1,050 responses)
+│   ├── logprobs_llama/         # Logprobs replication, Llama 3.2 3B (added in v2)
 │   ├── flipped/                # Flipped framing experiment (1,260 responses)
 │   ├── positional/             # Positional placement experiment (1,260 responses)
+│   ├── neutral_filler/         # Non-evaluative filler control (§5.4, added in v2)
 │   ├── raw/                    # Local models (Llama, Qwen) via Ollama
 │   ├── openai/                 # GPT-4.1 Nano results
 │   ├── openai-gpt52/           # GPT-5.2 results
@@ -90,27 +115,37 @@ This repository contains the code, data, and analysis for our study on how conve
 │   ├── claude-opus-4-6/        # Claude Opus 4.6 results
 │   ├── gemini-flash/           # Gemini 2.5 Flash results
 │   ├── gemini-pro/             # Gemini 2.5 Pro results
-│   └── deepseek-v3/            # DeepSeek V4 Flash results (added in paper v2)
+│   └── deepseek-v3/            # DeepSeek V4 Flash results (directory predates the V4 label; added in paper v2)
 │
 └── results/
-    ├── paper_figures/          # Figures 0-13 (PDF + PNG, 14 total)
-    ├── paper_statistics.json   # Main experiment statistics
+    ├── paper_figures/                 # Figures 0-13 (PDF + PNG, 14 total)
+    ├── paper_statistics.json          # Main experiment statistics
+    ├── paper_statistics_adjudicated.json # Stats on adjudicated ground-truth
+    ├── bootstrap_cis.json             # Item-clustered bootstrap CIs
+    ├── consistency_rate.json          # Per-domain modal-answer consistency
+    ├── accumulation_slope.json        # OLS context-length slope test
+    ├── entropy_stratified.json        # High/low-entropy split
     ├── asymmetry_baseline_corr.json
     ├── logprobs_analysis.json
+    ├── logprobs_llama_compare.json
     ├── flipped_analysis.json
     ├── positional_analysis.json
+    ├── neutral_filler_compare.json
     ├── contrast_assimilation.json
     ├── continuous_confidence.json
     ├── mixed_effects.json
     ├── response_time.json
     ├── qualitative_examples.json
     ├── mitigation_analysis.json
-    └── temperature_analysis.json
+    ├── temperature_analysis.json
+    ├── qwen30b_dedup_sensitivity.json
+    ├── unparseable_by_condition.json
+    └── iir_scores.json                # Krippendorff α and per-domain breakdown
 ```
 
 ## Experimental Design
 
-We use a between-subjects design with four conditions per test item:
+We use a within-subjects design (each item appears under every condition) with four conditions per test item:
 
 | Condition | Context | Description |
 |-----------|---------|-------------|
@@ -132,6 +167,7 @@ Each condition is repeated 10 times at temperature T=1.0 across context lengths 
 | Anthropic | Claude Opus 4.6 | -0.17 |
 | Google | Gemini 2.5 Flash | -0.18 |
 | Google | Gemini 2.5 Pro | -0.27 |
+| DeepSeek | DeepSeek V4 Flash | -0.20 |
 | Local | Llama 3.2 3B | -0.32 |
 | Local | Qwen3 4B | +0.19 (contrarian) |
 | Local | Qwen3.5 4B | -0.08 (n.s.) |

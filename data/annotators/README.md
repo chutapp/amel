@@ -23,10 +23,12 @@ designed to be reusable by other researchers.
   with prior NLP / CS / data-science experience (filter: ≥80 % job-success
   score). All five signed digital consent allowing publication and
   public dataset release.
-- **Demographics.** Four annotators in Pakistan, one in Serbia;
-  three data scientists / ML engineers, two academic researchers. All
-  reported "fluent (working proficiency)" English (full per-annotator
-  demographics fields are kept inside the individual `anon_*.json` files).
+- **Demographics.** Five annotators located outside North America and
+  Western Europe; three data scientists / ML engineers, two academic
+  researchers. All reported "fluent (working proficiency)" English.
+  Per-annotator profession and fluency are kept in the individual
+  `anon_*.json` files; country was removed from the released files to
+  reduce quasi-identifier risk.
 - **Compensation.** $50 per annotator (~$40 / hour for a ~75-minute
   task), well above platform minimums.
 - **Order.** Items presented in a per-annotator deterministic

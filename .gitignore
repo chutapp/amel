@@ -61,3 +61,18 @@ client_secret*.json
 *.json.credentials
 results-*.json
 data/annotators/_raw/
+
+# Claude Code / local tooling state
+.claude/
+
+# Internal planning notes (do not publish review-process drafts)
+plans/
+
+# Pre-publication backup snapshots (kept for personal recovery only)
+data/all_results.pre_*_backup.jsonl
+results/*.pre_*_backup.json
+# NB: results/paper_statistics_v{1,2}.json are intentionally NOT ignored —
+# they are consumed by analysis/paper_statistics_adjudicated.py.
+
+# arXiv tarball is a build artifact (regenerate via scripts/build_arxiv_tarball.sh)
+amel-arxiv.tar.gz

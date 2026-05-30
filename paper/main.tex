@@ -74,9 +74,9 @@ A few clarifications up front. AMEL is not sycophancy \cite{sharma2024understand
 
 Main findings:
 \begin{enumerate}
-    \item Across the 12 tested models (drawn from 5 providers, with 1--3 models per provider), conversation history pulls responses toward its prevailing polarity ($d = -0.17$, $p < 10^{-54}$); 10 of 12 models show a significant effect after Bonferroni correction under the conservative first-occurrence Qwen3 30B deduplication. Under last-occurrence or random-selection dedup the count is 11 of 12 (Qwen3 30B significant contrarian, $d = +0.17$ to $+0.22$). The choice is load-bearing for this single row; the other 11 model classifications are stable across dedup schemes (Appendix~\ref{app:dedup}). The result holds in every provider sub-panel, but at 1--3 models per provider this is a coverage observation, not a provider-level claim.
+    \item Across the 12 tested models (drawn from 5 providers, with 1--4 models per provider), conversation history pulls responses toward its prevailing polarity ($d = -0.17$, $p < 10^{-53}$); 10 of 12 models show a significant effect after Bonferroni correction under the conservative first-occurrence Qwen3 30B deduplication. Under last-occurrence or random-selection dedup the count is 11 of 12 (Qwen3 30B significant contrarian, $d = +0.17$ to $+0.22$). The choice is load-bearing for this single row; the other 11 model classifications are stable across dedup schemes (Appendix~\ref{app:dedup}). The result holds in every provider sub-panel, but at 1--4 models per provider this is a coverage observation, not a provider-level claim.
     \item Susceptibility tracks the model's own baseline uncertainty. Items where the model is genuinely uncertain at baseline (nonzero binary entropy of $P(\text{yes}|\text{baseline})$) absorb $\approx 2\times$ more bias than items where the baseline is deterministic ($d = -0.36$ vs.\ $d = -0.15$). The author-coded ``ambiguous'' label predicts bias size only because some author-ambiguous items are also empirically uncertain; among items the model already finds clear-cut, author labels add little (Section~\ref{sec:empirical_entropy}).
-    \item Negative history biases more than positive history: paired per-item $|BS|$ ratio $1.52\times$ ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$). Marginal means give $\approx 2\times$ but mix item composition across cells; the paired test is the cleaner statistic.
+    \item Negative history biases more than positive history: paired per-item $|BS|$ ratio $1.52\times$ ($t = 13.03$, $p < 10^{-37}$, $n = 2{,}733$). Marginal means give $\approx 2.1\times$ but mix item composition across cells; the paired test is the cleaner statistic.
     \item Bias saturates early. Five turns of skewed history produce the same shift as fifty (Spearman $|r| < 0.01$, $p = 0.92$; OLS slope $-4 \times 10^{-5}$ BS/turn, $p = 0.84$). The model recognizes the pattern fast and additional examples do not strengthen it.
     \item Larger models within provider families show less bias, but none are immune.
     \item The effect is detected in all three tested domains, all significant after Bonferroni correction: code review ($d = -0.25$) $>$ meals ($d = -0.13$) $\approx$ content moderation ($d = -0.12$). For content moderation the parametric test is significant but the item-clustered bootstrap CI just touches zero, so the per-domain content-moderation magnitude is the most stimulus-sensitive of the three.
@@ -155,7 +155,7 @@ My flat accumulation curve (Section~\ref{sec:accumulation}) fits this framework.
 
 \subsection{Experimental Design}
 
-I use a between-subjects design.
+I use a within-subjects design: each item appears in every (model, polarity, context-length) cell.
 The same test items appear under different context conditions, and I measure whether the context shifts the model's response.
 
 \paragraph{Conditions.}
@@ -275,10 +275,10 @@ Appendix~\ref{app:unparseable} also reports an adversarial-imputation sensitivit
 \subsection{Statistical Analysis}
 
 \paragraph{Sample size justification.}
-With 8,387 bias score observations, the marginal one-sample $t$-test treating each observation as independent has $>$99\% power to detect $d = 0.10$ at $\alpha = 0.05/21$.
+With 8,387 bias score observations, the marginal one-sample $t$-test treating each observation as independent has $>$99\% power to detect $d = 0.10$ at $\alpha = 0.05/22$.
 This is an overstatement because observations are nested 10-deep within (model, item, condition) baselines; the bias-score construction collapses each 10-rep cell to a single $BS$ value (so the 8,387 figure is already at the cell level, not the per-call level), but cells within the same item or model remain correlated.
 The crossed mixed-effects model in Section~\ref{sec:mixed} estimates ICC$_\text{model} = 0.026$ and ICC$_\text{item} = 0.066$; item-level clustering is the larger of the two non-residual variance components. Using the Kish design effect $1 + (m-1)\,\text{ICC}$ with the dominant (item-level) ICC and average cluster size $m = 8{,}387 / 63 \approx 133$ per item gives an effective $n_\text{eff} \approx 8{,}387 / (1 + 132 \cdot 0.066) \approx 870$.
-At $n_\text{eff} = 870$, 80\% power detects $d \approx 0.10$ at $\alpha = 0.05/21$, comfortably below the observed overall $d = 0.17$.
+At $n_\text{eff} = 870$, 80\% power detects $d \approx 0.10$ at $\alpha = 0.05/22$, comfortably below the observed overall $d = 0.17$.
 The smallest per-model subsample (Gemini Pro, $n = 402$ cells) provides $\approx 80\%$ power to detect $d = 0.20$ at the corrected $\alpha$, close to the smallest significant per-model effect I report.
 
 I test $BS = 0$ (no bias) with one-sample $t$-tests for each grouping.
@@ -295,7 +295,7 @@ Accumulation is assessed via Spearman rank correlation between context length an
 \label{sec:results}
 
 I collected 84,088 API responses (86,274 raw responses; 2,186 duplicate-condition rows from a concurrent-resume bug on the Qwen3 30B run were deduplicated, keeping the first occurrence per condition; see Appendix~\ref{app:dedup}).
-After dropping unparseable outputs (7.09\%, concentrated in Claude Opus 4.6 which produces verbose conditional responses that resist binary extraction), 8,387 bias score observations remain.
+After dropping unparseable outputs (7.09\%, concentrated in Qwen3 30B and Claude Opus 4.6, both of which produce verbose conditional responses that resist binary extraction; see Appendix~\ref{app:unparseable}), 8,387 bias score observations remain.
 The unparseable rate differs across conditions ($\chi^2 = 96.58$, $p < 10^{-20}$, $df = 3$): baseline 9.71\%, no-saturated 6.29\%, yes-saturated 7.38\%, neutral 6.96\%.
 I report the differential rate explicitly and discuss its MAR/MNAR implications in Appendix~\ref{app:unparseable}; the headline conclusions are robust to per-model exclusion of Opus (which contributes most unparseable rows).
 Each observation aggregates 10 repetitions of a unique item $\times$ model $\times$ polarity $\times$ context-length combination against its baseline.
@@ -310,7 +310,7 @@ Table~\ref{tab:summary} gives the headline numbers.
 \toprule
 \textbf{Finding} & $d$ & $p$ & \textbf{Key number} \\
 \midrule
-Overall effect & $-0.17$ & $<10^{-54}$ & $\bar{BS} = -0.054$ \\
+Overall effect & $-0.17$ & $<10^{-53}$ & $\bar{BS} = -0.054$ \\
 High-entropy items & $-0.36$ & $<10^{-12}$ & Hardest hit \\
 Negativity asymmetry & --- & $<10^{-37}$ & paired $1.52\times$ \\
 Accumulation & --- & $0.92$ & Spearman $|r|<0.01$ \\
@@ -324,7 +324,7 @@ Scaling (Anthropic) & \multicolumn{3}{l}{$-0.22 \to -0.18 \to -0.17$} \\
 \subsection{The Effect Is Real}
 \label{sec:overall}
 
-The overall bias score is $\bar{BS} = -0.054$ (95\% CI: $[-0.062, -0.046]$; $t(8386) = -15.68$, $p < 10^{-54}$, $d = -0.17$, item-clustered bootstrap 95\% CI on $d$: $[-0.21, -0.13]$ from 1{,}000 block-bootstrap resamples of items).
+The overall bias score is $\bar{BS} = -0.054$ (95\% CI: $[-0.062, -0.046]$; $t(8386) = -15.68$, $p < 10^{-53}$, $d = -0.17$, item-clustered bootstrap 95\% CI on $d$: $[-0.21, -0.13]$ from 1{,}000 block-bootstrap resamples of items).
 The bias-induced flip rate is $15.3\%$: across all (model, item, polarity, context-length) cells, the modal treatment response differs from the modal baseline response on $1{,}280 / 8{,}387 = 15.3\%$ of cells (consistency rate $\mathrm{CR} = 84.7\%$; $\mathrm{CR} = 70.7\%$ in code review, $89.1\%$ in content moderation, $93.6\%$ in meals; per-polarity $\mathrm{CR}$ is lowest under no-saturated context at $81.9\%$).
 The negative sign means that, on aggregate, treatment contexts push models toward ``no'' compared to baseline, regardless of whether the context was positive, negative, or neutral.
 
@@ -338,7 +338,7 @@ Second, yes-saturated contexts fail to push models equivalently toward ``yes'' (
 Figure~\ref{fig:model_comparison} shows susceptibility across all 12 models.
 Ten out of twelve show significant bias after Bonferroni correction.
 
-The most susceptible models are GPT-4.1 Nano ($d = -0.34$), Llama 3.2 3B ($d = -0.32$), and Gemini 2.5 Pro ($d = -0.27$; partial data, $n = 402$ cells vs.\ the panel typical $n = 693$, so the Pro estimate has roughly $\sqrt{693/402} \approx 1.3\times$ wider CIs than the others and the Pro vs.\ Flash comparison should be interpreted with that caveat).
+The most susceptible models are GPT-4.1 Nano ($d = -0.34$), Llama 3.2 3B ($d = -0.32$), and Gemini 2.5 Pro ($d = -0.27$; partial data, $n = 402$ cells vs.\ the panel modal $n = 756$, so the Pro estimate has roughly $\sqrt{756/402} \approx 1.37\times$ wider CIs than the others and the Pro vs.\ Flash comparison should be interpreted with that caveat).
 The least affected (toward conformity) are Qwen3.5 4B ($d = -0.08$, $p_\text{corrected} = 0.46$, n.s.) and Qwen3 30B ($d = +0.10$, $p_\text{corrected} = 0.17$, n.s.\ under first-occurrence dedup); among API models, GPT-5.2 and Opus 4.6 tie at $d = -0.17$.
 
 \paragraph{Scaling trends.}
@@ -376,7 +376,7 @@ Section~\ref{sec:empirical_entropy} re-runs this analysis with empirical baselin
 The pattern suggests a decision-boundary account.
 When a model's internal confidence is high, the contextual signal cannot override it.
 When the model's own baseline behavior is uncertain (high binary entropy), context tips the scale.
-Note that author-labeled ``ambiguous'' is only a rough proxy for empirical model uncertainty: as Section~\ref{sec:empirical_entropy} shows, 81\% of author-ambiguous items are actually in the deterministic-baseline bin $B_1$ for the model.
+Note that author-labeled ``ambiguous'' is only a rough proxy for empirical model uncertainty: as Section~\ref{sec:empirical_entropy} shows, 79\% of author-ambiguous items are actually in the deterministic-baseline bin $B_1$ for the model.
 This mirrors anchoring in human judgment, where uncertain estimates are most susceptible to external cues \cite{tversky1974judgment}.
 
 The practical upshot is unwelcome: the items most vulnerable to AMEL are exactly the ones where you most need an unbiased evaluation.
@@ -500,7 +500,7 @@ $B_2$ low uncertainty ($0{<}H{\le}0.72$) & 444 & $-0.092$ & $-0.21$ & $<10^{-4}$
 $B_3$ high uncertainty ($H{>}0.72$) & 432 & $-0.135$ & $-0.36$ & $<10^{-12}$ \\
 \bottomrule
 \end{tabular}
-\caption{Empirical-entropy stratification. Each bias-score observation is grouped by the binary entropy of $P(\text{yes}|\text{baseline})$ across 10 reps. The three bins sum to 7,079 observations, not the full 8,387: observations from (model, item) pairs where fewer than 5 baseline reps parsed cleanly are dropped from this analysis. The author-label crosstab (Appendix~\ref{app:entropy_crosstab}) shows that 81\% of author-coded ``ambiguous'' items are actually in $B_1$ (model is confident at baseline), so the entropy strata do not coincide with the author labels.}
+\caption{Empirical-entropy stratification. Each bias-score observation is grouped by the binary entropy of $P(\text{yes}|\text{baseline})$ across 10 reps. The three bins sum to 7,079 observations, not the full 8,387: observations from (model, item) pairs where fewer than 5 baseline reps parsed cleanly are dropped from this analysis. The author-label crosstab (Appendix~\ref{app:entropy_crosstab}) shows that 79\% of author-coded ``ambiguous'' items are actually in $B_1$ (model is confident at baseline), so the entropy strata do not coincide with the author labels.}
 \label{tab:entropy_bins}
 \end{table}
 
@@ -704,7 +704,7 @@ I use three representative models (GPT-4.1 Nano, Llama 3.2 3B, Qwen3.5 4B) acros
 In the fixed-order condition, bias is not significant overall ($d = -0.07$, $p = 0.31$), but position analysis reveals dramatic drift: P(no) increases monotonically from 0.07 at the start (clear-positive items) to 1.0 by position 14 (Spearman $r = 0.86$, $p < 10^{-6}$).
 As the model evaluates items sequentially, its own response history creates an increasingly biased context. This is the same mechanism my main experiment isolates.
 
-In the balanced-order condition, the overall bias is significant ($d = -0.46$, $p < 10^{-9}$), indicating a general negativity shift, but critically there is no position-dependent drift ($r = -0.25$, $p = 0.28$).
+In the balanced-order condition, the overall bias is significant ($d = -0.46$, $p < 10^{-8}$), indicating a general negativity shift, but critically there is no position-dependent drift ($r = -0.25$, $p = 0.28$).
 Interleaving expected-yes and expected-no items prevents the model from establishing a consistent polarity pattern.
 The fixed-order vs.\ balanced-order difference is significant ($t = 4.17$, $p < 10^{-4}$), confirming that ordering matters.
 Full details are in Appendix~\ref{app:mitigation}.
@@ -798,7 +798,7 @@ Two follow-up studies would directly strengthen the claims here: (1) a non-evalu
 
 \section{Conclusion}
 
-AMEL shows up in every provider sub-panel I tested, though with only 1--3 models per provider this is a coverage observation rather than a provider-level claim: 10 of 12 models are significant after Bonferroni under the conservative Qwen3 30B dedup, 11 of 12 under the alternative. The overall magnitude is small but consistent ($d = -0.17$, item-clustered CI $[-0.21, -0.13]$). What I find more troubling is where it concentrates---on the items where the model itself is uncertain at baseline, exactly the borderline cases where a judge most needs to be unbiased ($d = -0.36$ for high-entropy items). The asymmetry is real too: negative history pulls $1.52\times$ harder than positive in the paired test ($p < 10^{-37}$). And the shift is immediate. Five turns of biased history are enough; fifty do not deepen it.
+AMEL shows up in every provider sub-panel I tested, though with only 1--4 models per provider this is a coverage observation rather than a provider-level claim: 10 of 12 models are significant after Bonferroni under the conservative Qwen3 30B dedup, 11 of 12 under the alternative. The overall magnitude is small but consistent ($d = -0.17$, item-clustered CI $[-0.21, -0.13]$). What I find more troubling is where it concentrates---on the items where the model itself is uncertain at baseline, exactly the borderline cases where a judge most needs to be unbiased ($d = -0.36$ for high-entropy items). The asymmetry is real too: negative history pulls $1.52\times$ harder than positive in the paired test ($p < 10^{-37}$). And the shift is immediate. Five turns of biased history are enough; fifty do not deepen it.
 
 The three follow-ups in Section~\ref{sec:mechanism} narrow what is plausibly going on. The probability distribution shifts continuously, not at a threshold. The negativity asymmetry has both token-level and semantic flavours, with a per-model balance I cannot disentangle at $n = 21$. Position within the conversation does not matter. None of these are definitive on their own---each experiment covers only 1--2 models in one domain (Section~\ref{sec:limitations})---but together they narrow the space of explanations meaningfully.
 
@@ -812,7 +812,7 @@ All code, data, and analysis scripts are available at \url{https://github.com/ch
 The complete dataset (84,088 deduplicated API responses) is provided in JSONL format with deterministic seeds for all random operations.
 Data were collected between 2026-03-09 and 2026-03-25 (DeepSeek V4 Flash added 2026-05-25).
 The exact API model strings used are listed in Table~\ref{tab:models}; provider aliases without dated suffixes (\eg{} \texttt{gpt-5.2}, \texttt{claude-opus-4-6}, \texttt{deepseek-chat}) may receive silent updates from providers after the collection window, so exact quantitative reproduction in the future is not guaranteed for those rows.
-Per-condition seeds are derived from the test-item ID via Python's hash; for bit-exact replay, set \texttt{PYTHONHASHSEED=0} in the runner environment.
+Per-condition seeds are derived from the test-item ID via Python's hash; for bit-exact replay, set \texttt{PYTHONHASHSEED=0} in the runner environment. Every \texttt{run\_*.py} now calls \texttt{src.seed\_guard.require\_hashseed()} at start-up and aborts if the variable is unset, preventing a recurrence of the duplicate-row incident described in Appendix~\ref{app:dedup}.
 The repository \texttt{requirements.txt} pins the Python dependency set; tested with Python 3.11.
 Local open-weight runs use Ollama; the exact tags are listed in Table~\ref{tab:models}.
 System prompts and conversation-construction logic live in \texttt{src/conversation.py}; they are minimal (the system prompt is the question itself, no persona or instruction scaffolding) but are reproduced in source rather than in the main text for length reasons.
@@ -887,25 +887,25 @@ Table~\ref{tab:model_detail} gives full results for all 12 models.
 \toprule
 \textbf{Provider} & \textbf{Model} & $\bar{BS}$ & \textbf{95\% CI} & $t$ & $p_\text{raw}$ & $p_\text{corr}$ & $d$ & \textbf{Sig.} \\
 \midrule
-OpenAI & GPT-4.1 Nano & $-0.120$ & $[-0.145, -0.095]$ & $-9.38$ & $< 10^{-20}$ & $< 10^{-18}$ & $-0.34$ & *** \\
-OpenAI & GPT-5.2 & $-0.038$ & $[-0.055, -0.021]$ & $-4.44$ & $< 10^{-5}$ & $< 10^{-4}$ & $-0.17$ & *** \\
+OpenAI & GPT-4.1 Nano & $-0.120$ & $[-0.145, -0.095]$ & $-9.38$ & $< 10^{-19}$ & $< 10^{-17}$ & $-0.34$ & *** \\
+OpenAI & GPT-5.2 & $-0.038$ & $[-0.055, -0.021]$ & $-4.44$ & $< 10^{-4}$ & $< 10^{-3}$ & $-0.17$ & *** \\
 \midrule
-Anthropic & Haiku 4.5 & $-0.077$ & $[-0.102, -0.053]$ & $-6.16$ & $< 10^{-9}$ & $< 10^{-8}$ & $-0.22$ & *** \\
-Anthropic & Sonnet 4.6 & $-0.060$ & $[-0.084, -0.036]$ & $-4.93$ & $< 10^{-6}$ & $< 10^{-5}$ & $-0.18$ & *** \\
-Anthropic & Opus 4.6 & $-0.041$ & $[-0.058, -0.024]$ & $-4.73$ & $< 10^{-6}$ & $< 10^{-5}$ & $-0.17$ & *** \\
+Anthropic & Haiku 4.5 & $-0.077$ & $[-0.102, -0.053]$ & $-6.16$ & $< 10^{-8}$ & $< 10^{-7}$ & $-0.22$ & *** \\
+Anthropic & Sonnet 4.6 & $-0.060$ & $[-0.084, -0.036]$ & $-4.93$ & $< 10^{-5}$ & $< 10^{-4}$ & $-0.18$ & *** \\
+Anthropic & Opus 4.6 & $-0.041$ & $[-0.058, -0.024]$ & $-4.73$ & $< 10^{-5}$ & $< 10^{-4}$ & $-0.17$ & *** \\
 \midrule
-Google & Gemini Flash & $-0.071$ & $[-0.103, -0.039]$ & $-4.39$ & $< 10^{-5}$ & $< 10^{-4}$ & $-0.18$ & *** \\
-Google & Gemini Pro & $-0.094$ & $[-0.128, -0.060]$ & $-5.42$ & $< 10^{-7}$ & $< 10^{-6}$ & $-0.27$ & *** \\
+Google & Gemini Flash & $-0.071$ & $[-0.103, -0.039]$ & $-4.39$ & $< 10^{-4}$ & $< 10^{-3}$ & $-0.18$ & *** \\
+Google & Gemini Pro & $-0.094$ & $[-0.128, -0.060]$ & $-5.42$ & $< 10^{-6}$ & $< 10^{-5}$ & $-0.27$ & *** \\
 \midrule
-DeepSeek & DeepSeek V4 Flash & $-0.074$ & $[-0.100, -0.047]$ & $-5.48$ & $< 10^{-7}$ & $< 10^{-6}$ & $-0.20$ & *** \\
+DeepSeek & DeepSeek V4 Flash & $-0.074$ & $[-0.100, -0.047]$ & $-5.48$ & $< 10^{-7}$ & $< 10^{-5}$ & $-0.20$ & *** \\
 \midrule
-Local & Llama 3.2 3B & $-0.129$ & $[-0.157, -0.100]$ & $-8.85$ & $< 10^{-18}$ & $< 10^{-16}$ & $-0.32$ & *** \\
-Local & Qwen3 4B & $+0.025$ & $[+0.016, +0.034]$ & $+5.24$ & $< 10^{-7}$ & $< 10^{-6}$ & $+0.19$ & *** \\
+Local & Llama 3.2 3B & $-0.129$ & $[-0.157, -0.100]$ & $-8.85$ & $< 10^{-17}$ & $< 10^{-15}$ & $-0.32$ & *** \\
+Local & Qwen3 4B & $+0.025$ & $[+0.016, +0.034]$ & $+5.24$ & $< 10^{-6}$ & $< 10^{-5}$ & $+0.19$ & *** \\
 Local & Qwen3.5 4B & $-0.016$ & $[-0.030, -0.002]$ & $-2.30$ & $0.022$ & $0.457$ & $-0.08$ & n.s. \\
 Local & Qwen3 30B & $+0.032$ & $[+0.008, +0.056]$ & $+2.66$ & $0.008$ & $0.169$ & $+0.10$ & n.s. \\
 \bottomrule
 \end{tabular}
-\caption{Full results, all 12 models. $\bar{BS}$ = mean bias score, $d$ = Cohen's $d$, Sig.\ = significance after Bonferroni correction ($\alpha/21$). ***: $p_\text{corr} < 0.001$.}
+\caption{Full results, all 12 models. $\bar{BS}$ = mean bias score, $d$ = Cohen's $d$, Sig.\ = significance after Bonferroni correction ($\alpha/22$). ***: $p_\text{corr} < 0.001$.}
 \label{tab:model_detail}
 \end{table*}
 
@@ -936,7 +936,7 @@ The sequential batch experiment (Section~\ref{sec:sequential}) used 3,780 API ca
 \textbf{Condition} & $n$ & $\bar{BS}$ & $d$ & $p$ & Sig. \\
 \midrule
 Sequential fixed & 189 & $-0.015$ & $-0.07$ & $0.306$ & n.s. \\
-Sequential balanced & 189 & $-0.116$ & $-0.46$ & $< 10^{-9}$ & *** \\
+Sequential balanced & 189 & $-0.116$ & $-0.46$ & $< 10^{-8}$ & *** \\
 \bottomrule
 \end{tabular}
 \caption{Mitigation: bias scores relative to fresh baseline. Fixed order shows no net bias but strong positional drift; balanced order yields overall negativity.}
@@ -1048,12 +1048,12 @@ All paper numbers and figures use v2.
 \toprule
 \textbf{Author label} & $B_1$ (det.) & $B_2$ (low) & $B_3$ (high) \\
 \midrule
-clear\_negative & 2,111 & 36 & 12 \\
-clear\_positive & 1,812 & 192 & 96 \\
-ambiguous & 1,668 & 156 & 240 \\
+clear\_negative & 2,351 & 48 & 12 \\
+clear\_positive & 2,028 & 192 & 132 \\
+ambiguous & 1,824 & 204 & 288 \\
 \bottomrule
 \end{tabular}
-\caption{Cross-tab of author category against empirical-entropy bin. 81\% of items the author called ``ambiguous'' fall in $B_1$ (deterministic baseline): the model is fully confident on them despite the author's label. Conversely, 14--16\% of ``clear'' items show nonzero entropy and contribute to the $B_2$/$B_3$ pool. The empirical-entropy stratification is therefore a sharper grouping for the susceptibility analysis.}
+\caption{Cross-tab of author category against empirical-entropy bin (counts from \texttt{results/entropy\_stratified.json}; row sums match the 7,079-observation pool of Section~\ref{sec:empirical_entropy}). 79\% of items the author called ``ambiguous'' fall in $B_1$ (deterministic baseline): the model is fully confident on them despite the author's label. Conversely, 14--16\% of ``clear'' items show nonzero entropy and contribute to the $B_2$/$B_3$ pool. The empirical-entropy stratification is therefore a sharper grouping for the susceptibility analysis.}
 \label{tab:entropy_crosstab}
 \end{table}
 

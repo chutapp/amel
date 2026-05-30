@@ -13,9 +13,13 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-SRC = Path("data/all_results.jsonl")
-DST = Path("data/all_results.jsonl")  # in-place; backup is .pre_dedup_backup.jsonl
+REPO_ROOT = Path(__file__).resolve().parent.parent
+SRC = REPO_ROOT / "data" / "all_results.jsonl"
+DST = REPO_ROOT / "data" / "all_results.jsonl"  # in-place; backup is .pre_dedup_backup.jsonl
 
+# NOTE: dedup is scoped to qwen3:30b rows only via the model check below.
+# `model` is intentionally NOT in KEY_FIELDS because the scope is enforced
+# upstream — do not reuse this key tuple for multi-model dedup.
 KEY_FIELDS = ("domain", "polarity", "context_length", "test_item_id", "repetition")
 
 
