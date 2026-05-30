@@ -4,7 +4,7 @@ This repository contains the code, data, and analysis for our study on how conve
 
 ## Key Findings
 
-- **AMEL is cross-provider** (d = -0.17, p < 10^-54, N = 84,088 main-experiment API calls after dedup; 10/12 models significant after Bonferroni; item-clustered 95% CI on d: [-0.21, -0.13])
+- **AMEL is cross-provider** (d = -0.17, p < 10^-53, N = 84,088 main-experiment API calls after dedup; 10/12 models significant after Bonferroni; item-clustered 95% CI on d: [-0.21, -0.13])
 - **Uncertainty predicts susceptibility**: items where the model is genuinely uncertain at baseline (nonzero binary entropy) absorb roughly twice the bias of confident-baseline items (d = -0.36 vs d = -0.15)
 - **Two regimes**: assimilation for congruent items (model conforms when context matches item ground truth), resistance/anchoring for incongruent items (model shifts away from context when item contradicts it); paired difference d = 0.50 (unpaired sensitivity check d = 0.56)
 - **Negativity asymmetry**: paired per-item ratio 1.52x (t = 13.03, p < 10^-37, n = 2,733 pairs); marginal-means ratio is ~2.1x but mixes item composition
