@@ -19,6 +19,9 @@ import httpx
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from src.seed_guard import require_hashseed
+require_hashseed()
+
 from src.config import MAX_TOKENS, OLLAMA_BASE_URL
 from src.conversation import build_messages
 from src.domains.code_review_flipped import CodeReviewFlippedDomain

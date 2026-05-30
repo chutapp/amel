@@ -13,6 +13,10 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 import numpy as np
 from scipy import stats
 
+# Bonferroni factor — single source of truth in analysis/utils.py
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from analysis.utils import N_COMPARISONS  # noqa: E402
+
 # ── Style ──────────────────────────────────────────────────────────────────
 plt.rcParams.update({
     "font.family": "sans-serif",
@@ -178,7 +182,7 @@ def fig0_hero(scores, results, out_dir):
     ax.text(0.02, 0.87, "Ambiguity modulates\nthe effect", transform=ax.transAxes,
             fontsize=8, va="top", ha="left", color="#555555")
 
-    n_comparisons = 21
+    n_comparisons = N_COMPARISONS
     for i, (m, d) in enumerate(zip(means_a, ds_a)):
         y_off = -0.008 if m < 0 else 0.008
         va = "top" if m < 0 else "bottom"
@@ -397,7 +401,7 @@ def fig2_model_comparison(scores, out_dir):
     oss_models = sorted([m for m in model_stats if is_oss(m)],
                         key=lambda m: model_stats[m]["mean"])
 
-    n_comparisons = 21  # Bonferroni factor used throughout the paper
+    n_comparisons = N_COMPARISONS  # Bonferroni factor used throughout the paper
 
     def _bar_panel(ax, models, title):
         y_pos = np.arange(len(models))
@@ -469,8 +473,8 @@ def fig3_category(scores, out_dir):
     ax.axhline(0, color="#374151", lw=0.8)
     ax.set_title("AMEL by Test Item Ambiguity", fontweight="bold", pad=12)
 
-    # Annotations (Bonferroni-corrected, 21 comparisons)
-    n_comparisons = 21
+    # Annotations (Bonferroni-corrected, 22 comparisons — see analysis/utils.py)
+    n_comparisons = N_COMPARISONS
     for i, (m, d) in enumerate(zip(means, ds)):
         y_off = -0.008 if m < 0 else 0.008
         va = "top" if m < 0 else "bottom"
@@ -513,8 +517,8 @@ def fig4_domain(scores, out_dir):
     ax.axhline(0, color="#374151", lw=0.8)
     ax.set_title("AMEL by Evaluation Domain", fontweight="bold", pad=12)
 
-    # Bonferroni-corrected, 21 comparisons
-    n_comparisons = 21
+    # Bonferroni-corrected, 22 comparisons — see analysis/utils.py
+    n_comparisons = N_COMPARISONS
     for i, (m, d) in enumerate(zip(means, ds)):
         y_off = -0.005 if m < 0 else 0.005
         va = "top" if m < 0 else "bottom"
@@ -1158,6 +1162,14 @@ def main():
 
     print(f"\nAll figures saved to {out_dir}/")
     print("Formats: .pdf (vector for submission) + .png (preview)")
+
+    # Mirror PDFs into paper/figures/ — that is the path \includegraphics in main.tex uses.
+    import shutil
+    paper_fig_dir = Path("paper/figures")
+    paper_fig_dir.mkdir(parents=True, exist_ok=True)
+    for pdf in out_dir.glob("*.pdf"):
+        shutil.copy2(pdf, paper_fig_dir / pdf.name)
+    print(f"Mirrored {len(list(paper_fig_dir.glob('*.pdf')))} PDFs to {paper_fig_dir}/ for LaTeX build")
 
 
 if __name__ == "__main__":

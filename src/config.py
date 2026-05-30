@@ -4,13 +4,12 @@ from dataclasses import dataclass, field
 
 OLLAMA_BASE_URL = "http://localhost:11434"
 
-# Models to test (local via Ollama)
+# Models to test (local via Ollama) — matches the 4 local models reported in the paper.
 MODELS = [
     "qwen3:30b",
     "qwen3:4b",
     "qwen3.5:4b",
     "llama3.2:3b",
-    "llama3.3:70b",
 ]
 
 # Context lengths to test (number of prior turns)

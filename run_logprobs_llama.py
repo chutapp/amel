@@ -27,6 +27,9 @@ import httpx
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from src.seed_guard import require_hashseed
+require_hashseed()
+
 from src.config import MAX_TOKENS
 from src.conversation import build_messages
 from src.domains import ALL_DOMAINS
