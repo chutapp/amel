@@ -37,7 +37,7 @@ designed to be reusable by other researchers.
 - **Quality control.** Each rating carries `seconds_spent`. The
   per-item timing distribution was checked for AI-shortcut signals
   (impossibly fast cells; uniform pacing). Comments were scanned for
-  LLM-style vocabulary tells; none of the four annotators showed
+  LLM-style vocabulary tells; none of the five annotators showed
   evidence of AI-assisted rating.
 - **No AI tools.** Annotators explicitly consented to rating without
   ChatGPT / Claude / other LLM assistance. The form recorded this
