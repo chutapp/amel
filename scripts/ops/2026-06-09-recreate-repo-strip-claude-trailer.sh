@@ -31,7 +31,7 @@ git rev-parse pre-trailer-strip-backup >/dev/null 2>&1 \
   || { echo "Safety tag 'pre-trailer-strip-backup' missing — refusing"; exit 1; }
 echo "    safety tag present at $(git rev-parse --short pre-trailer-strip-backup)"
 
-active="$(gh auth status 2>&1 | awk '/Active account: true/{print prev} {prev=$0}' | awk '{print $NF}')"
+active="$(gh auth status 2>&1 | awk '/Logged in to github.com account/{acct=$NF} /Active account: true/{print acct; exit}' | tr -d '()')"
 echo "    active gh account: $active"
 [[ "$active" == "chutapp" ]] || { echo "Active gh account is not chutapp — run: gh auth switch --user chutapp"; exit 1; }
 
