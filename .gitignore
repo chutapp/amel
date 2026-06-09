@@ -62,7 +62,7 @@ client_secret*.json
 results-*.json
 data/annotators/_raw/
 
-# Claude Code / local tooling state
+# Local tooling state
 .claude/
 
 # Internal planning notes (do not publish review-process drafts)
