@@ -21,7 +21,7 @@ git diff --quiet || { echo "Working tree dirty"; exit 1; }
 git diff --cached --quiet || { echo "Index dirty"; exit 1; }
 
 # Confirm rewritten main no longer contains the trailer
-if git log --format=%B main | grep -i "Co-Authored-By:.*Claude" >/dev/null; then
+if git log --format=%B main | grep -iE "^Co-Authored-By:.*Claude" >/dev/null; then
   echo "Local main still mentions Claude trailer — filter-branch did not run? abort"
   exit 1
 fi
